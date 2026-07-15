@@ -4,19 +4,133 @@
   "0x5f4c3cc22fa622b8f8594748ddc495d3c8a0e5da": {},
   "0xb981a0c739dddb86a40c576aa1fd75f491184e0e": {},
   "0x6b8a3e5c1d6547a716c91d305b79b4b9b3fe9e53": {},
-  "0xf12ed46adc77882e12165b513b0d1f7ca6d09321": {}
+  "0xf12ed46adc77882e12165b513b0d1f7ca6d09321": {},
+  "0xf929122994e177079c924631ba13fb280f5cd1f9": {
+   "ETH": "LONG"
+  },
+  "0xcfa18ed6874b0bbc3f01adbd87620c4ef3383831": {},
+  "0xb294964ceb670a21d34693da52a39c9837dd651f": {},
+  "0x6807f127eaf85e3d0b9dbc7971bbed2afd041f8d": {
+   "ETH": "SHORT"
+  },
+  "0x9cd0a696c7cbb9d44de99268194cb08e5684e5fe": {},
+  "0x42b9594f12bddd170416e94c42e4cb5e42965f39": {
+   "BTC": "LONG"
+  }
  },
- "paper": {
-  "start": 10000.0,
-  "cash": 10000.0,
-  "equity": 10000.0,
-  "positions": [],
-  "history": [],
-  "equity_curve": [
-   [
-    "2026-07-15T16:27:46+00:00",
-    10000.0
+ "profiles": {
+  "prudent": {
+   "start": 10000.0,
+   "cash": 9700.0,
+   "equity": 10000.0,
+   "positions": [
+    {
+     "coin": "ETH",
+     "side": "LONG",
+     "entry": 1919.65,
+     "amount": 300.0,
+     "trader": "0xf92912",
+     "opened": "2026-07-15T17:01:52+00:00",
+     "price": 1919.65,
+     "pnl": 0.0
+    }
+   ],
+   "history": [
+    {
+     "time": "2026-07-15T17:01:52+00:00",
+     "note": "ouverture LONG ETH \u00e0 1,919.65 $ (300 $ virtuels)",
+     "trader": "0xf92912",
+     "profil": "Prudent"
+    }
+   ],
+   "equity_curve": [
+    [
+     "2026-07-15T17:01:52+00:00",
+     10000.0
+    ]
    ]
-  ]
+  },
+  "equilibre": {
+   "start": 10000.0,
+   "cash": 9500.0,
+   "equity": 10000.0,
+   "positions": [
+    {
+     "coin": "ETH",
+     "side": "SHORT",
+     "entry": 1919.65,
+     "amount": 500.0,
+     "trader": "0x6807f1",
+     "opened": "2026-07-15T17:01:52+00:00",
+     "price": 1919.65,
+     "pnl": -0.0
+    }
+   ],
+   "history": [
+    {
+     "time": "2026-07-15T17:01:52+00:00",
+     "note": "ouverture SHORT ETH \u00e0 1,919.65 $ (500 $ virtuels)",
+     "trader": "0x6807f1",
+     "profil": "\u00c9quilibr\u00e9"
+    }
+   ],
+   "equity_curve": [
+    [
+     "2026-07-15T16:27:46+00:00",
+     10000.0
+    ],
+    [
+     "2026-07-15T17:01:52+00:00",
+     10000.0
+    ]
+   ]
+  },
+  "agressif": {
+   "start": 10000.0,
+   "cash": 8000.0,
+   "equity": 10000.0,
+   "positions": [
+    {
+     "coin": "ETH",
+     "side": "SHORT",
+     "entry": 1919.65,
+     "amount": 1000.0,
+     "trader": "0x6807f1",
+     "opened": "2026-07-15T17:01:52+00:00",
+     "price": 1919.65,
+     "pnl": -0.0
+    },
+    {
+     "coin": "BTC",
+     "side": "LONG",
+     "entry": 65065.5,
+     "amount": 1000.0,
+     "trader": "0x42b959",
+     "opened": "2026-07-15T17:01:52+00:00",
+     "price": 65065.5,
+     "pnl": 0.0
+    }
+   ],
+   "history": [
+    {
+     "time": "2026-07-15T17:01:52+00:00",
+     "note": "ouverture SHORT ETH \u00e0 1,919.65 $ (1,000 $ virtuels)",
+     "trader": "0x6807f1",
+     "profil": "Agressif"
+    },
+    {
+     "time": "2026-07-15T17:01:52+00:00",
+     "note": "ouverture LONG BTC \u00e0 65,065.50 $ (1,000 $ virtuels)",
+     "trader": "0x42b959",
+     "profil": "Agressif"
+    }
+   ],
+   "equity_curve": [
+    [
+     "2026-07-15T17:01:52+00:00",
+     10000.0
+    ]
+   ]
+  }
  }
 }
