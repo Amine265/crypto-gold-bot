@@ -1,0 +1,22 @@
+{
+ "tracked": {
+  "0xfae1d8c606a26071a01b59f3f02e157083114b90": {},
+  "0x5f4c3cc22fa622b8f8594748ddc495d3c8a0e5da": {},
+  "0xb981a0c739dddb86a40c576aa1fd75f491184e0e": {},
+  "0x6b8a3e5c1d6547a716c91d305b79b4b9b3fe9e53": {},
+  "0xf12ed46adc77882e12165b513b0d1f7ca6d09321": {}
+ },
+ "paper": {
+  "start": 10000.0,
+  "cash": 10000.0,
+  "equity": 10000.0,
+  "positions": [],
+  "history": [],
+  "equity_curve": [
+   [
+    "2026-07-15T16:27:46+00:00",
+    10000.0
+   ]
+  ]
+ }
+}
