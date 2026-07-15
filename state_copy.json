@@ -11,7 +11,9 @@
   "0xcfa18ed6874b0bbc3f01adbd87620c4ef3383831": {},
   "0xb294964ceb670a21d34693da52a39c9837dd651f": {},
   "0x6807f127eaf85e3d0b9dbc7971bbed2afd041f8d": {
-   "ETH": "SHORT"
+   "BTC": "SHORT",
+   "ETH": "SHORT",
+   "PUMP": "SHORT"
   },
   "0x9cd0a696c7cbb9d44de99268194cb08e5684e5fe": {},
   "0x42b9594f12bddd170416e94c42e4cb5e42965f39": {
@@ -26,7 +28,7 @@
   "prudent": {
    "start": 10000.0,
    "cash": 9399.9508,
-   "equity": 10000.38,
+   "equity": 9998.86,
    "positions": [
     {
      "coin": "ETH",
@@ -35,8 +37,8 @@
      "amount": 300.0,
      "trader": "0xf92912",
      "opened": "2026-07-15T17:01:52+00:00",
-     "price": 1922.05,
-     "pnl": 0.3750683718385951
+     "price": 1923.95,
+     "pnl": 0.6719974995441806
     },
     {
      "coin": "LIT",
@@ -45,8 +47,8 @@
      "amount": 300.0492,
      "trader": "0xd487e2",
      "opened": "2026-07-15T20:11:20+00:00",
-     "price": 2.45495,
-     "pnl": 0.0
+     "price": 2.4401,
+     "pnl": -1.8149985213548172
     }
    ],
    "history": [
@@ -75,13 +77,17 @@
     [
      "2026-07-15T20:11:20+00:00",
      10000.38
+    ],
+    [
+     "2026-07-15T22:03:03+00:00",
+     9998.86
     ]
    ]
   },
   "equilibre": {
    "start": 10000.0,
-   "cash": 9500.0,
-   "equity": 9999.37,
+   "cash": 8500.062999999998,
+   "equity": 9998.88,
    "positions": [
     {
      "coin": "ETH",
@@ -90,14 +96,46 @@
      "amount": 500.0,
      "trader": "0x6807f1",
      "opened": "2026-07-15T17:01:52+00:00",
-     "price": 1922.05,
-     "pnl": -0.6251139530643252
+     "price": 1923.95,
+     "pnl": -1.1199958325736343
+    },
+    {
+     "coin": "BTC",
+     "side": "SHORT",
+     "entry": 64851.5,
+     "amount": 499.96850000000006,
+     "trader": "0x6807f1",
+     "opened": "2026-07-15T22:03:03+00:00",
+     "price": 64851.5,
+     "pnl": -0.0
+    },
+    {
+     "coin": "PUMP",
+     "side": "SHORT",
+     "entry": 0.00166,
+     "amount": 499.96850000000006,
+     "trader": "0x6807f1",
+     "opened": "2026-07-15T22:03:03+00:00",
+     "price": 0.00166,
+     "pnl": -0.0
     }
    ],
    "history": [
     {
      "time": "2026-07-15T17:01:52+00:00",
      "note": "ouverture SHORT ETH \u00e0 1,919.65 $ (500 $ virtuels)",
+     "trader": "0x6807f1",
+     "profil": "\u00c9quilibr\u00e9"
+    },
+    {
+     "time": "2026-07-15T22:03:03+00:00",
+     "note": "ouverture SHORT BTC \u00e0 64,851.50 $ (500 $ virtuels)",
+     "trader": "0x6807f1",
+     "profil": "\u00c9quilibr\u00e9"
+    },
+    {
+     "time": "2026-07-15T22:03:03+00:00",
+     "note": "ouverture SHORT PUMP \u00e0 0.00 $ (500 $ virtuels)",
      "trader": "0x6807f1",
      "profil": "\u00c9quilibr\u00e9"
     }
@@ -118,13 +156,17 @@
     [
      "2026-07-15T20:11:20+00:00",
      9999.37
+    ],
+    [
+     "2026-07-15T22:03:03+00:00",
+     9998.88
     ]
    ]
   },
   "agressif": {
    "start": 10000.0,
-   "cash": 8000.0,
-   "equity": 9996.81,
+   "cash": 6000.637999999999,
+   "equity": 9994.47,
    "positions": [
     {
      "coin": "ETH",
@@ -133,8 +175,8 @@
      "amount": 1000.0,
      "trader": "0x6807f1",
      "opened": "2026-07-15T17:01:52+00:00",
-     "price": 1922.05,
-     "pnl": -1.2502279061286503
+     "price": 1923.95,
+     "pnl": -2.2399916651472687
     },
     {
      "coin": "BTC",
@@ -143,8 +185,28 @@
      "amount": 1000.0,
      "trader": "0x42b959",
      "opened": "2026-07-15T17:01:52+00:00",
-     "price": 64939.5,
-     "pnl": -1.9365101320976554
+     "price": 64851.5,
+     "pnl": -3.28899339895951
+    },
+    {
+     "coin": "BTC",
+     "side": "SHORT",
+     "entry": 64851.5,
+     "amount": 999.681,
+     "trader": "0x6807f1",
+     "opened": "2026-07-15T22:03:03+00:00",
+     "price": 64851.5,
+     "pnl": -0.0
+    },
+    {
+     "coin": "PUMP",
+     "side": "SHORT",
+     "entry": 0.00166,
+     "amount": 999.681,
+     "trader": "0x6807f1",
+     "opened": "2026-07-15T22:03:03+00:00",
+     "price": 0.00166,
+     "pnl": -0.0
     }
    ],
    "history": [
@@ -158,6 +220,18 @@
      "time": "2026-07-15T17:01:52+00:00",
      "note": "ouverture LONG BTC \u00e0 65,065.50 $ (1,000 $ virtuels)",
      "trader": "0x42b959",
+     "profil": "Agressif"
+    },
+    {
+     "time": "2026-07-15T22:03:03+00:00",
+     "note": "ouverture SHORT BTC \u00e0 64,851.50 $ (1,000 $ virtuels)",
+     "trader": "0x6807f1",
+     "profil": "Agressif"
+    },
+    {
+     "time": "2026-07-15T22:03:03+00:00",
+     "note": "ouverture SHORT PUMP \u00e0 0.00 $ (1,000 $ virtuels)",
+     "trader": "0x6807f1",
      "profil": "Agressif"
     }
    ],
@@ -173,6 +247,10 @@
     [
      "2026-07-15T20:11:20+00:00",
      9996.81
+    ],
+    [
+     "2026-07-15T22:03:03+00:00",
+     9994.47
     ]
    ]
   }
