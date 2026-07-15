@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cockpit — Bot Crypto &amp; Or</title>
+<style>
+  :root {
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --muted: #898781;
+    --grid: #2c2c2a;
+    --border: rgba(255, 255, 255, 0.10);
+    --up: #0ca30c;
+    --down: #d03b3b;
+    --btc: #3987e5;
+    --eth: #199e70;
+    --gold: #c98500;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  header { max-width: 960px; margin: 0 auto 20px; display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; justify-content: space-between; }
+  h1 { font-size: 1.25rem; font-weight: 650; }
+  #updated { color: var(--muted); font-size: 0.85rem; }
+  main { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 16px 10px;
+  }
+  .card h2 { font-size: 0.9rem; font-weight: 600; color: var(--ink-2); display: flex; align-items: center; gap: 8px; }
+  .swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+  .price { font-size: 1.7rem; font-weight: 650; margin-top: 6px; }
+  .delta { font-size: 0.9rem; margin-top: 2px; }
+  .delta.up { color: var(--up); }
+  .delta.down { color: var(--down); }
+  .badge {
+    display: inline-block; margin-top: 8px; padding: 2px 8px;
+    border-radius: 999px; font-size: 0.75rem; font-weight: 600;
+    border: 1px solid var(--border); color: var(--muted);
+  }
+  .badge.hausse { color: var(--up); border-color: var(--up); }
+  .badge.baisse { color: var(--down); border-color: var(--down); }
+  .spark { position: relative; margin-top: 10px; }
+  .spark svg { display: block; width: 100%; height: 72px; }
+  .tip {
+    position: absolute; pointer-events: none; display: none;
+    background: var(--page); border: 1px solid var(--border); border-radius: 6px;
+    padding: 4px 8px; font-size: 0.75rem; color: var(--ink-2); white-space: nowrap;
+    transform: translate(-50%, -130%);
+  }
+  .wallet-line { color: var(--ink-2); font-size: 0.9rem; margin-top: 8px; word-break: break-all; }
+  footer { max-width: 960px; margin: 24px auto 0; color: var(--muted); font-size: 0.78rem; line-height: 1.5; }
+  #empty { max-width: 960px; margin: 0 auto; color: var(--ink-2); background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🛰️ Cockpit — Bot Crypto &amp; Or</h1>
+  <span id="updated">chargement…</span>
+</header>
+<p id="empty">Aucune donnée pour l'instant : le premier run du workflow n'a pas encore publié <code>data.json</code>.</p>
+<main id="cards"></main>
+<footer>
+  Données CoinGecko (l'or via le jeton PAXG, adossé à 1&nbsp;once d'or). Un signal est actif quand la variation sur 24&nbsp;h
+  dépasse le seuil de l'actif (±5&nbsp;% pour BTC/ETH, ±1,5&nbsp;% pour l'or) ; l'alerte Telegram part au changement de signal.
+  Historique&nbsp;: 7&nbsp;jours au pas horaire. Ceci n'est pas un conseil en investissement.
+</footer>
+<script>
+const SERIES = [
+  { id: "bitcoin",  key: "btc",  color: "var(--btc)",  hex: "#3987e5" },
+  { id: "ethereum", key: "eth",  color: "var(--eth)",  hex: "#199e70" },
+  { id: "pax-gold", key: "gold", color: "var(--gold)", hex: "#c98500" },
+];
+const fmtUsd = v => v == null ? "—" : v.toLocaleString("fr-FR", { maximumFractionDigits: 2 }) + " $";
+const fmtTime = iso => new Date(iso).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" });
+
+function sparkline(container, points, hex) {
+  if (points.length < 2) { container.innerHTML = '<span style="color:var(--muted);font-size:.75rem">historique en cours de collecte…</span>'; return; }
+  const W = 300, H = 72, PAD = 4;
+  const vals = points.map(p => p.v);
+  const min = Math.min(...vals), max = Math.max(...vals), span = (max - min) || 1;
+  const x = i => PAD + i * (W - 2 * PAD) / (points.length - 1);
+  const y = v => H - PAD - (v - min) * (H - 2 * PAD) / span;
+  const path = points.map((p, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(p.v).toFixed(1)}`).join(" ");
+  const svgNS = "http://www.w3.org/2000/svg";
+  container.innerHTML =
+    `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Historique des prix">` +
+    `<line x1="${PAD}" y1="${H - PAD}" x2="${W - PAD}" y2="${H - PAD}" stroke="var(--grid)" stroke-width="1"/>` +
+    `<path d="${path}" fill="none" stroke="${hex}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>` +
+    `<circle r="4" fill="${hex}" stroke="var(--surface)" stroke-width="2" style="display:none"/>` +
+    `</svg><div class="tip"></div>`;
+  const svg = container.querySelector("svg");
+  const dot = container.querySelector("circle");
+  const tip = container.querySelector(".tip");
+  svg.addEventListener("mousemove", ev => {
+    const rect = svg.getBoundingClientRect();
+    const i = Math.max(0, Math.min(points.length - 1,
+      Math.round((ev.clientX - rect.left) / rect.width * (points.length - 1))));
+    const p = points[i];
+    dot.style.display = "";
+    dot.setAttribute("cx", x(i)); dot.setAttribute("cy", y(p.v));
+    tip.style.display = "block";
+    tip.style.left = (x(i) / W * 100) + "%";
+    tip.style.top = (y(p.v) / H * 100) + "%";
+    tip.textContent = `${fmtUsd(p.v)} · ${fmtTime(p.t)}`;
+  });
+  svg.addEventListener("mouseleave", () => { dot.style.display = "none"; tip.style.display = "none"; });
+}
+
+fetch("data.json", { cache: "no-store" })
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById("updated").textContent =
+      data.updated_at ? "Mis à jour le " + fmtTime(data.updated_at) : "en attente du premier run";
+    const cards = document.getElementById("cards");
+    if (!data.updated_at) { document.getElementById("empty").style.display = "block"; return; }
+    for (const s of SERIES) {
+      const a = data.assets[s.id];
+      if (!a) continue;
+      const card = document.createElement("div");
+      card.className = "card";
+      const dir = a.change_24h >= 0 ? "up" : "down";
+      const badge = a.signal
+        ? `<span class="badge ${a.signal}">${a.signal === "hausse" ? "▲ signal hausse" : "▼ signal baisse"}</span>`
+        : `<span class="badge">— aucun signal (seuil ±${a.threshold}%)</span>`;
+      card.innerHTML =
+        `<h2><span class="swatch" style="background:${s.hex}"></span>${a.name} · ${a.symbol}</h2>` +
+        `<div class="price">${fmtUsd(a.price_usd)}</div>` +
+        `<div class="delta ${dir}">${a.change_24h >= 0 ? "▲" : "▼"} ${a.change_24h.toFixed(2)} % / 24 h</div>` +
+        badge + `<div class="spark"></div>`;
+      cards.appendChild(card);
+      sparkline(card.querySelector(".spark"),
+        data.history.map(h => ({ t: h.t, v: h[s.key] })).filter(p => p.v != null), s.hex);
+    }
+    if (data.wallet) {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `<h2>👛 Wallet</h2>` +
+        `<div class="price">${data.wallet.eth_balance != null ? data.wallet.eth_balance + " ETH" : "—"}</div>` +
+        `<div class="wallet-line">${data.wallet.address}</div>`;
+      cards.appendChild(card);
+    }
+  })
+  .catch(() => {
+    document.getElementById("updated").textContent = "données indisponibles";
+    document.getElementById("empty").style.display = "block";
+  });
+</script>
+</body>
+</html>
