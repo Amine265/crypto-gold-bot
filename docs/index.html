@@ -64,6 +64,9 @@
   .carte{background:var(--panneau);border:1px solid var(--lisere);border-radius:16px;padding:18px}
 
   /* Portefeuille paper */
+  .profils{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
+  .profil .nomp{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--or);font-weight:600}
+  .profil .regles{font-size:11.5px;color:var(--muet);margin-top:2px}
   .equity{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-end}
   .equity .grande{font-size:38px;font-weight:600}
   .equity .delta{font-size:16px;font-weight:600}
@@ -105,8 +108,8 @@
   <div id="instruments" class="instruments"></div>
 
   <section>
-    <div class="titre-sec"><h2>Portefeuille <b>paper</b> — copytrading simulé</h2></div>
-    <div class="carte" id="paper"><div class="vide">En attente des premières données du bot…</div></div>
+    <div class="titre-sec"><h2>Profils d'investissement <b>simulés</b> — 10 000 $ virtuels chacun</h2></div>
+    <div class="profils" id="paper"><div class="carte vide">En attente des premières données du bot…</div></div>
   </section>
 
   <section>
@@ -185,21 +188,27 @@ function rendre(data, live){
   }
   if(!inst.innerHTML) inst.innerHTML='<div class="carte vide">Les instruments s\'allumeront après la première exécution du bot.</div>';
 
-  /* Paper */
-  const paper=data.paper;
-  if(paper){
-    const perf=(paper.equity/paper.start-1)*100;
-    const cls=perf>=0?'up':'down';
-    let posHtml=(paper.positions||[]).map(p=>`
-      <div class="pos"><span><span class="cote ${p.side}">${p.side}</span> ${p.coin} <span class="mono" style="color:var(--muet)">@ ${fmt$(p.entry)}</span></span>
-      <span class="mono ${p.pnl>=0?'up':'down'}">${p.pnl>=0?'+':''}${fmt$(p.pnl||0)} $</span></div>`).join('');
-    document.getElementById('paper').innerHTML=`
-      <div class="equity">
-        <div><div class="grande mono">${fmt$(paper.equity)} $</div><div class="note-paper">équité virtuelle (départ ${fmt$(paper.start)} $)</div></div>
-        <div class="delta mono ${cls}">${perf>=0?'+':''}${perf.toFixed(1)} %</div>
-      </div>
-      ${courbeEquity(paper.equity_curve)}
-      ${posHtml||'<div class="vide">Aucune position répliquée pour le moment.</div>'}`;
+  /* Profils simulés */
+  const REGLES={prudent:'3 traders · gros comptes · sans short · 3%/position',
+                equilibre:'5 traders · long + short · 5%/position',
+                agressif:'8 traders · ROI max · long + short · 10%/position'};
+  const profils=data.profiles||(data.paper?{equilibre:{label:'Équilibré',...data.paper}}:null);
+  if(profils){
+    document.getElementById('paper').innerHTML=Object.entries(profils).map(([k,p])=>{
+      const perf=(p.equity/p.start-1)*100, cls=perf>=0?'up':'down';
+      const posHtml=(p.positions||[]).map(x=>`
+        <div class="pos"><span><span class="cote ${x.side}">${x.side}</span> ${x.coin} <span class="mono" style="color:var(--muet)">@ ${fmt$(x.entry)}</span></span>
+        <span class="mono ${x.pnl>=0?'up':'down'}">${x.pnl>=0?'+':''}${fmt$(x.pnl||0)} $</span></div>`).join('');
+      return `<div class="carte profil">
+        <div class="nomp">${p.label}</div>
+        <div class="regles">${REGLES[k]||''}</div>
+        <div class="equity" style="margin-top:10px">
+          <div class="grande mono" style="font-size:28px">${fmt$(p.equity)} $</div>
+          <div class="delta mono ${cls}">${perf>=0?'+':''}${perf.toFixed(1)} %</div>
+        </div>
+        ${courbeEquity(p.equity_curve)}
+        ${posHtml||'<div class="vide">Aucune position répliquée.</div>'}
+      </div>`;}).join('');
   }
 
   /* Traders */
@@ -235,7 +244,7 @@ function rendre(data, live){
   /* Journal : signaux marché + trades paper mélangés, du plus récent au plus ancien */
   const items=[];
   (data.signals||[]).forEach(s=>items.push({t:s.time,html:`<time class="mono">${fmtH(s.time)}</time><span class="tag ${s.type}">${s.type}</span><span><b>${s.asset}</b> — ${s.reason}</span>`}));
-  ((data.paper||{}).history||[]).forEach(h=>items.push({t:h.time,html:`<time class="mono">${fmtH(h.time)}</time><span class="tag copie">copie</span><span>${h.note} <span style="color:var(--muet)">· suit ${h.trader}</span></span>`}));
+  Object.values(profils||{}).forEach(p=>(p.history||[]).forEach(h=>items.push({t:h.time,html:`<time class="mono">${fmtH(h.time)}</time><span class="tag copie">${h.profil||'copie'}</span><span>${h.note} <span style="color:var(--muet)">· suit ${h.trader}</span></span>`})));
   items.sort((a,b)=>b.t.localeCompare(a.t));
   if(items.length) document.getElementById('journal').innerHTML=items.slice(0,40).map(i=>`<div class="ligne">${i.html}</div>`).join('');
 

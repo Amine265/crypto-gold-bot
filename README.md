@@ -37,3 +37,23 @@ Dans `copytrader.py` : `TOP_N` (nombre de traders suivis), `MIN_ACCOUNT_VALUE` (
 ## Avertissement
 
 Portefeuille virtuel et indicateurs techniques à but informatif uniquement. Les performances passées des traders suivis ne garantissent rien, et rien ici ne constitue un conseil financier. Si un jour tu envisages le passage en trading réel, fais-le avec des montants que tu peux te permettre de perdre, et sache que cela exigerait de confier des clés API de trading à un script : un risque à ne prendre qu'en toute connaissance de cause.
+
+---
+
+# Nouveautés v3
+
+## Trois profils d'investissement simulés
+
+`copytrader.py` fait désormais tourner trois portefeuilles virtuels de 10 000 $ en parallèle, chacun avec sa stratégie : **Prudent** (3 traders à gros comptes, ROI 30j plafonné à 300% pour écarter les profils intenables, pas de short, 3% par position), **Équilibré** (5 traders, long et short, 5% par position) et **Agressif** (8 traders au ROI maximal, 10% par position). Le cockpit affiche les trois courbes côte à côte : après quelques semaines, la comparaison des équités et des creux te dira quelle stratégie tient la route.
+
+## Bot Telegram interactif (`worker/worker.js`)
+
+Un Cloudflare Worker (gratuit, aucun serveur) répond instantanément aux commandes : `/prix`, `/portefeuille`, `/traders`, `/signaux`, avec un bouton qui ouvre le cockpit directement dans Telegram.
+
+Déploiement en 4 étapes :
+1. Crée un compte sur dash.cloudflare.com (gratuit), puis Workers & Pages → Create Worker → colle le contenu de `worker/worker.js` → Deploy. Note l'URL (`https://xxx.workers.dev`).
+2. Dans le Worker : Settings → Variables → ajoute un **secret** `TELEGRAM_TOKEN` avec ton token BotFather.
+3. Enregistre le webhook en ouvrant dans ton navigateur : `https://api.telegram.org/bot<TON_TOKEN>/setWebhook?url=https://xxx.workers.dev` (réponse attendue : `"ok":true`).
+4. Bouton menu cockpit : @BotFather → `/mybots` → ton bot → Bot Settings → Menu Button → colle l'URL du cockpit.
+
+Si tu changes de dépôt ou de compte GitHub, mets à jour `DATA_URL` et `COCKPIT_URL` en haut de `worker.js`.
