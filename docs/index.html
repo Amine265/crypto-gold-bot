@@ -1,160 +1,258 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cockpit — Bot Crypto &amp; Or</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cockpit — Crypto & Or</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --page: #0d0d0d;
-    --surface: #1a1a19;
-    --ink: #ffffff;
-    --ink-2: #c3c2b7;
-    --muted: #898781;
-    --grid: #2c2c2a;
-    --border: rgba(255, 255, 255, 0.10);
-    --up: #0ca30c;
-    --down: #d03b3b;
-    --btc: #3987e5;
-    --eth: #199e70;
-    --gold: #c98500;
+  :root{
+    --nuit:#0A111F; --panneau:#101A2C; --panneau2:#0D1626;
+    --lisere:#223252; --or:#E3B34C; --or-doux:rgba(227,179,76,.14);
+    --texte:#E9EEF7; --muet:#7F8CA6;
+    --achat:#3FC98A; --vente:#E4586B;
   }
-  * { box-sizing: border-box; margin: 0; }
-  body {
-    background: var(--page);
-    color: var(--ink);
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-    padding: 24px;
-    min-height: 100vh;
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--nuit)}
+  body{
+    font-family:'Inter',system-ui,sans-serif;color:var(--texte);
+    background:
+      radial-gradient(1200px 500px at 70% -10%, rgba(227,179,76,.06), transparent 60%),
+      var(--nuit);
+    min-height:100vh;padding:0 0 64px;
   }
-  header { max-width: 960px; margin: 0 auto 20px; display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; justify-content: space-between; }
-  h1 { font-size: 1.25rem; font-weight: 650; }
-  #updated { color: var(--muted); font-size: 0.85rem; }
-  main { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 16px 10px;
+  .mono{font-family:'IBM Plex Mono',monospace}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 18px}
+
+  /* ---------- En-tête ---------- */
+  header{padding:26px 0 8px;border-bottom:1px solid var(--lisere)}
+  .brand{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  h1{font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(20px,4vw,28px);letter-spacing:.01em}
+  h1 .or{color:var(--or)}
+  .statut{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muet)}
+  .pastille{width:8px;height:8px;border-radius:50%;background:var(--achat);box-shadow:0 0 10px var(--achat);animation:pulse 2.4s infinite}
+  .pastille.hs{background:var(--muet);box-shadow:none;animation:none}
+  @keyframes pulse{50%{opacity:.35}}
+  @media (prefers-reduced-motion:reduce){.pastille{animation:none}}
+
+  /* ---------- Instruments (signature) ---------- */
+  .instruments{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:22px 0}
+  .cadran{
+    background:linear-gradient(180deg,var(--panneau),var(--panneau2));
+    border:1px solid var(--lisere);border-radius:16px;padding:18px 16px 14px;
+    position:relative;overflow:hidden;
   }
-  .card h2 { font-size: 0.9rem; font-weight: 600; color: var(--ink-2); display: flex; align-items: center; gap: 8px; }
-  .swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
-  .price { font-size: 1.7rem; font-weight: 650; margin-top: 6px; }
-  .delta { font-size: 0.9rem; margin-top: 2px; }
-  .delta.up { color: var(--up); }
-  .delta.down { color: var(--down); }
-  .badge {
-    display: inline-block; margin-top: 8px; padding: 2px 8px;
-    border-radius: 999px; font-size: 0.75rem; font-weight: 600;
-    border: 1px solid var(--border); color: var(--muted);
-  }
-  .badge.hausse { color: var(--up); border-color: var(--up); }
-  .badge.baisse { color: var(--down); border-color: var(--down); }
-  .spark { position: relative; margin-top: 10px; }
-  .spark svg { display: block; width: 100%; height: 72px; }
-  .tip {
-    position: absolute; pointer-events: none; display: none;
-    background: var(--page); border: 1px solid var(--border); border-radius: 6px;
-    padding: 4px 8px; font-size: 0.75rem; color: var(--ink-2); white-space: nowrap;
-    transform: translate(-50%, -130%);
-  }
-  .wallet-line { color: var(--ink-2); font-size: 0.9rem; margin-top: 8px; word-break: break-all; }
-  footer { max-width: 960px; margin: 24px auto 0; color: var(--muted); font-size: 0.78rem; line-height: 1.5; }
-  #empty { max-width: 960px; margin: 0 auto; color: var(--ink-2); background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: none; }
+  .cadran::before{content:"";position:absolute;inset:0;border-radius:16px;
+    border:1px solid var(--or-doux);pointer-events:none}
+  .cadran .actif{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--or);font-weight:600}
+  .cadran .prix{font-size:26px;font-weight:600;margin-top:2px}
+  .cadran .devise{font-size:13px;color:var(--muet)}
+  .jauge{display:flex;align-items:center;gap:14px;margin-top:10px}
+  .jauge svg{flex:none}
+  .jauge .lecture .val{font-size:20px;font-weight:600}
+  .jauge .lecture .lib{font-size:11px;color:var(--muet);letter-spacing:.08em;text-transform:uppercase}
+  .zone{font-size:11.5px;margin-top:3px;font-weight:600}
+  .zone.achat{color:var(--achat)} .zone.vente{color:var(--vente)} .zone.neutre{color:var(--muet)}
+  .spark{margin-top:10px}
+
+  /* ---------- Sections ---------- */
+  section{margin-top:30px}
+  .titre-sec{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px}
+  .titre-sec h2{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--muet);font-weight:600}
+  .titre-sec h2 b{color:var(--or)}
+  .carte{background:var(--panneau);border:1px solid var(--lisere);border-radius:16px;padding:18px}
+
+  /* Portefeuille paper */
+  .equity{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-end}
+  .equity .grande{font-size:38px;font-weight:600}
+  .equity .delta{font-size:16px;font-weight:600}
+  .up{color:var(--achat)} .down{color:var(--vente)}
+  .note-paper{font-size:12px;color:var(--muet);margin-top:8px}
+  .courbe{margin-top:14px;width:100%}
+
+  /* Traders */
+  .traders{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+  .trader .nom{font-weight:600;font-size:15px}
+  .trader .adresse{font-size:11px;color:var(--muet)}
+  .trader .stats{display:flex;gap:18px;margin:10px 0 6px;font-size:13px}
+  .trader .stats b{display:block;font-size:15px}
+  .pos{display:flex;justify-content:space-between;font-size:12.5px;padding:7px 0;border-top:1px dashed var(--lisere)}
+  .pos .cote{font-weight:600}
+  .pos .cote.LONG{color:var(--achat)} .pos .cote.SHORT{color:var(--vente)}
+
+  /* Journal */
+  .ligne{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--lisere);font-size:13.5px;align-items:baseline}
+  .ligne:last-child{border-bottom:none}
+  .ligne time{color:var(--muet);font-size:11.5px;flex:none;width:94px}
+  .tag{flex:none;font-size:10.5px;font-weight:600;letter-spacing:.08em;padding:2px 8px;border-radius:20px;text-transform:uppercase}
+  .tag.achat{background:rgba(63,201,138,.12);color:var(--achat)}
+  .tag.vente{background:rgba(228,88,107,.12);color:var(--vente)}
+  .tag.copie{background:var(--or-doux);color:var(--or)}
+  .vide{color:var(--muet);font-size:13.5px;padding:8px 0}
+  .avert{margin-top:34px;font-size:12px;color:var(--muet);border-top:1px solid var(--lisere);padding-top:14px}
 </style>
 </head>
 <body>
 <header>
-  <h1>🛰️ Cockpit — Bot Crypto &amp; Or</h1>
-  <span id="updated">chargement…</span>
+  <div class="wrap brand">
+    <h1>COCKPIT <span class="or">◈</span> crypto &amp; or</h1>
+    <div class="statut"><span id="pastille" class="pastille hs"></span><span id="maj" class="mono">connexion…</span></div>
+  </div>
 </header>
-<p id="empty">Aucune donnée pour l'instant : le premier run du workflow n'a pas encore publié <code>data.json</code>.</p>
-<main id="cards"></main>
-<footer>
-  Données CoinGecko (l'or via le jeton PAXG, adossé à 1&nbsp;once d'or). Un signal est actif quand la variation sur 24&nbsp;h
-  dépasse le seuil de l'actif (±5&nbsp;% pour BTC/ETH, ±1,5&nbsp;% pour l'or) ; l'alerte Telegram part au changement de signal.
-  Historique&nbsp;: 7&nbsp;jours au pas horaire. Ceci n'est pas un conseil en investissement.
-</footer>
-<script>
-const SERIES = [
-  { id: "bitcoin",  key: "btc",  color: "var(--btc)",  hex: "#3987e5" },
-  { id: "ethereum", key: "eth",  color: "var(--eth)",  hex: "#199e70" },
-  { id: "pax-gold", key: "gold", color: "var(--gold)", hex: "#c98500" },
-];
-const fmtUsd = v => v == null ? "—" : v.toLocaleString("fr-FR", { maximumFractionDigits: 2 }) + " $";
-const fmtTime = iso => new Date(iso).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" });
 
-function sparkline(container, points, hex) {
-  if (points.length < 2) { container.innerHTML = '<span style="color:var(--muted);font-size:.75rem">historique en cours de collecte…</span>'; return; }
-  const W = 300, H = 72, PAD = 4;
-  const vals = points.map(p => p.v);
-  const min = Math.min(...vals), max = Math.max(...vals), span = (max - min) || 1;
-  const x = i => PAD + i * (W - 2 * PAD) / (points.length - 1);
-  const y = v => H - PAD - (v - min) * (H - 2 * PAD) / span;
-  const path = points.map((p, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(p.v).toFixed(1)}`).join(" ");
-  const svgNS = "http://www.w3.org/2000/svg";
-  container.innerHTML =
-    `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Historique des prix">` +
-    `<line x1="${PAD}" y1="${H - PAD}" x2="${W - PAD}" y2="${H - PAD}" stroke="var(--grid)" stroke-width="1"/>` +
-    `<path d="${path}" fill="none" stroke="${hex}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>` +
-    `<circle r="4" fill="${hex}" stroke="var(--surface)" stroke-width="2" style="display:none"/>` +
-    `</svg><div class="tip"></div>`;
-  const svg = container.querySelector("svg");
-  const dot = container.querySelector("circle");
-  const tip = container.querySelector(".tip");
-  svg.addEventListener("mousemove", ev => {
-    const rect = svg.getBoundingClientRect();
-    const i = Math.max(0, Math.min(points.length - 1,
-      Math.round((ev.clientX - rect.left) / rect.width * (points.length - 1))));
-    const p = points[i];
-    dot.style.display = "";
-    dot.setAttribute("cx", x(i)); dot.setAttribute("cy", y(p.v));
-    tip.style.display = "block";
-    tip.style.left = (x(i) / W * 100) + "%";
-    tip.style.top = (y(p.v) / H * 100) + "%";
-    tip.textContent = `${fmtUsd(p.v)} · ${fmtTime(p.t)}`;
-  });
-  svg.addEventListener("mouseleave", () => { dot.style.display = "none"; tip.style.display = "none"; });
+<main class="wrap">
+  <div id="instruments" class="instruments"></div>
+
+  <section>
+    <div class="titre-sec"><h2>Portefeuille <b>paper</b> — copytrading simulé</h2></div>
+    <div class="carte" id="paper"><div class="vide">En attente des premières données du bot…</div></div>
+  </section>
+
+  <section>
+    <div class="titre-sec"><h2>Top traders <b>suivis</b></h2></div>
+    <div class="traders" id="traders"><div class="carte vide">En attente des données Hyperliquid…</div></div>
+  </section>
+
+  <section id="sec-wallet" style="display:none">
+    <div class="titre-sec"><h2>Mon <b>wallet</b> (lecture seule)</h2></div>
+    <div class="carte" id="wallet"></div>
+  </section>
+
+  <section>
+    <div class="titre-sec"><h2>Journal des <b>signaux</b></h2></div>
+    <div class="carte" id="journal"><div class="vide">Aucun signal pour l'instant.</div></div>
+  </section>
+
+  <p class="avert">Instruments techniques et portefeuille virtuel à but informatif. Rien ici n'est un conseil financier ; les performances passées des traders ne préjugent pas de leurs performances futures.</p>
+</main>
+
+<script>
+const COINGECKO = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,pax-gold&vs_currencies=usd";
+const fmt$ = n => n>=1000 ? n.toLocaleString('fr-FR',{maximumFractionDigits:0}) : n.toLocaleString('fr-FR',{maximumFractionDigits:2});
+const fmtH = iso => { try{ const d=new Date(iso); return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});}catch{return ''} };
+
+/* ---- Cadran RSI (arc SVG, signature du cockpit) ---- */
+function arc(cx,cy,r,a0,a1){const p=a=>[cx+r*Math.cos(a*Math.PI/180),cy+r*Math.sin(a*Math.PI/180)];
+  const [x0,y0]=p(a0),[x1,y1]=p(a1);const large=(a1-a0)>180?1:0;
+  return `M ${x0} ${y0} A ${r} ${r} 0 ${large} 1 ${x1} ${y1}`;}
+function cadranRSI(rsi){
+  const a0=150,a1=390, a=a0+(a1-a0)*Math.min(100,Math.max(0,rsi))/100;
+  const seuil=v=>a0+(a1-a0)*v/100;
+  const nx=44+34*Math.cos(a*Math.PI/180), ny=44+34*Math.sin(a*Math.PI/180);
+  return `<svg width="88" height="76" viewBox="0 0 88 82" aria-label="RSI ${rsi}">
+    <path d="${arc(44,44,36,a0,a1)}" stroke="#223252" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="${arc(44,44,36,a0,seuil(30))}" stroke="rgba(63,201,138,.55)" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="${arc(44,44,36,seuil(70),a1)}" stroke="rgba(228,88,107,.55)" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <circle cx="44" cy="44" r="3" fill="#E3B34C"/>
+    <line x1="44" y1="44" x2="${nx}" y2="${ny}" stroke="#E3B34C" stroke-width="2.5" stroke-linecap="round"/>
+  </svg>`;}
+function sparkline(vals,w=210,h=34){
+  if(!vals||vals.length<2)return '';
+  const min=Math.min(...vals),max=Math.max(...vals),d=max-min||1;
+  const pts=vals.map((v,i)=>`${(i/(vals.length-1)*w).toFixed(1)},${(h-4-(v-min)/d*(h-8)).toFixed(1)}`).join(' ');
+  const up=vals[vals.length-1]>=vals[0];
+  return `<svg class="spark" width="100%" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <polyline points="${pts}" fill="none" stroke="${up?'#3FC98A':'#E4586B'}" stroke-width="1.8" opacity=".9"/></svg>`;}
+function courbeEquity(curve){
+  if(!curve||curve.length<2)return '<div class="vide">La courbe apparaîtra après quelques heures d\'historique.</div>';
+  const vals=curve.map(p=>p[1]);
+  const min=Math.min(...vals),max=Math.max(...vals),d=max-min||1,w=600,h=90;
+  const pts=vals.map((v,i)=>`${(i/(vals.length-1)*w).toFixed(1)},${(h-6-(v-min)/d*(h-12)).toFixed(1)}`).join(' ');
+  return `<svg class="courbe" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <polyline points="${pts}" fill="none" stroke="#E3B34C" stroke-width="2"/>
+    <polyline points="0,${h} ${pts} ${w},${h}" fill="rgba(227,179,76,.07)" stroke="none"/></svg>`;}
+
+function zoneRSI(r){ if(r<30)return ['achat','survente — zone d\'achat']; if(r>70)return ['vente','surachat — zone de vente']; return ['neutre','zone neutre']; }
+
+function rendre(data, live){
+  /* Instruments */
+  const inst=document.getElementById('instruments'); inst.innerHTML='';
+  const market=data.market||{};
+  for(const id of ['bitcoin','ethereum','pax-gold']){
+    const m=market[id]; if(!m) continue;
+    const prix=(live&&live[id])?live[id].usd:m.price;
+    const [zc,zt]=zoneRSI(m.rsi);
+    inst.insertAdjacentHTML('beforeend',`
+      <div class="cadran">
+        <div class="actif">${m.label}</div>
+        <div class="prix mono">${fmt$(prix)} <span class="devise">USD</span></div>
+        <div class="jauge">${cadranRSI(m.rsi)}
+          <div class="lecture"><div class="val mono">${m.rsi}</div><div class="lib">RSI 14</div>
+          <div class="zone ${zc}">${zt}</div></div>
+        </div>${sparkline(m.sparkline)}
+      </div>`);
+  }
+  if(!inst.innerHTML) inst.innerHTML='<div class="carte vide">Les instruments s\'allumeront après la première exécution du bot.</div>';
+
+  /* Paper */
+  const paper=data.paper;
+  if(paper){
+    const perf=(paper.equity/paper.start-1)*100;
+    const cls=perf>=0?'up':'down';
+    let posHtml=(paper.positions||[]).map(p=>`
+      <div class="pos"><span><span class="cote ${p.side}">${p.side}</span> ${p.coin} <span class="mono" style="color:var(--muet)">@ ${fmt$(p.entry)}</span></span>
+      <span class="mono ${p.pnl>=0?'up':'down'}">${p.pnl>=0?'+':''}${fmt$(p.pnl||0)} $</span></div>`).join('');
+    document.getElementById('paper').innerHTML=`
+      <div class="equity">
+        <div><div class="grande mono">${fmt$(paper.equity)} $</div><div class="note-paper">équité virtuelle (départ ${fmt$(paper.start)} $)</div></div>
+        <div class="delta mono ${cls}">${perf>=0?'+':''}${perf.toFixed(1)} %</div>
+      </div>
+      ${courbeEquity(paper.equity_curve)}
+      ${posHtml||'<div class="vide">Aucune position répliquée pour le moment.</div>'}`;
+  }
+
+  /* Traders */
+  const tr=document.getElementById('traders');
+  if(data.traders&&data.traders.length){
+    tr.innerHTML=data.traders.map(t=>`
+      <div class="carte trader">
+        <div class="nom">${t.name}</div>
+        <div class="adresse mono">${(t.address||'').slice(0,10)}…</div>
+        <div class="stats mono">
+          <span>ROI 30j<b class="${t.roi_30d>=0?'up':'down'}">${(t.roi_30d*100).toFixed(0)} %</b></span>
+          <span>P&amp;L 30j<b>${fmt$(t.pnl_30d)} $</b></span>
+          <span>Compte<b>${fmt$(t.account_value)} $</b></span>
+        </div>
+        ${(t.positions||[]).map(p=>`<div class="pos">
+          <span><span class="cote ${p.side}">${p.side}</span> ${p.coin}</span>
+          <span class="mono ${p.pnl>=0?'up':'down'}">${p.pnl>=0?'+':''}${fmt$(p.pnl)} $</span></div>`).join('')
+          ||'<div class="vide">Aucune position ouverte.</div>'}
+      </div>`).join('');
+  }
+
+  /* Wallet */
+  if(data.wallet){
+    document.getElementById('sec-wallet').style.display='';
+    document.getElementById('wallet').innerHTML=`
+      <div class="adresse mono" style="margin-bottom:8px">${data.wallet.address}</div>
+      ${(data.wallet.positions||[]).map(p=>`<div class="pos">
+        <span><span class="cote ${p.side}">${p.side}</span> ${p.coin} <span class="mono" style="color:var(--muet)">@ ${fmt$(p.entry)}</span></span>
+        <span class="mono ${p.pnl>=0?'up':'down'}">${p.pnl>=0?'+':''}${fmt$(p.pnl)} $</span></div>`).join('')
+        ||'<div class="vide">Aucune position ouverte sur ce wallet.</div>'}`;
+  }
+
+  /* Journal : signaux marché + trades paper mélangés, du plus récent au plus ancien */
+  const items=[];
+  (data.signals||[]).forEach(s=>items.push({t:s.time,html:`<time class="mono">${fmtH(s.time)}</time><span class="tag ${s.type}">${s.type}</span><span><b>${s.asset}</b> — ${s.reason}</span>`}));
+  ((data.paper||{}).history||[]).forEach(h=>items.push({t:h.time,html:`<time class="mono">${fmtH(h.time)}</time><span class="tag copie">copie</span><span>${h.note} <span style="color:var(--muet)">· suit ${h.trader}</span></span>`}));
+  items.sort((a,b)=>b.t.localeCompare(a.t));
+  if(items.length) document.getElementById('journal').innerHTML=items.slice(0,40).map(i=>`<div class="ligne">${i.html}</div>`).join('');
+
+  document.getElementById('maj').textContent='mise à jour '+fmtH(data.updated||data.market_updated);
+  document.getElementById('pastille').classList.remove('hs');
 }
 
-fetch("data.json", { cache: "no-store" })
-  .then(r => r.json())
-  .then(data => {
-    document.getElementById("updated").textContent =
-      data.updated_at ? "Mis à jour le " + fmtTime(data.updated_at) : "en attente du premier run";
-    const cards = document.getElementById("cards");
-    if (!data.updated_at) { document.getElementById("empty").style.display = "block"; return; }
-    for (const s of SERIES) {
-      const a = data.assets[s.id];
-      if (!a) continue;
-      const card = document.createElement("div");
-      card.className = "card";
-      const dir = a.change_24h >= 0 ? "up" : "down";
-      const badge = a.signal
-        ? `<span class="badge ${a.signal}">${a.signal === "hausse" ? "▲ signal hausse" : "▼ signal baisse"}</span>`
-        : `<span class="badge">— aucun signal (seuil ±${a.threshold}%)</span>`;
-      card.innerHTML =
-        `<h2><span class="swatch" style="background:${s.hex}"></span>${a.name} · ${a.symbol}</h2>` +
-        `<div class="price">${fmtUsd(a.price_usd)}</div>` +
-        `<div class="delta ${dir}">${a.change_24h >= 0 ? "▲" : "▼"} ${a.change_24h.toFixed(2)} % / 24 h</div>` +
-        badge + `<div class="spark"></div>`;
-      cards.appendChild(card);
-      sparkline(card.querySelector(".spark"),
-        data.history.map(h => ({ t: h.t, v: h[s.key] })).filter(p => p.v != null), s.hex);
-    }
-    if (data.wallet) {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `<h2>👛 Wallet</h2>` +
-        `<div class="price">${data.wallet.eth_balance != null ? data.wallet.eth_balance + " ETH" : "—"}</div>` +
-        `<div class="wallet-line">${data.wallet.address}</div>`;
-      cards.appendChild(card);
-    }
-  })
-  .catch(() => {
-    document.getElementById("updated").textContent = "données indisponibles";
-    document.getElementById("empty").style.display = "block";
-  });
+async function charger(){
+  let data={};
+  try{ data=await (await fetch('data.json?'+Date.now())).json(); }
+  catch{ document.getElementById('maj').textContent='data.json introuvable — lance le bot une première fois'; }
+  let live=null;
+  try{ live=await (await fetch(COINGECKO)).json(); }catch{}
+  rendre(data,live);
+}
+charger();
+setInterval(charger, 60_000);
 </script>
 </body>
 </html>

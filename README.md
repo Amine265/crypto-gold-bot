@@ -1,31 +1,39 @@
-# 🛰️ crypto-gold-bot
+# Bot Crypto & Or — Alertes Telegram, Copytrading paper et Cockpit
 
-Bot de surveillance **Bitcoin / Ethereum / Or** qui tourne entièrement sur GitHub Actions :
+Trois briques dans un seul dépôt GitHub, le tout 100% gratuit et sans serveur à gérer :
 
-- **Toutes les heures** (et à la demande), le workflow [`Bot Crypto & Or`](.github/workflows/bot.yml) exécute [`bot.py`](bot.py).
-- Le bot récupère les prix via **CoinGecko** (l'or via le jeton **PAXG**, adossé à 1 once d'or).
-- Un **signal** est actif quand la variation sur 24 h dépasse le seuil : **±5 %** pour BTC/ETH, **±1,5 %** pour l'or.
-- Au **changement de signal**, une alerte est envoyée sur **Telegram** (anti-spam : pas de répétition tant que le signal ne change pas).
-- Chaque run met à jour [`docs/data.json`](docs/data.json), affiché par le **cockpit GitHub Pages** : `docs/index.html`.
-- En lancement **manuel** (`workflow_dispatch`) sans signal actif, le bot envoie un message de confirmation « ✅ opérationnel » avec les prix du moment.
+**1. Signaux de marché** (`bot.py`) — analyse BTC, ETH et l'or (via PAXG) toutes les heures : RSI, croisements SMA 20/50 et MACD, avec alertes Telegram et anti-doublons.
 
-## Secrets du dépôt (Settings → Secrets and variables → Actions)
+**2. Copytrading paper** (`copytrader.py`) — suit les traders les plus performants du classement public Hyperliquid (ROI 30 jours, compte de plus de 100 000 $), t'alerte sur Telegram dès qu'ils ouvrent, ferment ou retournent une position, et réplique leurs trades dans un portefeuille **virtuel** de 10 000 $ pour mesurer ce que ça donnerait avant de risquer un euro. Aucun ordre réel n'est passé, aucune clé de trading n'est nécessaire.
 
-| Secret | Rôle |
-|---|---|
-| `TELEGRAM_TOKEN` | Token du bot Telegram (via @BotFather) |
-| `TELEGRAM_CHAT_ID` | Identifiant du chat qui reçoit les alertes |
-| `MY_WALLET` | *(optionnel)* adresse **publique** Ethereum `0x…` — le solde ETH est affiché dans le cockpit |
+**3. Cockpit** (`docs/index.html`) — tableau de bord hébergé gratuitement sur GitHub Pages : cadrans RSI style instruments de bord, prix en direct, équité du portefeuille paper avec sa courbe, positions des top traders, journal des signaux, et suivi optionnel de ton wallet en lecture seule.
 
-## Cockpit
+## Installation
 
-GitHub Pages sert le dossier `docs/` de la branche `main` :
-prix, variation 24 h, badges de signal, historique 7 jours (sparklines) et solde du wallet.
+### Étape 1 — Bot Telegram
+1. Sur Telegram, cherche **@BotFather**, envoie `/newbot` et suis les instructions pour obtenir ton **token**.
+2. Écris un premier message à ton bot, puis ouvre `https://api.telegram.org/bot<TON_TOKEN>/getUpdates` dans un navigateur et note le `"chat":{"id": ...}` : c'est ton **chat_id**.
 
-## Lancer manuellement
+### Étape 2 — Dépôt GitHub
+Crée un dépôt (il doit être **public** pour que GitHub Pages soit gratuit) et téléverse tous les fichiers de ce dossier en conservant la structure, y compris `.github/workflows/` et `docs/`.
 
-```bash
-gh workflow run "Bot Crypto & Or"
-```
+### Étape 3 — Secrets
+Dans **Settings → Secrets and variables → Actions**, crée : `TELEGRAM_TOKEN`, `TELEGRAM_CHAT_ID`, et si tu veux suivre ton wallet dans le cockpit, `MY_WALLET` avec ton **adresse publique** (jamais ta clé privée ni ta seed phrase — le bot n'en a pas besoin et ne doit jamais les connaître).
 
-> ⚠️ Ceci n'est pas un conseil en investissement.
+### Étape 4 — Activer le cockpit
+Dans **Settings → Pages**, choisis Source : "Deploy from a branch", branche `main`, dossier `/docs`. Ton cockpit sera en ligne à l'adresse `https://ton-pseudo.github.io/nom-du-depot/` après une ou deux minutes.
+
+### Étape 5 — Tester
+Onglet **Actions** → "Bot Crypto & Or" → **Run workflow**. Ensuite tout tourne automatiquement toutes les heures : le bot analyse, alerte, et pousse les données fraîches vers le cockpit. Le fichier `docs/data.json` fourni contient des données de démonstration qui seront remplacées à la première exécution réelle.
+
+## À propos du wallet
+
+Ce projet ne crée volontairement pas de wallet : générer et transmettre une clé privée via Telegram ou un serveur serait dangereux. Crée ton wallet dans une application dédiée (Ledger, Trust Wallet, Rabby...) et donne uniquement ton adresse publique au bot pour le suivi en lecture seule.
+
+## Personnalisation
+
+Dans `copytrader.py` : `TOP_N` (nombre de traders suivis), `MIN_ACCOUNT_VALUE` (filtre de sérieux), `ALLOC_PCT` (part du capital virtuel par trade répliqué). Dans `bot.py` : la liste `ASSETS` (identifiants CoinGecko) et les seuils RSI/SMA.
+
+## Avertissement
+
+Portefeuille virtuel et indicateurs techniques à but informatif uniquement. Les performances passées des traders suivis ne garantissent rien, et rien ici ne constitue un conseil financier. Si un jour tu envisages le passage en trading réel, fais-le avec des montants que tu peux te permettre de perdre, et sache que cela exigerait de confier des clés API de trading à un script : un risque à ne prendre qu'en toute connaissance de cause.

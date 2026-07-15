@@ -1,177 +1,225 @@
-#!/usr/bin/env python3
-"""Bot Crypto & Or — surveille BTC, ETH et l'or (via PAXG), envoie des alertes
-Telegram quand un signal est actif et met à jour docs/data.json pour le cockpit
-GitHub Pages. Bibliothèque standard uniquement (aucune dépendance)."""
+"""
+Bot d'analyse Crypto + Or avec alertes Telegram
+------------------------------------------------
+- Récupère les prix horaires via l'API CoinGecko (gratuite, sans clé)
+- Actifs suivis : Bitcoin, Ethereum, Or (via PAXG, jeton adossé à 1 once d'or)
+- Indicateurs : RSI(14), croisement SMA 20/50, croisement MACD (12/26/9)
+- Envoie une alerte Telegram quand un signal d'ACHAT ou de VENTE apparaît
+- Conçu pour tourner via GitHub Actions (exécution toutes les heures)
+
+⚠️ Outil d'aide à la décision uniquement. Ce n'est pas un conseil financier.
+"""
 
 import json
 import os
 import sys
-import urllib.request
-import urllib.parse
-from datetime import datetime, timezone
+from pathlib import Path
 
-DATA_FILE = os.path.join(os.path.dirname(__file__), "docs", "data.json")
+import pandas as pd
+import requests
 
-# Seuils de variation sur 24 h (en %) qui déclenchent un signal
+# ------------------------- Configuration -------------------------
+
 ASSETS = {
-    "bitcoin":  {"name": "Bitcoin",  "symbol": "BTC",  "threshold": 5.0},
-    "ethereum": {"name": "Ethereum", "symbol": "ETH",  "threshold": 5.0},
-    "pax-gold": {"name": "Or (PAXG)", "symbol": "OR", "threshold": 1.5},
+    "bitcoin": "BTC",
+    "ethereum": "ETH",
+    "pax-gold": "OR (once, via PAXG)",
 }
 
-COINGECKO_URL = (
-    "https://api.coingecko.com/api/v3/simple/price"
-    "?ids=" + ",".join(ASSETS) + "&vs_currencies=usd&include_24hr_change=true"
-)
-ETH_RPC_URL = "https://cloudflare-eth.com"
-HISTORY_MAX = 168  # 7 jours en pas horaire
+RSI_PERIOD = 14
+RSI_OVERSOLD = 30      # en dessous -> signal d'achat potentiel
+RSI_OVERBOUGHT = 70    # au-dessus  -> signal de vente potentiel
+SMA_FAST = 20
+SMA_SLOW = 50
+
+TG_TOKEN = os.environ.get("TELEGRAM_TOKEN")
+TG_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
+
+STATE_FILE = Path("state.json")  # évite d'envoyer 2x la même alerte
+DATA_FILE = Path("docs/data.json")  # données publiées pour le cockpit
+
+# ------------------------- Données marché -------------------------
+
+def get_hourly_prices(coin_id: str) -> pd.DataFrame:
+    """Prix horaires des 14 derniers jours via CoinGecko."""
+    url = f"https://api.coingecko.com/api/v3/coins/{coin_id}/market_chart"
+    r = requests.get(
+        url,
+        params={"vs_currency": "usd", "days": 14},
+        timeout=30,
+        headers={"Accept": "application/json"},
+    )
+    r.raise_for_status()
+    df = pd.DataFrame(r.json()["prices"], columns=["ts", "price"])
+    df["ts"] = pd.to_datetime(df["ts"], unit="ms")
+    return df
+
+# ------------------------- Indicateurs -------------------------
+
+def rsi(prices: pd.Series, period: int = 14) -> pd.Series:
+    delta = prices.diff()
+    gain = delta.clip(lower=0).ewm(alpha=1 / period, adjust=False).mean()
+    loss = (-delta.clip(upper=0)).ewm(alpha=1 / period, adjust=False).mean()
+    rs = gain / loss.replace(0, 1e-10)
+    return 100 - (100 / (1 + rs))
 
 
-def http_json(url, payload=None, headers=None):
-    data = None
-    req_headers = {"User-Agent": "crypto-gold-bot/1.0", "Accept": "application/json"}
-    if headers:
-        req_headers.update(headers)
-    if payload is not None:
-        data = json.dumps(payload).encode()
-        req_headers["Content-Type"] = "application/json"
-    req = urllib.request.Request(url, data=data, headers=req_headers)
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        return json.loads(resp.read().decode())
+def macd(prices: pd.Series):
+    ema12 = prices.ewm(span=12, adjust=False).mean()
+    ema26 = prices.ewm(span=26, adjust=False).mean()
+    macd_line = ema12 - ema26
+    signal_line = macd_line.ewm(span=9, adjust=False).mean()
+    return macd_line, signal_line
 
 
-def fetch_prices():
-    raw = http_json(COINGECKO_URL)
-    prices = {}
-    for coin_id, meta in ASSETS.items():
-        entry = raw.get(coin_id)
-        if not entry or "usd" not in entry:
-            raise RuntimeError(f"Réponse CoinGecko incomplète pour {coin_id}: {raw}")
-        prices[coin_id] = {
-            "name": meta["name"],
-            "symbol": meta["symbol"],
-            "price_usd": round(float(entry["usd"]), 2),
-            "change_24h": round(float(entry.get("usd_24h_change") or 0.0), 2),
-            "threshold": meta["threshold"],
-        }
-    return prices
+def analyse(df: pd.DataFrame) -> dict:
+    """Calcule les indicateurs et détecte les signaux frais (dernière bougie)."""
+    p = df["price"]
+    df = df.copy()
+    df["rsi"] = rsi(p, RSI_PERIOD)
+    df["sma_fast"] = p.rolling(SMA_FAST).mean()
+    df["sma_slow"] = p.rolling(SMA_SLOW).mean()
+    df["macd"], df["macd_sig"] = macd(p)
 
+    last, prev = df.iloc[-1], df.iloc[-2]
+    buy, sell = [], []
 
-def compute_signal(asset):
-    if asset["change_24h"] >= asset["threshold"]:
-        return "hausse"
-    if asset["change_24h"] <= -asset["threshold"]:
-        return "baisse"
-    return None
+    # RSI : franchissement des seuils
+    if prev["rsi"] >= RSI_OVERSOLD > last["rsi"]:
+        buy.append(f"RSI passé en zone de survente ({last['rsi']:.1f})")
+    if prev["rsi"] <= RSI_OVERBOUGHT < last["rsi"]:
+        sell.append(f"RSI passé en zone de surachat ({last['rsi']:.1f})")
 
+    # Croisement de moyennes mobiles
+    if prev["sma_fast"] <= prev["sma_slow"] and last["sma_fast"] > last["sma_slow"]:
+        buy.append(f"Croisement haussier SMA{SMA_FAST}/SMA{SMA_SLOW} (golden cross)")
+    if prev["sma_fast"] >= prev["sma_slow"] and last["sma_fast"] < last["sma_slow"]:
+        sell.append(f"Croisement baissier SMA{SMA_FAST}/SMA{SMA_SLOW} (death cross)")
 
-def fetch_wallet(address):
-    """Solde ETH d'une adresse publique via un RPC public. Optionnel et tolérant aux pannes."""
-    try:
-        result = http_json(ETH_RPC_URL, payload={
-            "jsonrpc": "2.0", "method": "eth_getBalance",
-            "params": [address, "latest"], "id": 1,
-        })
-        wei = int(result["result"], 16)
-        return {"address": address, "eth_balance": round(wei / 1e18, 6)}
-    except Exception as exc:  # le solde du wallet ne doit jamais faire échouer le run
-        print(f"::warning::Lecture du wallet impossible : {exc}")
-        return {"address": address, "eth_balance": None}
+    # Croisement MACD
+    if prev["macd"] <= prev["macd_sig"] and last["macd"] > last["macd_sig"]:
+        buy.append("Croisement haussier du MACD")
+    if prev["macd"] >= prev["macd_sig"] and last["macd"] < last["macd_sig"]:
+        sell.append("Croisement baissier du MACD")
 
-
-def send_telegram(token, chat_id, text):
-    url = f"https://api.telegram.org/bot{token}/sendMessage"
-    resp = http_json(url, payload={
-        "chat_id": chat_id, "text": text,
-        "parse_mode": "HTML", "disable_web_page_preview": True,
-    })
-    if not resp.get("ok"):
-        raise RuntimeError(f"Échec de l'envoi Telegram : {resp}")
-
-
-def fmt_price(value):
-    return f"{value:,.2f}".replace(",", " ") + " $"
-
-
-def main():
-    token = os.environ.get("TELEGRAM_TOKEN", "").strip()
-    chat_id = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
-    wallet_addr = os.environ.get("MY_WALLET", "").strip()
-    is_manual = os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
-
-    if not token or not chat_id:
-        print("::error::TELEGRAM_TOKEN ou TELEGRAM_CHAT_ID manquant (secrets du dépôt).")
-        sys.exit(1)
-
-    try:
-        with open(DATA_FILE, encoding="utf-8") as fh:
-            previous = json.load(fh)
-    except (FileNotFoundError, json.JSONDecodeError):
-        previous = {}
-
-    prices = fetch_prices()
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-    previous_signals = {
-        coin_id: (previous.get("assets", {}).get(coin_id) or {}).get("signal")
-        for coin_id in ASSETS
+    return {
+        "price": last["price"],
+        "rsi": last["rsi"],
+        "buy": buy,
+        "sell": sell,
     }
 
+# ------------------------- Telegram -------------------------
+
+def send_telegram(text: str) -> None:
+    url = f"https://api.telegram.org/bot{TG_TOKEN}/sendMessage"
+    r = requests.post(
+        url,
+        json={"chat_id": TG_CHAT_ID, "text": text, "parse_mode": "HTML"},
+        timeout=30,
+    )
+    r.raise_for_status()
+
+# ------------------------- État (anti-doublons) -------------------------
+
+def load_state() -> dict:
+    if STATE_FILE.exists():
+        try:
+            return json.loads(STATE_FILE.read_text())
+        except json.JSONDecodeError:
+            return {}
+    return {}
+
+
+def save_state(state: dict) -> None:
+    STATE_FILE.write_text(json.dumps(state, indent=2))
+
+# ------------------------- Programme principal -------------------------
+
+def load_data() -> dict:
+    if DATA_FILE.exists():
+        try:
+            return json.loads(DATA_FILE.read_text())
+        except json.JSONDecodeError:
+            return {}
+    return {}
+
+
+def main() -> int:
+    if not TG_TOKEN or not TG_CHAT_ID:
+        print("ERREUR : définis TELEGRAM_TOKEN et TELEGRAM_CHAT_ID.")
+        return 1
+
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    state = load_state()
+    data = load_data()
+    data.setdefault("market", {})
+    data.setdefault("signals", [])
     alerts = []
-    for coin_id, asset in prices.items():
-        signal = compute_signal(asset)
-        asset["signal"] = signal
-        # Anti-spam : on n'alerte que lorsque le signal change
-        if signal and signal != previous_signals.get(coin_id):
-            arrow = "📈" if signal == "hausse" else "📉"
-            alerts.append(
-                f"{arrow} <b>{asset['name']}</b> : {asset['change_24h']:+.2f}% sur 24 h "
-                f"(seuil ±{asset['threshold']}%) — {fmt_price(asset['price_usd'])}"
-            )
 
-    wallet = fetch_wallet(wallet_addr) if wallet_addr else None
+    for coin_id, label in ASSETS.items():
+        try:
+            df = get_hourly_prices(coin_id)
+            res = analyse(df)
+        except Exception as e:
+            print(f"[{label}] erreur : {e}")
+            continue
 
-    history = previous.get("history", [])
-    history.append({
-        "t": now,
-        "btc": prices["bitcoin"]["price_usd"],
-        "eth": prices["ethereum"]["price_usd"],
-        "gold": prices["pax-gold"]["price_usd"],
-    })
-    history = history[-HISTORY_MAX:]
+        # Publication pour le cockpit
+        sparkline = [round(v, 2) for v in df["price"].iloc[::14].tail(48).tolist()]
+        data["market"][coin_id] = {
+            "label": label,
+            "price": round(res["price"], 2),
+            "rsi": round(res["rsi"], 1),
+            "sparkline": sparkline,
+        }
+        for s in res["buy"]:
+            data["signals"].insert(0, {"time": now, "asset": label, "type": "achat", "reason": s})
+        for s in res["sell"]:
+            data["signals"].insert(0, {"time": now, "asset": label, "type": "vente", "reason": s})
 
-    data = {
-        "updated_at": now,
-        "assets": prices,
-        "wallet": wallet,
-        "alerts_sent": len(alerts),
-        "history": history,
-    }
-    os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
-    with open(DATA_FILE, "w", encoding="utf-8") as fh:
-        json.dump(data, fh, ensure_ascii=False, indent=2)
-    print(f"docs/data.json mis à jour ({now}) — {len(alerts)} alerte(s).")
+        signature = "|".join(res["buy"] + res["sell"])
+        already_sent = state.get(coin_id) == signature and signature != ""
+
+        if (res["buy"] or res["sell"]) and not already_sent:
+            lines = [f"<b>{label}</b> — {res['price']:,.2f} $ | RSI {res['rsi']:.1f}"]
+            for s in res["buy"]:
+                lines.append(f"🟢 <b>ACHAT</b> : {s}")
+            for s in res["sell"]:
+                lines.append(f"🔴 <b>VENTE</b> : {s}")
+            alerts.append("\n".join(lines))
+
+        state[coin_id] = signature
+        print(f"[{label}] prix={res['price']:,.2f}$ rsi={res['rsi']:.1f} "
+              f"achat={res['buy']} vente={res['sell']}")
 
     if alerts:
-        send_telegram(token, chat_id, "🚨 <b>Bot Crypto &amp; Or</b>\n\n" + "\n".join(alerts))
-        print("Alerte(s) envoyée(s) sur Telegram.")
-    elif is_manual:
-        # Lancement manuel : message de confirmation pour vérifier la chaîne Telegram
+        msg = "🚨 <b>Signaux de marché</b>\n\n" + "\n\n".join(alerts)
+        msg += "\n\n<i>Indicateurs techniques — pas un conseil financier.</i>"
+        send_telegram(msg)
+        print("Alerte Telegram envoyée.")
+    elif os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch":
+        # Lancement manuel : confirmation que la chaîne Telegram fonctionne
         lines = [
-            f"• {a['name']} : {fmt_price(a['price_usd'])} ({a['change_24h']:+.2f}%/24 h)"
-            for a in prices.values()
+            f"• {m['label']} : {m['price']:,.2f} $ | RSI {m['rsi']}"
+            for m in data["market"].values()
         ]
-        if wallet and wallet["eth_balance"] is not None:
-            lines.append(f"• Wallet : {wallet['eth_balance']} ETH")
         send_telegram(
-            token, chat_id,
             "✅ <b>Bot Crypto &amp; Or opérationnel</b>\n"
-            "Aucun signal actif pour le moment.\n\n" + "\n".join(lines),
+            "Aucun nouveau signal pour le moment.\n\n" + "\n".join(lines)
         )
         print("Message de confirmation envoyé sur Telegram (lancement manuel).")
     else:
-        print("Aucun signal actif : pas de message Telegram (exécution planifiée).")
+        print("Aucun nouveau signal.")
+
+    save_state(state)
+    data["signals"] = data["signals"][:50]
+    data["market_updated"] = now
+    DATA_FILE.parent.mkdir(exist_ok=True)
+    DATA_FILE.write_text(json.dumps(data, indent=1))
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
