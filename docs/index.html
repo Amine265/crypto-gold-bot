@@ -245,6 +245,7 @@ function rendre(data, live){
   const items=[];
   (data.signals||[]).forEach(s=>{const plan=s.plan?`<br><span class="mono" style="color:var(--muet);font-size:12px">🎯 entrée ${fmt$(s.plan.entry)} · SL ${fmt$(s.plan.sl)} (−${s.plan.risk_pct}%) · TP1 ${fmt$(s.plan.tp1)} · TP2 ${fmt$(s.plan.tp2)}</span>`:'';items.push({t:s.time,html:`<time class="mono">${fmtH(s.time)}</time><span class="tag ${s.type}">${s.type}</span><span><b>${s.asset}</b> — ${s.reason}${plan}</span>`})});
   Object.values(profils||{}).forEach(p=>(p.history||[]).forEach(h=>items.push({t:h.time,html:`<time class="mono">${fmtH(h.time)}</time><span class="tag copie">${h.profil||'copie'}</span><span>${h.note} <span style="color:var(--muet)">· suit ${h.trader}</span></span>`})));
+  (data.signaux_resultats||[]).forEach(r=>{const e=r.resultat==='TP2'?'🎯':r.resultat==='SL'?'🛑':'⏳';items.push({t:r.time,html:`<time class="mono">${fmtH(r.time)}</time><span class="tag copie">suivi</span><span>${e} ${r.resultat} franchi — signal ${r.type} <b>${r.asset}</b> (entrée ${fmt$(r.entry)})${r.tp1_franchi&&r.resultat==='SL'?' après TP1':''}</span>`})});
   items.sort((a,b)=>b.t.localeCompare(a.t));
   if(items.length) document.getElementById('journal').innerHTML=items.slice(0,40).map(i=>`<div class="ligne">${i.html}</div>`).join('');
 

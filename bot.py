@@ -169,6 +169,60 @@ def load_data() -> dict:
     return {}
 
 
+def suivre_plans(data: dict, now: str) -> list[str]:
+    """Suit les plans des signaux passés : détecte les franchissements de SL/TP1/TP2.
+
+    Contrôle horaire sur le dernier prix connu — annonce un *niveau de prix
+    franchi*, pas l'exécution d'un ordre réel. Les plans expirent après 7 jours.
+    """
+    from datetime import datetime, timedelta
+    alerts, restants = [], []
+    for pl in data.get("plans_actifs", []):
+        m = data.get("market", {}).get(pl["coin"])
+        if not m:
+            restants.append(pl)
+            continue
+        price = m["price"]
+        d = 1 if pl["type"] == "achat" else -1
+        resultat = None
+        if d * (price - pl["sl"]) <= 0:
+            resultat = "SL"
+        elif d * (price - pl["tp2"]) >= 0:
+            resultat = "TP2"
+        elif not pl.get("tp1_franchi") and d * (price - pl["tp1"]) >= 0:
+            pl["tp1_franchi"] = True
+            alerts.append(
+                f"🎯 <b>TP1 franchi</b> — signal {pl['type'].upper()} {pl['asset']} "
+                f"(entrée {pl['entry']:,.2f} $, prix {price:,.2f} $)\n"
+                f"Si tu es en position : pense à remonter le SL de la 2e moitié à l'entrée. "
+                f"Vérifie ton ordre sur Kraken.")
+        age = datetime.fromisoformat(now) - datetime.fromisoformat(pl["time"])
+        if resultat:
+            pnl = d * (price - pl["entry"]) / pl["entry"] * 100
+            emoji = "🛑" if resultat == "SL" else "🎯"
+            alerts.append(
+                f"{emoji} <b>{resultat} franchi</b> — signal {pl['type'].upper()} {pl['asset']} "
+                f"(entrée {pl['entry']:,.2f} $ → {price:,.2f} $, {pnl:+.2f}%)\n"
+                f"<i>Niveau de prix franchi (contrôle horaire) — l'état réel de ton ordre "
+                f"est sur Kraken.</i>")
+            data.setdefault("signaux_resultats", []).insert(0, {
+                "time": now, "signal_time": pl["time"], "asset": pl["asset"],
+                "type": pl["type"], "resultat": resultat,
+                "tp1_franchi": bool(pl.get("tp1_franchi")) or resultat == "TP2",
+                "entry": pl["entry"], "sortie": price})
+        elif age > timedelta(days=7):
+            data.setdefault("signaux_resultats", []).insert(0, {
+                "time": now, "signal_time": pl["time"], "asset": pl["asset"],
+                "type": pl["type"], "resultat": "expiré",
+                "tp1_franchi": bool(pl.get("tp1_franchi")), "entry": pl["entry"],
+                "sortie": price})
+        else:
+            restants.append(pl)
+    data["plans_actifs"] = restants[-20:]
+    data["signaux_resultats"] = data.get("signaux_resultats", [])[:50]
+    return alerts
+
+
 def main() -> int:
     if not TG_TOKEN or not TG_CHAT_ID:
         print("ERREUR : définis TELEGRAM_TOKEN et TELEGRAM_CHAT_ID.")
@@ -218,6 +272,9 @@ def main() -> int:
             plan = build_plan(res["price"], res["atr"], side)
             lines.append(plan_text(plan, res["support"], res["resistance"]))
             alerts.append("\n".join(lines))
+            data.setdefault("plans_actifs", []).append(
+                {"time": now, "asset": label, "coin": coin_id, "type": side,
+                 **plan, "tp1_franchi": False})
 
         state[coin_id] = signature
         print(f"[{label}] prix={res['price']:,.2f}$ rsi={res['rsi']:.1f} "
@@ -241,6 +298,12 @@ def main() -> int:
         print("Message de confirmation envoyé sur Telegram (lancement manuel).")
     else:
         print("Aucun nouveau signal.")
+
+    # Suivi des plans des signaux précédents (SL/TP franchis, pris ou non)
+    suivis = suivre_plans(data, now)
+    if suivis:
+        send_telegram("📡 <b>Suivi des signaux</b>\n\n" + "\n\n".join(suivis))
+        print(f"{len(suivis)} franchissement(s) de niveau annoncé(s).")
 
     save_state(state)
     data["signals"] = data["signals"][:50]

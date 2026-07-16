@@ -76,7 +76,7 @@ function buildReply(cmd, data) {
           "/prix — BTC, ETH, Or + RSI\n" +
           "/portefeuille — les 3 profils simulés\n" +
           "/traders — top traders suivis\n" +
-          "/signaux — derniers signaux\n/spot — signaux d'achat dimensionnés pour mon enveloppe\n" +
+          "/signaux — derniers signaux\n/spot — signaux d'achat dimensionnés pour mon enveloppe\n/bilan — historique et taux de réussite des signaux\n" +
           "/aide — rappel des commandes\n\n" +
           "<i>Outil informatif — pas un conseil financier.</i>",
         keyboard: kbCockpit,
@@ -198,11 +198,44 @@ function buildReply(cmd, data) {
       };
     }
 
+    case "/bilan": {
+      const res = data.signaux_resultats || [];
+      if (!res.length)
+        return {
+          text:
+            "📒 <b>Bilan des signaux</b> — aucun signal résolu pour l'instant.\n" +
+            "Chaque signal est suivi jusqu'à son SL, son TP2 ou 7 jours ; " +
+            "les issues s'accumuleront ici, que tu aies pris le trade ou non.",
+          keyboard: kbCockpit,
+        };
+      const n = res.length;
+      const tp2 = res.filter((r) => r.resultat === "TP2").length;
+      const sl = res.filter((r) => r.resultat === "SL").length;
+      const exp = res.filter((r) => r.resultat === "expiré").length;
+      const tp1 = res.filter((r) => r.tp1_franchi).length;
+      const lignes = res.slice(0, 6).map((r) => {
+        const e = r.resultat === "TP2" ? "🎯" : r.resultat === "SL" ? "🛑" : "⏳";
+        return `${e} ${r.type} <b>${r.asset}</b> → ${r.resultat}${r.tp1_franchi && r.resultat === "SL" ? " (après TP1)" : ""} · <i>${heure(r.signal_time)}</i>`;
+      });
+      return {
+        text:
+          `📒 <b>Bilan des signaux</b> (${n} résolus)\n\n` +
+          `🎯 TP2 atteint : <b>${tp2}</b> (${((tp2 / n) * 100).toFixed(0)}%)\n` +
+          `🛑 SL touché : <b>${sl}</b> (${((sl / n) * 100).toFixed(0)}%)\n` +
+          `⏳ Expirés (7j) : <b>${exp}</b>\n` +
+          `TP1 franchi au moins : <b>${tp1}</b> (${((tp1 / n) * 100).toFixed(0)}%)\n\n` +
+          lignes.join("\n") +
+          "\n\n<i>Niveaux de prix contrôlés toutes les heures — indicatif, " +
+          "pris ou non par toi.</i>",
+        keyboard: kbCockpit,
+      };
+    }
+
     case "/aide":
       return {
         text:
           "📌 /prix — marchés + RSI\n/portefeuille — profils simulés\n" +
-          "/traders — top traders\n/signaux — derniers signaux\n/spot — plan spot (enveloppe 100 $)",
+          "/traders — top traders\n/signaux — derniers signaux\n/spot — plan spot\n/bilan — historique des signaux",
         keyboard: kbCockpit,
       };
 
