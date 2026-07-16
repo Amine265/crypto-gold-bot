@@ -18,6 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # checkout fige le commit du déclenchement ; un run mis en file par la
+      # concurrence doit d'abord récupérer ce que le run précédent a poussé
+      - name: Se placer sur la pointe de main
+        run: git pull --rebase origin main
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
