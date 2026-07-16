@@ -16,6 +16,11 @@
 const DATA_URL = "https://amine265.github.io/crypto-gold-bot/data.json";
 const COCKPIT_URL = "https://amine265.github.io/crypto-gold-bot/";
 
+// --- Trading spot manuel (commande /spot) ---
+const ENVELOPPE = 50;      // $ — capital total dédié au spot
+const RISQUE_MAX = 0.02;   // 2% de l'enveloppe risqués par trade au maximum
+const FRAIS = 0.0025;      // taux de frais par ordre (0,25% ≈ Kraken palier 1)
+
 export default {
   async fetch(request, env) {
     if (request.method !== "POST") return new Response("Bot en ligne ✅");
@@ -71,7 +76,7 @@ function buildReply(cmd, data) {
           "/prix — BTC, ETH, Or + RSI\n" +
           "/portefeuille — les 3 profils simulés\n" +
           "/traders — top traders suivis\n" +
-          "/signaux — derniers signaux\n" +
+          "/signaux — derniers signaux\n/spot — signaux d'achat dimensionnés pour mon enveloppe\n" +
           "/aide — rappel des commandes\n\n" +
           "<i>Outil informatif — pas un conseil financier.</i>",
         keyboard: kbCockpit,
@@ -146,11 +151,58 @@ function buildReply(cmd, data) {
       };
     }
 
+    case "/spot": {
+      // Signaux d'ACHAT uniquement (jouables en spot sans levier), avec plan
+      const achats = (data.signals || [])
+        .filter((s) => s.type === "achat" && s.plan)
+        .slice(0, 5);
+      if (!achats.length)
+        return {
+          text:
+            "🛒 <b>Spot</b> — aucun signal d'achat récent avec plan.\n" +
+            "Les signaux de vente/short ne sont pas jouables en spot : patience, " +
+            "le prochain 🟢 apparaîtra ici.",
+          keyboard: kbCockpit,
+        };
+      const blocs = achats.map((s) => {
+        const p = s.plan;
+        // Taille : risque max 2% de l'enveloppe, plafonnée à l'enveloppe (pas de levier)
+        const tailleIdeale = (ENVELOPPE * RISQUE_MAX) / (p.risk_pct / 100);
+        const taille = Math.min(ENVELOPPE, tailleIdeale);
+        const perteSL = (taille * p.risk_pct) / 100;
+        const gainTP1 = taille * Math.abs(p.tp1 - p.entry) / p.entry;
+        const gainTP2 = taille * Math.abs(p.tp2 - p.entry) / p.entry;
+        const fraisAR = taille * FRAIS * 2;
+        const netTP2 = gainTP2 - fraisAR;
+        const verdict =
+          netTP2 <= 0
+            ? "⛔ frais ≥ gain : à laisser passer"
+            : gainTP1 - fraisAR <= 0
+              ? "⚠️ rentable seulement si TP2 atteint"
+              : "✅ exploitable";
+        return (
+          `🟢 <b>${s.asset}</b> — ${s.reason}\n<i>${heure(s.time)}</i>\n` +
+          `Position : <b>${taille.toFixed(0)} $</b> (sans levier)\n` +
+          `Entrée ${fmt(p.entry, 2)} $ · SL ${fmt(p.sl, 2)} $ · TP1 ${fmt(p.tp1, 2)} $ · TP2 ${fmt(p.tp2, 2)} $\n` +
+          `Perte au SL ≈ ${perteSL.toFixed(2)} $ · Gain TP1 ≈ +${gainTP1.toFixed(2)} $ · TP2 ≈ +${gainTP2.toFixed(2)} $\n` +
+          `Frais A/R ≈ ${fraisAR.toFixed(2)} $ → net TP2 ≈ ${netTP2 >= 0 ? "+" : ""}${netTP2.toFixed(2)} $\n${verdict}`
+        );
+      });
+      return {
+        text:
+          `🛒 <b>Plan spot</b> — enveloppe ${ENVELOPPE} $ · risque max ${RISQUE_MAX * 100}%/trade\n\n` +
+          blocs.join("\n\n") +
+          "\n\n<i>Niveaux indicatifs (frais estimés à 0,25%/ordre) — pas un conseil financier. " +
+          "Vérifie le prix actuel avant d'entrer : un signal ancien peut être périmé.</i>",
+        keyboard: kbCockpit,
+      };
+    }
+
     case "/aide":
       return {
         text:
           "📌 /prix — marchés + RSI\n/portefeuille — profils simulés\n" +
-          "/traders — top traders\n/signaux — derniers signaux",
+          "/traders — top traders\n/signaux — derniers signaux\n/spot — plan spot (enveloppe 50 $)",
         keyboard: kbCockpit,
       };
 
