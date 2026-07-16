@@ -1,19 +1,19 @@
-name: Bot Crypto & Or
+name: Copytrading paper
 
 on:
   schedule:
-    - cron: "5 * * * *"   # toutes les heures, à H:05
+    - cron: "5 * * * *"     # toutes les heures, à H:05
   workflow_dispatch:        # lancement manuel pour tester
 
 permissions:
   contents: write           # nécessaire pour publier data.json vers le cockpit
 
 concurrency:
-  group: bot-crypto-or      # jamais deux runs en même temps (protège le push)
+  group: bot-crypto-or      # partagé avec les signaux : jamais deux runs en même temps
   cancel-in-progress: false
 
 jobs:
-  analyse:
+  copytrading:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,12 +24,6 @@ jobs:
 
       - name: Installer les dépendances
         run: pip install -r requirements.txt
-
-      - name: Signaux de marché (crypto + or)
-        env:
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python bot.py
 
       - name: Copytrading paper (top traders Hyperliquid)
         env:
@@ -42,7 +36,7 @@ jobs:
         run: |
           git config user.name "bot"
           git config user.email "bot@users.noreply.github.com"
-          git add -A state.json state_copy.json docs/data.json || true
-          git diff --cached --quiet || git commit -m "maj données cockpit"
+          git add -A state_copy.json docs/data.json || true
+          git diff --cached --quiet || git commit -m "maj données cockpit (copytrading)"
           git pull --rebase origin main
           git push
