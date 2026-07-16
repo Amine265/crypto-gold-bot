@@ -17,7 +17,7 @@ const DATA_URL = "https://amine265.github.io/crypto-gold-bot/data.json";
 const COCKPIT_URL = "https://amine265.github.io/crypto-gold-bot/";
 
 // --- Trading spot manuel (commande /spot) ---
-const ENVELOPPE = 50;      // $ — capital total dédié au spot
+const ENVELOPPE = 100;     // $ — capital total dédié au spot
 const RISQUE_MAX = 0.02;   // 2% de l'enveloppe risqués par trade au maximum
 const FRAIS = 0.0025;      // taux de frais par ordre (0,25% ≈ Kraken palier 1)
 
@@ -202,7 +202,7 @@ function buildReply(cmd, data) {
       return {
         text:
           "📌 /prix — marchés + RSI\n/portefeuille — profils simulés\n" +
-          "/traders — top traders\n/signaux — derniers signaux\n/spot — plan spot (enveloppe 50 $)",
+          "/traders — top traders\n/signaux — derniers signaux\n/spot — plan spot (enveloppe 100 $)",
         keyboard: kbCockpit,
       };
 
