@@ -132,10 +132,12 @@ function buildReply(cmd, data) {
     }
 
     case "/signaux": {
-      const lignes = (data.signals || []).slice(0, 6).map(
-        (s) =>
-          `${s.type === "achat" ? "🟢" : "🔴"} <b>${s.asset}</b> — ${s.reason}\n<i>${heure(s.time)}</i>`,
-      );
+      const lignes = (data.signals || []).slice(0, 6).map((s) => {
+        const plan = s.plan
+          ? `\n🎯 Entrée ${fmt(s.plan.entry, 2)} $ · SL ${fmt(s.plan.sl, 2)} $ (−${s.plan.risk_pct}%) · TP1 ${fmt(s.plan.tp1, 2)} $ · TP2 ${fmt(s.plan.tp2, 2)} $`
+          : "";
+        return `${s.type === "achat" ? "🟢" : "🔴"} <b>${s.asset}</b> — ${s.reason}${plan}\n<i>${heure(s.time)}</i>`;
+      });
       return {
         text: lignes.length
           ? "🚨 <b>Derniers signaux</b>\n\n" + lignes.join("\n\n")

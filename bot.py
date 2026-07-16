@@ -102,12 +102,36 @@ def analyse(df: pd.DataFrame) -> dict:
     if prev["macd"] >= prev["macd_sig"] and last["macd"] < last["macd_sig"]:
         sell.append("Croisement baissier du MACD")
 
+    # Volatilité et niveaux (pour le plan de trade indicatif)
+    atr = p.diff().abs().rolling(14).mean().iloc[-1]  # ATR approx. (clôtures horaires)
     return {
         "price": last["price"],
         "rsi": last["rsi"],
         "buy": buy,
         "sell": sell,
+        "atr": atr,
+        "support": p.tail(48).min(),      # plus bas 48h
+        "resistance": p.tail(48).max(),   # plus haut 48h
     }
+
+
+def build_plan(price: float, atr: float, side: str) -> dict:
+    """Plan indicatif basé sur la volatilité : SL à 1,5 ATR, TP1 1:1, TP2 1:2."""
+    d = 1 if side == "achat" else -1
+    sl = price - d * 1.5 * atr
+    return {
+        "entry": round(price, 2),
+        "sl": round(sl, 2),
+        "tp1": round(price + d * 1.5 * atr, 2),
+        "tp2": round(price + d * 3.0 * atr, 2),
+        "risk_pct": round(abs(price - sl) / price * 100, 2),
+    }
+
+
+def plan_text(plan: dict, support: float, resistance: float) -> str:
+    return (f"🎯 Entrée ~{plan['entry']:,.2f} $ | SL {plan['sl']:,.2f} $ "
+            f"(-{plan['risk_pct']}%) | TP1 {plan['tp1']:,.2f} $ | TP2 {plan['tp2']:,.2f} $\n"
+            f"Support 48h {support:,.2f} $ · Résistance {resistance:,.2f} $")
 
 # ------------------------- Telegram -------------------------
 
@@ -175,9 +199,11 @@ def main() -> int:
             "sparkline": sparkline,
         }
         for s in res["buy"]:
-            data["signals"].insert(0, {"time": now, "asset": label, "type": "achat", "reason": s})
+            data["signals"].insert(0, {"time": now, "asset": label, "type": "achat", "reason": s,
+                                       "plan": build_plan(res["price"], res["atr"], "achat")})
         for s in res["sell"]:
-            data["signals"].insert(0, {"time": now, "asset": label, "type": "vente", "reason": s})
+            data["signals"].insert(0, {"time": now, "asset": label, "type": "vente", "reason": s,
+                                       "plan": build_plan(res["price"], res["atr"], "vente")})
 
         signature = "|".join(res["buy"] + res["sell"])
         already_sent = state.get(coin_id) == signature and signature != ""
@@ -188,6 +214,9 @@ def main() -> int:
                 lines.append(f"🟢 <b>ACHAT</b> : {s}")
             for s in res["sell"]:
                 lines.append(f"🔴 <b>VENTE</b> : {s}")
+            side = "achat" if res["buy"] else "vente"
+            plan = build_plan(res["price"], res["atr"], side)
+            lines.append(plan_text(plan, res["support"], res["resistance"]))
             alerts.append("\n".join(lines))
 
         state[coin_id] = signature

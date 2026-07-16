@@ -57,3 +57,7 @@ Déploiement en 4 étapes :
 4. Bouton menu cockpit : @BotFather → `/mybots` → ton bot → Bot Settings → Menu Button → colle l'URL du cockpit.
 
 Si tu changes de dépôt ou de compte GitHub, mets à jour `DATA_URL` et `COCKPIT_URL` en haut de `worker.js`.
+
+# Nouveautés v4 — Plans de trade SL/TP
+
+Chaque alerte inclut désormais un plan indicatif calibré sur la volatilité réelle de l'actif (ATR 14 périodes) : prix d'entrée, stop-loss à 1,5 ATR, take-profit à ratio risque/gain 1:2 (plus TP1/TP2 et support/résistance 48h pour les signaux de marché). Les portefeuilles paper appliquent ces niveaux : une position répliquée se clôture automatiquement quand son SL (🛑) ou son TP (🎯) est touché, ce qui rend la simulation plus proche d'une gestion réelle. Limite à connaître : le contrôle est horaire, donc une mèche intra-horaire qui toucherait un niveau entre deux passages n'est pas vue — en trading réel, SL et TP seraient des ordres placés sur l'exchange, exécutés instantanément.

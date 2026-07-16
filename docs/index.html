@@ -197,7 +197,7 @@ function rendre(data, live){
     document.getElementById('paper').innerHTML=Object.entries(profils).map(([k,p])=>{
       const perf=(p.equity/p.start-1)*100, cls=perf>=0?'up':'down';
       const posHtml=(p.positions||[]).map(x=>`
-        <div class="pos"><span><span class="cote ${x.side}">${x.side}</span> ${x.coin} <span class="mono" style="color:var(--muet)">@ ${fmt$(x.entry)}</span></span>
+        <div class="pos"><span><span class="cote ${x.side}">${x.side}</span> ${x.coin} <span class="mono" style="color:var(--muet)">@ ${fmt$(x.entry)}${x.sl?` · SL ${fmt$(x.sl)} · TP ${fmt$(x.tp)}`:''}</span></span>
         <span class="mono ${x.pnl>=0?'up':'down'}">${x.pnl>=0?'+':''}${fmt$(x.pnl||0)} $</span></div>`).join('');
       return `<div class="carte profil">
         <div class="nomp">${p.label}</div>
@@ -243,7 +243,7 @@ function rendre(data, live){
 
   /* Journal : signaux marché + trades paper mélangés, du plus récent au plus ancien */
   const items=[];
-  (data.signals||[]).forEach(s=>items.push({t:s.time,html:`<time class="mono">${fmtH(s.time)}</time><span class="tag ${s.type}">${s.type}</span><span><b>${s.asset}</b> — ${s.reason}</span>`}));
+  (data.signals||[]).forEach(s=>{const plan=s.plan?`<br><span class="mono" style="color:var(--muet);font-size:12px">🎯 entrée ${fmt$(s.plan.entry)} · SL ${fmt$(s.plan.sl)} (−${s.plan.risk_pct}%) · TP1 ${fmt$(s.plan.tp1)} · TP2 ${fmt$(s.plan.tp2)}</span>`:'';items.push({t:s.time,html:`<time class="mono">${fmtH(s.time)}</time><span class="tag ${s.type}">${s.type}</span><span><b>${s.asset}</b> — ${s.reason}${plan}</span>`})});
   Object.values(profils||{}).forEach(p=>(p.history||[]).forEach(h=>items.push({t:h.time,html:`<time class="mono">${fmtH(h.time)}</time><span class="tag copie">${h.profil||'copie'}</span><span>${h.note} <span style="color:var(--muet)">· suit ${h.trader}</span></span>`})));
   items.sort((a,b)=>b.t.localeCompare(a.t));
   if(items.length) document.getElementById('journal').innerHTML=items.slice(0,40).map(i=>`<div class="ligne">${i.html}</div>`).join('');

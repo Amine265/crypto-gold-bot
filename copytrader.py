@@ -119,6 +119,37 @@ def get_mids() -> dict[str, float]:
     data = post_info({"type": "allMids"})
     return {k: float(v) for k, v in data.items() if not k.startswith("@")}
 
+
+_ATR_CACHE: dict[str, float] = {}
+
+def atr_for(coin: str, price: float) -> float:
+    """ATR(14) horaire via les bougies Hyperliquid ; repli sur 2% du prix."""
+    if coin in _ATR_CACHE:
+        return _ATR_CACHE[coin]
+    try:
+        import time
+        end = int(time.time() * 1000)
+        candles = post_info({"type": "candleSnapshot", "req": {
+            "coin": coin, "interval": "1h",
+            "startTime": end - 3 * 24 * 3600 * 1000, "endTime": end}})
+        trs, prev_c = [], None
+        for c in candles:
+            h, l, cl = float(c["h"]), float(c["l"]), float(c["c"])
+            tr = h - l if prev_c is None else max(h - l, abs(h - prev_c), abs(l - prev_c))
+            trs.append(tr)
+            prev_c = cl
+        atr = sum(trs[-14:]) / min(len(trs), 14) if trs else price * 0.02
+    except Exception:
+        atr = price * 0.02
+    _ATR_CACHE[coin] = atr
+    return atr
+
+
+def levels(side: str, price: float, atr: float) -> tuple[float, float]:
+    """SL à 1,5 ATR, TP à 3 ATR (risque:gain 1:2)."""
+    d = 1 if side == "LONG" else -1
+    return round(price - d * 1.5 * atr, 4), round(price + d * 3.0 * atr, 4)
+
 # ------------------------- Paper trading -------------------------
 
 def new_paper() -> dict:
@@ -137,9 +168,30 @@ def paper_open(paper, cfg, coin, side, price, trader):
     if paper["cash"] < amount:
         return None
     paper["cash"] -= amount
+    sl, tp = levels(side, price, atr_for(coin, price))
     paper["positions"].append({"coin": coin, "side": side, "entry": price,
-                               "amount": amount, "trader": trader, "opened": now_iso()})
-    return f"ouverture {side} {coin} à {price:,.2f} $ ({amount:,.0f} $ virtuels)"
+                               "sl": sl, "tp": tp, "amount": amount,
+                               "trader": trader, "opened": now_iso()})
+    return (f"ouverture {side} {coin} à {price:,.2f} $ ({amount:,.0f} $ virtuels) — "
+            f"SL {sl:,.2f} $ · TP {tp:,.2f} $")
+
+
+def check_exits(paper: dict, mids: dict) -> list[str]:
+    """Clôture les positions dont le SL ou le TP a été touché (contrôle horaire)."""
+    notes = []
+    for p in list(paper["positions"]):
+        price = mids.get(p["coin"])
+        if not price or not p.get("sl"):
+            continue
+        d = 1 if p["side"] == "LONG" else -1
+        hit = ("SL" if d * (price - p["sl"]) <= 0
+               else "TP" if d * (price - p["tp"]) >= 0 else None)
+        if hit:
+            done = paper_close(paper, p["coin"], p["side"], price)
+            if done:
+                emoji = "🛑" if hit == "SL" else "🎯"
+                notes.append(f"{emoji} {hit} touché — {done}")
+    return notes
 
 
 def paper_close(paper, coin, side, price):
@@ -234,8 +286,10 @@ def main() -> int:
                     events.append((addr, t["name"], "close", coin, old[coin], price))
                 events.append((addr, t["name"], "open", coin, side, price))
                 emoji = "🟢" if side == "LONG" else "🔴"
+                sl, tp = levels(side, price, atr_for(coin, price))
                 alerts.append(f"{emoji} <b>{t['name']}</b> (ROI 30j {t['roi_30d']*100:+.0f}%)\n"
-                              f"Ouvre un <b>{side} {coin}</b> vers {price:,.2f} $")
+                              f"Ouvre un <b>{side} {coin}</b> vers {price:,.2f} $\n"
+                              f"🎯 Plan : entrée {price:,.2f} $ · SL {sl:,.2f} $ · TP {tp:,.2f} $ (1:2)")
         for coin, side in old.items():
             if coin not in new:
                 price = mids.get(coin, 0)
@@ -245,6 +299,7 @@ def main() -> int:
         state["tracked"][addr] = new
 
     # Application des événements à chaque profil selon ses règles
+    exit_alerts = []
     for key, cfg in PROFILES.items():
         paper = state["profiles"][key]
         addrs = {t["address"] for t in profile_traders[key]}
@@ -256,6 +311,11 @@ def main() -> int:
             if done:
                 paper["history"].append({"time": now_iso(), "note": done,
                                          "trader": name, "profil": cfg["label"]})
+        # Sorties automatiques SL/TP (contrôle horaire sur le prix courant)
+        for note in check_exits(paper, mids):
+            paper["history"].append({"time": now_iso(), "note": note,
+                                     "trader": "auto", "profil": cfg["label"]})
+            exit_alerts.append(f"{note}\n<i>profil {cfg['label']}</i>")
         mark_to_market(paper, mids)
 
     # Suivi lecture seule du wallet (optionnel)
@@ -286,15 +346,16 @@ def main() -> int:
     DATA_FILE.write_text(json.dumps(data, indent=1))
     STATE_FILE.write_text(json.dumps(state, indent=1))
 
-    if alerts:
+    all_alerts = alerts[:15] + exit_alerts[:10]
+    if all_alerts:
         recap = " · ".join(
             f"{PROFILES[k]['label']} {state['profiles'][k]['equity']:,.0f} $"
             f" ({(state['profiles'][k]['equity']/PAPER_START-1)*100:+.1f}%)"
             for k in PROFILES)
-        msg = ("👥 <b>Copytrading (paper)</b>\n\n" + "\n\n".join(alerts[:15])
+        msg = ("👥 <b>Copytrading (paper)</b>\n\n" + "\n\n".join(all_alerts)
                + f"\n\n💼 {recap}\n<i>Simulation — pas un conseil financier.</i>")
         send_telegram(msg)
-        print(f"{len(alerts)} alerte(s) copytrading envoyée(s).")
+        print(f"{len(all_alerts)} alerte(s) copytrading envoyée(s).")
     else:
         print("Copytrading : aucun mouvement chez les top traders.")
     return 0
