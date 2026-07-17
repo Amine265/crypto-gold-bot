@@ -1,12 +1,18 @@
 {
  "resultats_vus": [
-  "2026-07-17T03:33:30+00:00|OR (once, via PAXG)|achat"
+  "2026-07-17T03:33:30+00:00|OR (once, via PAXG)|achat",
+  "2026-07-17T13:54:39+00:00|ETH|achat"
  ],
  "stats_types": {
   "autre": {
    "n": 1,
    "tp2": 0,
    "sl": 1
+  },
+  "RSI": {
+   "n": 1,
+   "tp2": 1,
+   "sl": 0
   }
  },
  "types_suspendus": [],
