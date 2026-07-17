@@ -1,0 +1,9 @@
+name = "cockpit-bot"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+
+# Espace de stockage des drapeaux de l'agent (mode, pause, approbations)
+# L'ID est renseigné au déploiement : npx wrangler kv namespace create AGENT_KV
+[[kv_namespaces]]
+binding = "AGENT_KV"
+id = "f821e9b0e831496fb33de8888b210306"

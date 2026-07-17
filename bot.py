@@ -207,13 +207,13 @@ def suivre_plans(data: dict, now: str) -> list[str]:
                 f"est sur Kraken.</i>")
             data.setdefault("signaux_resultats", []).insert(0, {
                 "time": now, "signal_time": pl["time"], "asset": pl["asset"],
-                "type": pl["type"], "resultat": resultat,
+                "type": pl["type"], "resultat": resultat, "reason": pl.get("reason", ""),
                 "tp1_franchi": bool(pl.get("tp1_franchi")) or resultat == "TP2",
                 "entry": pl["entry"], "sortie": price})
         elif age > timedelta(days=7):
             data.setdefault("signaux_resultats", []).insert(0, {
                 "time": now, "signal_time": pl["time"], "asset": pl["asset"],
-                "type": pl["type"], "resultat": "expiré",
+                "type": pl["type"], "resultat": "expiré", "reason": pl.get("reason", ""),
                 "tp1_franchi": bool(pl.get("tp1_franchi")), "entry": pl["entry"],
                 "sortie": price})
         else:
@@ -274,6 +274,7 @@ def main() -> int:
             alerts.append("\n".join(lines))
             data.setdefault("plans_actifs", []).append(
                 {"time": now, "asset": label, "coin": coin_id, "type": side,
+                 "reason": (res["buy"] + res["sell"])[0],
                  **plan, "tp1_franchi": False})
 
         state[coin_id] = signature

@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "*/15 * * * *"  # toutes les 15 minutes
   workflow_dispatch:        # lancement manuel pour tester
+    inputs:
+      test_blanc:
+        description: "Test à blanc de l'agent Kraken (validation sans rien placer)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write           # nécessaire pour publier data.json vers le cockpit
@@ -36,11 +41,26 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python bot.py
 
+      - name: Agent Kraken
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          KRAKEN_KEY: ${{ secrets.KRAKEN_KEY }}
+          KRAKEN_SECRET: ${{ secrets.KRAKEN_SECRET }}
+          FLAGS_URL: ${{ secrets.FLAGS_URL }}
+          AGENT_SECRET: ${{ secrets.AGENT_SECRET }}
+        run: |
+          if [ "${{ inputs.test_blanc }}" = "true" ]; then
+            TEST_BLANC=1 python agent.py
+          else
+            python agent.py
+          fi
+
       - name: Publier les données du cockpit
         run: |
           git config user.name "bot"
           git config user.email "bot@users.noreply.github.com"
-          git add -A state.json docs/data.json || true
+          git add -A state.json agent_state.json docs/data.json || true
           git diff --cached --quiet || git commit -m "maj données cockpit (signaux)"
           git pull --rebase origin main
           git push

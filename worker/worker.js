@@ -17,32 +17,127 @@ const DATA_URL = "https://amine265.github.io/crypto-gold-bot/data.json";
 const COCKPIT_URL = "https://amine265.github.io/crypto-gold-bot/";
 
 // --- Trading spot manuel (commande /spot) ---
-const ENVELOPPE = 100;     // $ — capital total dédié au spot
+const ENVELOPPE = 50;      // $ — capital total dédié au spot
 const RISQUE_MAX = 0.02;   // 2% de l'enveloppe risqués par trade au maximum
 const FRAIS = 0.0025;      // taux de frais par ordre (0,25% ≈ Kraken palier 1)
 
 export default {
   async fetch(request, env) {
+    const url = new URL(request.url);
+
+    // --- Endpoints pour l'agent (GitHub Actions) ---
+    if (url.pathname === "/flags" && request.method === "GET") {
+      const flags = await lireFlags(env);
+      return new Response(JSON.stringify(flags), {
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+    if (url.pathname === "/consume" && request.method === "POST") {
+      if (request.headers.get("X-Agent-Secret") !== env.AGENT_SECRET)
+        return new Response("nope", { status: 403 });
+      const { ids = [] } = await request.json().catch(() => ({}));
+      const flags = await lireFlags(env);
+      flags.approvals = flags.approvals.filter((a) => !ids.includes(a));
+      await env.AGENT_KV.put("flags", JSON.stringify(flags));
+      return new Response("ok");
+    }
+
     if (request.method !== "POST") return new Response("Bot en ligne ✅");
 
     let update;
     try { update = await request.json(); } catch { return new Response("ok"); }
+
+    // --- Bouton ✅ d'approbation d'un trade proposé ---
+    if (update.callback_query) {
+      const cq = update.callback_query;
+      if ((cq.data || "").startsWith("ap:")) {
+        const id = cq.data.slice(3);
+        const flags = await lireFlags(env);
+        if (!flags.approvals.includes(id)) flags.approvals.push(id);
+        await env.AGENT_KV.put("flags", JSON.stringify(flags));
+        await tg(env, "answerCallbackQuery", {
+          callback_query_id: cq.id,
+          text: "Approuvé — exécution au prochain passage (≤ 15 min).",
+        });
+        await tg(env, "editMessageText", {
+          chat_id: cq.message.chat.id, message_id: cq.message.message_id,
+          text: cq.message.text + "\n\n✅ Approuvé — exécution ≤ 15 min.",
+        });
+      }
+      return new Response("ok");
+    }
+
     const msg = update.message;
     if (!msg || !msg.text) return new Response("ok");
 
     const chatId = msg.chat.id;
     const cmd = msg.text.trim().split(/[\s@]/)[0].toLowerCase();
 
+    // --- Commandes de pilotage de l'agent (écrivent dans KV) ---
+    const pilotage = {
+      "/pause": { pause: true, texte: "⏸️ Agent en pause. Les positions ouvertes restent gérées ; aucune nouvelle entrée." },
+      "/reprise": { pause: false, texte: "▶️ Agent réarmé." },
+      "/mode_blanc": { mode: "blanc", texte: "🧪 Mode À BLANC : validation Kraken sans exécution." },
+      "/mode_bouton": { mode: "bouton", texte: "🔘 Mode BOUTON : chaque trade attend ton ✅." },
+      "/mode_auto": { mode: "auto", texte: "🤖 Mode AUTO : exécution directe des signaux ✅. Garde-fous actifs." },
+    };
+    if (pilotage[cmd]) {
+      const flags = await lireFlags(env);
+      if ("pause" in pilotage[cmd]) flags.pause = pilotage[cmd].pause;
+      if (pilotage[cmd].mode) flags.mode = pilotage[cmd].mode;
+      if (cmd === "/reprise") flags.pause = false;
+      await env.AGENT_KV.put("flags", JSON.stringify(flags));
+      await sendMessage(env.TELEGRAM_TOKEN, chatId, pilotage[cmd].texte);
+      return new Response("ok");
+    }
+
     let data = null;
     try {
       data = await (await fetch(DATA_URL + "?t=" + Date.now(), { cf: { cacheTtl: 0 } })).json();
     } catch {}
+
+    if (cmd === "/agent") {
+      const flags = await lireFlags(env);
+      const a = (data && data.agent) || {};
+      const pos = (a.positions || [])
+        .map((p) => `  · ${p.asset} @ ${fmt(p.entry, 2)} $ — ${p.statut === "tp1_fait" ? "TP1 fait, SL à l'entrée" : "ouvert"}`)
+        .join("\n");
+      await sendMessage(
+        env.TELEGRAM_TOKEN, chatId,
+        `🤖 <b>Agent</b>\nMode : <b>${flags.mode}</b>${flags.pause ? " · ⏸️ EN PAUSE" : ""}\n` +
+          `Trades aujourd'hui : ${a.trades_jour ?? 0}/3 · SL consécutifs : ${a.sl_consecutifs ?? 0}/3\n` +
+          `Validations à blanc : ${a.validations_blanc ?? 0}\n` +
+          (a.types_suspendus?.length ? `Types suspendus : ${a.types_suspendus.join(", ")}\n` : "") +
+          (pos ? `Positions :\n${pos}` : "Aucune position agent ouverte.") +
+          `\n\n/pause /reprise /mode_blanc /mode_bouton /mode_auto`,
+        kbFromCockpit(),
+      );
+      return new Response("ok");
+    }
 
     const reply = buildReply(cmd, data);
     await sendMessage(env.TELEGRAM_TOKEN, chatId, reply.text, reply.keyboard);
     return new Response("ok");
   },
 };
+
+async function lireFlags(env) {
+  const raw = await env.AGENT_KV.get("flags");
+  const flags = raw ? JSON.parse(raw) : {};
+  return { mode: flags.mode || "blanc", pause: flags.pause !== false, approvals: flags.approvals || [] };
+}
+
+async function tg(env, method, body) {
+  await fetch(`https://api.telegram.org/bot${env.TELEGRAM_TOKEN}/${method}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
+function kbFromCockpit() {
+  return { inline_keyboard: [[{ text: "📊 Ouvrir le cockpit", web_app: { url: COCKPIT_URL } }]] };
+}
 
 /* ------------------------- Réponses ------------------------- */
 
@@ -76,7 +171,7 @@ function buildReply(cmd, data) {
           "/prix — BTC, ETH, Or + RSI\n" +
           "/portefeuille — les 3 profils simulés\n" +
           "/traders — top traders suivis\n" +
-          "/signaux — derniers signaux\n/spot — signaux d'achat dimensionnés pour mon enveloppe\n/bilan — historique et taux de réussite des signaux\n" +
+          "/signaux — derniers signaux\n/spot — signaux d'achat dimensionnés pour mon enveloppe\n/bilan — historique et taux de réussite des signaux\n/agent — état et pilotage de l'agent Kraken\n" +
           "/aide — rappel des commandes\n\n" +
           "<i>Outil informatif — pas un conseil financier.</i>",
         keyboard: kbCockpit,
