@@ -142,6 +142,10 @@ def add_order(pair: str, price: float, volume: float, validate: bool,
     if close_type:
         payload["close[ordertype]"] = close_type
         payload["close[price]"] = fmt_price(pair, close_price)
+        if close_type.endswith("-limit"):
+            # les types *-limit exigent aussi le prix limite (close[price2]) ;
+            # limite = déclencheur : vente à TP1 exactement, pas de slippage
+            payload["close[price2]"] = fmt_price(pair, close_price)
     if validate:
         payload["validate"] = "true"
     return kraken_private("/0/private/AddOrder", payload)
