@@ -13,6 +13,7 @@ Bot d'analyse Crypto + Or avec alertes Telegram
 import json
 import os
 import sys
+import time
 from pathlib import Path
 
 import pandas as pd
@@ -23,6 +24,9 @@ import requests
 ASSETS = {
     "bitcoin": "BTC",
     "ethereum": "ETH",
+    "solana": "SOL",
+    "ripple": "XRP",
+    "chainlink": "LINK",
     "pax-gold": "OR (once, via PAXG)",
 }
 
@@ -42,6 +46,7 @@ DATA_FILE = Path("docs/data.json")  # données publiées pour le cockpit
 
 def get_hourly_prices(coin_id: str) -> pd.DataFrame:
     """Prix horaires des 14 derniers jours via CoinGecko."""
+    time.sleep(2)  # courtoisie : espace les appels CoinGecko (6 actifs/run)
     url = f"https://api.coingecko.com/api/v3/coins/{coin_id}/market_chart"
     r = requests.get(
         url,

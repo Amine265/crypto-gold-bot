@@ -60,7 +60,8 @@ RISQUE_MAX = 0.02          # part de l'enveloppe risquée par trade
 ENVELOPPE = 100.0
 
 # Paires Kraken négociables par l'agent (PAXG reste manuel : pas de paire USDC)
-PAIRES = {"bitcoin": "XBTUSDC", "ethereum": "ETHUSDC"}
+PAIRES = {"bitcoin": "XBTUSDC", "ethereum": "ETHUSDC", "solana": "SOLUSDC",
+          "ripple": "XRPUSDC", "chainlink": "LINKUSDC"}
 
 API = "https://api.kraken.com"
 STATE_FILE = Path("agent_state.json")
