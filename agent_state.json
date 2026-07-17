@@ -1,0 +1,20 @@
+{
+ "resultats_vus": [
+  "2026-07-17T03:33:30+00:00|OR (once, via PAXG)|achat"
+ ],
+ "stats_types": {
+  "autre": {
+   "n": 1,
+   "tp2": 0,
+   "sl": 1
+  }
+ },
+ "types_suspendus": [],
+ "daily": {
+  "date": "2026-07-17",
+  "n": 0
+ },
+ "signaux_traites": [
+  "2026-07-17T13:54:39+00:00|ethereum"
+ ]
+}
