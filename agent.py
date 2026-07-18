@@ -53,7 +53,7 @@ FLAGS_URL = os.environ.get("FLAGS_URL", "")        # https://cockpit-bot....work
 AGENT_SECRET = os.environ.get("AGENT_SECRET", "")  # partagé avec le worker
 
 MAX_PAR_POSITION = 50.0    # $ par trade (les deux moitiés incluses)
-MAX_TRADES_JOUR = 3
+MAX_TRADES_JOUR = 5
 MAX_SL_CONSECUTIFS = 3
 FRAIS = 0.0025             # par ordre, estimation (palier 1 Kraken)
 RISQUE_MAX = 0.02          # part de l'enveloppe risquée par trade
