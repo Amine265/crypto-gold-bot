@@ -115,6 +115,32 @@ export default {
       return new Response("ok");
     }
 
+    if (cmd === "/gains") {
+      const pnl = (data && data.agent && data.agent.pnl) || [];
+      const nowMs = Date.now();
+      const somme = (jours) =>
+        pnl
+          .filter((p) => nowMs - new Date(p.time).getTime() <= jours * 86400e3)
+          .reduce((s, p) => s + p.usd, 0);
+      const ligne = (label, jours) => {
+        const s = somme(jours);
+        const pct = (s / ENVELOPPE) * 100;
+        const e = s > 0 ? "🟢" : s < 0 ? "🔴" : "⚪";
+        return `${e} ${label} : <b>${s >= 0 ? "+" : ""}${s.toFixed(2)} $</b> (${pct >= 0 ? "+" : ""}${pct.toFixed(2)}% de l'enveloppe)`;
+      };
+      const dernieres = pnl.slice(-5).reverse()
+        .map((p) => `  · ${p.usd >= 0 ? "+" : ""}${p.usd.toFixed(2)} $ — ${p.asset} ${p.quoi} <i>${heure(p.time)}</i>`)
+        .join("\n");
+      await sendMessage(
+        env.TELEGRAM_TOKEN, chatId,
+        pnl.length
+          ? `💰 <b>Gains réalisés (agent)</b>\n\n${ligne("Aujourd'hui", 1)}\n${ligne("7 jours", 7)}\n${ligne("30 jours", 30)}\n\nDernières sorties :\n${dernieres}\n\n<i>P&L estimés (frais ~0,25%/ordre inclus). Ne couvre pas tes trades manuels — ceux-là vivent dans ton journal.</i>`
+          : "💰 <b>Gains réalisés (agent)</b> — aucune sortie enregistrée pour l'instant. Le registre démarre au premier TP ou SL exécuté par l'agent (modes bouton/auto).",
+        kbFromCockpit(),
+      );
+      return new Response("ok");
+    }
+
     const reply = buildReply(cmd, data);
     await sendMessage(env.TELEGRAM_TOKEN, chatId, reply.text, reply.keyboard);
     return new Response("ok");
@@ -171,7 +197,7 @@ function buildReply(cmd, data) {
           "/prix — BTC, ETH, Or + RSI\n" +
           "/portefeuille — les 3 profils simulés\n" +
           "/traders — top traders suivis\n" +
-          "/signaux — derniers signaux\n/spot — signaux d'achat dimensionnés pour mon enveloppe\n/bilan — historique et taux de réussite des signaux\n/agent — état et pilotage de l'agent Kraken\n" +
+          "/signaux — derniers signaux\n/spot — signaux d'achat dimensionnés pour mon enveloppe\n/bilan — historique et taux de réussite des signaux\n/agent — état et pilotage de l'agent Kraken\n/gains — P&L réalisés : jour, 7j, 30j\n" +
           "/aide — rappel des commandes\n\n" +
           "<i>Outil informatif — pas un conseil financier.</i>",
         keyboard: kbCockpit,
@@ -233,10 +259,11 @@ function buildReply(cmd, data) {
 
     case "/signaux": {
       const lignes = (data.signals || []).slice(0, 6).map((s) => {
+        const v = s.plan && s.plan.verdict ? s.plan.verdict + " " : "";
         const plan = s.plan
           ? `\n🎯 Entrée ${fmt(s.plan.entry, 2)} $ · SL ${fmt(s.plan.sl, 2)} $ (−${s.plan.risk_pct}%) · TP1 ${fmt(s.plan.tp1, 2)} $ · TP2 ${fmt(s.plan.tp2, 2)} $`
           : "";
-        return `${s.type === "achat" ? "🟢" : "🔴"} <b>${s.asset}</b> — ${s.reason}${plan}\n<i>${heure(s.time)}</i>`;
+        return `${s.type === "achat" ? "🟢" : "🔴"} ${v}<b>${s.asset}</b> — ${s.reason}${plan}\n<i>${heure(s.time)}</i>`;
       });
       return {
         text: lignes.length

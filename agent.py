@@ -285,6 +285,12 @@ def executer(plan: dict, validate: bool) -> dict | None:
 
 # ------------------------- Gestion des positions ouvertes -------------------------
 
+def pnl_log(state: dict, asset: str, usd: float, quoi: str) -> None:
+    state.setdefault("pnl", []).append(
+        {"time": now_iso(), "asset": asset, "usd": round(usd, 2), "quoi": quoi})
+    state["pnl"] = state["pnl"][-300:]
+
+
 def gerer_positions(state: dict) -> list[str]:
     """Aux quarts d'heure : TP1 -> vendre A + remonter le SL de B à l'entrée ;
     TP2 -> vendre B ; filet SL sur A si le stop de B est parti."""
@@ -309,18 +315,28 @@ def gerer_positions(state: dict) -> list[str]:
                 "volume": fmt_vol(tr["pair"], tr["vol_b"])})
             tr["statut"] = "tp1_fait"
             state["sl_consecutifs"] = 0
+            pnl_log(state, tr["asset"],
+                    tr["vol_a"] * (tr["tp1"] - tr["entry"])
+                    - tr["vol_a"] * tr["entry"] * FRAIS * 2, "TP1 (moitié A)")
             notes.append(f"🎯 <b>Agent</b> — TP1 exécuté sur {tr['asset']} : moitié A vendue, "
                          f"SL de la moitié B remonté à l'entrée ({tr['entry']:,.2f} $). "
                          f"Le trade ne peut plus perdre.")
         elif tr["statut"] == "tp1_fait" and prix >= tr["tp2"]:
             sell_market(tr["pair"], tr["vol_b"])
             tr["statut"] = "clos_tp2"
+            pnl_log(state, tr["asset"],
+                    tr["vol_b"] * (prix - tr["entry"])
+                    - tr["vol_b"] * tr["entry"] * FRAIS * 2, "TP2 (moitié B)")
             notes.append(f"🎯🎯 <b>Agent</b> — TP2 atteint sur {tr['asset']} : moitié B vendue "
                          f"à ~{prix:,.2f} $. Trade complet gagnant.")
         elif prix <= tr["sl"] * 0.999 and d_entree_execute and tr["statut"] == "ouvert":
             # Le stop de B s'est déclenché côté Kraken ; filet : vendre A si encore détenu
             sell_market(tr["pair"], tr["vol_a"])
             tr["statut"] = "clos_sl"
+            pnl_log(state, tr["asset"],
+                    tr["vol_b"] * (tr["sl"] - tr["entry"])
+                    + tr["vol_a"] * (prix - tr["entry"])
+                    - (tr["vol_a"] + tr["vol_b"]) * tr["entry"] * FRAIS * 2, "SL")
             state["sl_consecutifs"] = state.get("sl_consecutifs", 0) + 1
             notes.append(f"🛑 <b>Agent</b> — SL sur {tr['asset']} : position soldée "
                          f"({state['sl_consecutifs']} SL consécutif(s)).")
@@ -396,7 +412,9 @@ def main() -> int:
         sid = f"{pl['time']}|{pl['coin']}"
         if (pl["type"] == "achat" and pl["coin"] in PAIRES and sid not in executes
                 and type_signal(pl.get("reason", "")) not in state.get("types_suspendus", [])
-                and verdict_ok(pl)):
+                and (mode == "blanc" or verdict_ok(pl))):
+            # à blanc : tout signal d'achat entraîne le pipeline (rien n'est placé) ;
+            # en réel : seuls les verdicts ✅ passent.
             candidats.append(pl)
 
     approbations = flags.get("approvals", [])
@@ -443,6 +461,7 @@ def main() -> int:
         "validations_blanc": state.get("validations_blanc", 0),
         "types_suspendus": state.get("types_suspendus", []),
         "stats_types": state.get("stats_types", {}),
+        "pnl": state.get("pnl", [])[-200:],
         "positions": [{k: t[k] for k in ("asset", "entry", "sl", "tp1", "tp2", "statut")}
                       for t in state.get("trades", []) if t["statut"] in ("ouvert", "tp1_fait")],
     }

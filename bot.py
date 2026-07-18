@@ -133,6 +133,22 @@ def build_plan(price: float, atr: float, side: str) -> dict:
     }
 
 
+ENVELOPPE_SPOT = 100.0   # $ — même valeur que le worker (/spot)
+FRAIS_ORDRE = 0.0025     # estimation par ordre
+
+def verdict_spot(plan: dict) -> tuple[str, str]:
+    """Réplique le verdict de /spot : l'emoji apparaît dès l'alerte."""
+    taille = min(ENVELOPPE_SPOT, (ENVELOPPE_SPOT * 0.02) / (plan["risk_pct"] / 100))
+    gain_tp1 = taille * abs(plan["tp1"] - plan["entry"]) / plan["entry"]
+    gain_tp2 = taille * abs(plan["tp2"] - plan["entry"]) / plan["entry"]
+    frais = taille * FRAIS_ORDRE * 2
+    if gain_tp2 - frais <= 0:
+        return "⛔", "frais ≥ gain même à TP2 — à laisser passer"
+    if gain_tp1 - frais <= 0:
+        return "⚠️", "rentable seulement si TP2 atteint"
+    return "✅", "exploitable en spot"
+
+
 def plan_text(plan: dict, support: float, resistance: float) -> str:
     return (f"🎯 Entrée ~{plan['entry']:,.2f} $ | SL {plan['sl']:,.2f} $ "
             f"(-{plan['risk_pct']}%) | TP1 {plan['tp1']:,.2f} $ | TP2 {plan['tp2']:,.2f} $\n"
@@ -258,11 +274,15 @@ def main() -> int:
             "sparkline": sparkline,
         }
         for s in res["buy"]:
-            data["signals"].insert(0, {"time": now, "asset": label, "type": "achat", "reason": s,
-                                       "plan": build_plan(res["price"], res["atr"], "achat")})
+            p = build_plan(res["price"], res["atr"], "achat")
+            p["verdict"] = verdict_spot(p)[0]
+            data["signals"].insert(0, {"time": now, "asset": label, "type": "achat",
+                                       "reason": s, "plan": p})
         for s in res["sell"]:
-            data["signals"].insert(0, {"time": now, "asset": label, "type": "vente", "reason": s,
-                                       "plan": build_plan(res["price"], res["atr"], "vente")})
+            p = build_plan(res["price"], res["atr"], "vente")
+            p["verdict"] = "ℹ️"
+            data["signals"].insert(0, {"time": now, "asset": label, "type": "vente",
+                                       "reason": s, "plan": p})
 
         signature = "|".join(res["buy"] + res["sell"])
         already_sent = state.get(coin_id) == signature and signature != ""
@@ -276,6 +296,13 @@ def main() -> int:
             side = "achat" if res["buy"] else "vente"
             plan = build_plan(res["price"], res["atr"], side)
             lines.append(plan_text(plan, res["support"], res["resistance"]))
+            if side == "achat":
+                emoji_v, texte_v = verdict_spot(plan)
+                lines.append(f"{emoji_v} <b>Spot :</b> {texte_v}")
+                plan["verdict"] = emoji_v
+            else:
+                lines.append("ℹ️ Vente — non jouable en spot (sortie/contexte uniquement)")
+                plan["verdict"] = "ℹ️"
             alerts.append("\n".join(lines))
             data.setdefault("plans_actifs", []).append(
                 {"time": now, "asset": label, "coin": coin_id, "type": side,
