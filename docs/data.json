@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 64519.04,
-   "rsi": 71.4,
+   "price": 64487.44,
+   "rsi": 70.7,
    "sparkline": [
     63117.41,
     62887.67,
@@ -29,13 +29,13 @@
     63813.31,
     63158.84,
     63917.61,
-    64519.04
+    64487.44
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 1857.85,
-   "rsi": 65.6,
+   "price": 1855.78,
+   "rsi": 63.7,
    "sparkline": [
     1792.07,
     1756.49,
@@ -61,7 +61,7 @@
     1849.65,
     1828.78,
     1844.36,
-    1857.85
+    1855.78
    ]
   },
   "pax-gold": {
@@ -98,8 +98,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 75.32,
-   "rsi": 57.8,
+   "price": 75.3,
+   "rsi": 57.4,
    "sparkline": [
     81.8,
     79.77,
@@ -125,13 +125,13 @@
     75.02,
     74.48,
     74.88,
-    75.32
+    75.3
    ]
   },
   "ripple": {
    "label": "XRP",
    "price": 1.09,
-   "rsi": 54.9,
+   "rsi": 55.2,
    "sparkline": [
     1.17,
     1.13,
@@ -163,7 +163,7 @@
   "chainlink": {
    "label": "LINK",
    "price": 8.32,
-   "rsi": 59.5,
+   "rsi": 58.8,
    "sparkline": [
     8.07,
     7.85,
@@ -194,6 +194,48 @@
   }
  },
  "signals": [
+  {
+   "time": "2026-07-18T19:26:25+00:00",
+   "asset": "SOL",
+   "type": "achat",
+   "reason": "Croisement haussier SMA20/SMA50 (golden cross)",
+   "plan": {
+    "entry": 75.3,
+    "sl": 75.12,
+    "tp1": 75.48,
+    "tp2": 75.66,
+    "risk_pct": 0.24,
+    "verdict": "\u26d4"
+   }
+  },
+  {
+   "time": "2026-07-18T19:26:25+00:00",
+   "asset": "ETH",
+   "type": "achat",
+   "reason": "Croisement haussier SMA20/SMA50 (golden cross)",
+   "plan": {
+    "entry": 1855.78,
+    "sl": 1852.68,
+    "tp1": 1858.89,
+    "tp2": 1861.99,
+    "risk_pct": 0.17,
+    "verdict": "\u26d4"
+   }
+  },
+  {
+   "time": "2026-07-18T19:26:25+00:00",
+   "asset": "BTC",
+   "type": "vente",
+   "reason": "RSI pass\u00e9 en zone de surachat (70.7)",
+   "plan": {
+    "entry": 64487.44,
+    "sl": 64585.7,
+    "tp1": 64389.19,
+    "tp2": 64290.93,
+    "risk_pct": 0.15,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
   {
    "time": "2026-07-18T19:21:26+00:00",
    "asset": "SOL",
@@ -414,7 +456,7 @@
    "reason": "Croisement baissier du MACD"
   }
  ],
- "market_updated": "2026-07-18T19:21:26+00:00",
+ "market_updated": "2026-07-18T19:26:25+00:00",
  "updated": "2026-07-18T19:18:45+00:00",
  "traders": [
   {
@@ -1894,6 +1936,20 @@
    "tp2": 75.68,
    "risk_pct": 0.24,
    "tp1_franchi": false
+  },
+  {
+   "time": "2026-07-18T19:26:25+00:00",
+   "asset": "BTC",
+   "coin": "bitcoin",
+   "type": "vente",
+   "reason": "RSI pass\u00e9 en zone de surachat (70.7)",
+   "entry": 64487.44,
+   "sl": 64585.7,
+   "tp1": 64389.19,
+   "tp2": 64290.93,
+   "risk_pct": 0.15,
+   "verdict": "\u2139\ufe0f",
+   "tp1_franchi": false
   }
  ],
  "signaux_resultats": [
@@ -1986,10 +2042,10 @@
  "agent": {
   "mode": "blanc",
   "pause": false,
-  "maj": "2026-07-18T19:21:40+00:00",
+  "maj": "2026-07-18T19:26:40+00:00",
   "trades_jour": 0,
   "sl_consecutifs": 0,
-  "validations_blanc": 0,
+  "validations_blanc": 2,
   "types_suspendus": [],
   "stats_types": {
    "autre": {
@@ -2013,6 +2069,7 @@
     "sl": 0
    }
   },
+  "pnl": [],
   "positions": []
  }
 }
