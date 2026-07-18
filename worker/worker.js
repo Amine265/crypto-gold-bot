@@ -105,7 +105,7 @@ export default {
       await sendMessage(
         env.TELEGRAM_TOKEN, chatId,
         `🤖 <b>Agent</b>\nMode : <b>${flags.mode}</b>${flags.pause ? " · ⏸️ EN PAUSE" : ""}\n` +
-          `Trades aujourd'hui : ${a.trades_jour ?? 0}/3 · SL consécutifs : ${a.sl_consecutifs ?? 0}/3\n` +
+          `Trades aujourd'hui : ${a.trades_jour ?? 0}/5 · SL consécutifs : ${a.sl_consecutifs ?? 0}/3\n` +
           `Validations à blanc : ${a.validations_blanc ?? 0}\n` +
           (a.types_suspendus?.length ? `Types suspendus : ${a.types_suspendus.join(", ")}\n` : "") +
           (pos ? `Positions :\n${pos}` : "Aucune position agent ouverte.") +
