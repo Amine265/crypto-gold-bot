@@ -330,27 +330,48 @@ function buildReply(cmd, data) {
             "les issues s'accumuleront ici, que tu aies pris le trade ou non.",
           keyboard: kbCockpit,
         };
-      const n = res.length;
-      const tp2 = res.filter((r) => r.resultat === "TP2").length;
-      const sl = res.filter((r) => r.resultat === "SL").length;
-      const exp = res.filter((r) => r.resultat === "expiré").length;
-      const tp1 = res.filter((r) => r.tp1_franchi).length;
-      const lignes = res.slice(0, 6).map((r) => {
-        const e = r.resultat === "TP2" ? "🎯" : r.resultat === "SL" ? "🛑" : "⏳";
-        return `${e} ${r.type} <b>${r.asset}</b> → ${r.resultat}${r.tp1_franchi && r.resultat === "SL" ? " (après TP1)" : ""} · <i>${heure(r.signal_time)}</i>`;
-      });
-      return {
-        text:
-          `📒 <b>Bilan des signaux</b> (${n} résolus)\n\n` +
-          `🎯 TP2 atteint : <b>${tp2}</b> (${((tp2 / n) * 100).toFixed(0)}%)\n` +
-          `🛑 SL touché : <b>${sl}</b> (${((sl / n) * 100).toFixed(0)}%)\n` +
-          `⏳ Expirés (7j) : <b>${exp}</b>\n` +
-          `TP1 franchi au moins : <b>${tp1}</b> (${((tp1 / n) * 100).toFixed(0)}%)\n\n` +
-          lignes.join("\n") +
-          "\n\n<i>Niveaux de prix contrôlés toutes les heures — indicatif, " +
-          "pris ou non par toi.</i>",
-        keyboard: kbCockpit,
+      const stats = (arr) => {
+        const n = arr.length;
+        if (!n) return "aucun signal résolu.";
+        const c = (f) => arr.filter(f).length;
+        const pc = (x) => ((x / n) * 100).toFixed(0);
+        const tp2 = c((r) => r.resultat === "TP2");
+        const sl = c((r) => r.resultat === "SL");
+        const exp = c((r) => r.resultat === "expiré");
+        const tp1 = c((r) => r.tp1_franchi);
+        return (
+          `🎯 TP2 : <b>${tp2}</b> (${pc(tp2)}%) · 🛑 SL : <b>${sl}</b> (${pc(sl)}%) · ⏳ expirés : ${exp}\n` +
+          `TP1 franchi au moins : <b>${tp1}</b> (${pc(tp1)}%)`
+        );
       };
+      const achats = res.filter((r) => r.type === "achat");
+      const ventes = res.filter((r) => r.type === "vente");
+      const parActif = {};
+      for (const r of achats) {
+        const a = (parActif[r.asset] = parActif[r.asset] || { tp2: 0, sl: 0 });
+        if (r.resultat === "TP2") a.tp2 += 1;
+        if (r.resultat === "SL") a.sl += 1;
+      }
+      const tableau = Object.entries(parActif)
+        .map(([asset, c]) => `${asset} ${c.tp2}🎯/${c.sl}🛑`)
+        .join(" · ");
+      let texte =
+        `📒 <b>Bilan des signaux</b> (${res.length} résolus)\n\n` +
+        `🟢 <b>Achats (jouables en spot)</b> — ${achats.length}\n${stats(achats)}\n` +
+        (tableau ? `Par actif : ${tableau}\n` : "") +
+        `\n🔴 <b>Ventes (indicatif)</b> — ${ventes.length}\n${stats(ventes)}\n\n` +
+        `Dernières issues :\n`;
+      const pied =
+        "\n<i>Niveaux de prix contrôlés toutes les 15 minutes — indicatif, " +
+        "pris ou non par toi.</i>";
+      // Limite Telegram 4096 caractères : on tronque la liste, jamais les stats
+      for (const r of res.slice(0, 10)) {
+        const e = r.resultat === "TP2" ? "🎯" : r.resultat === "SL" ? "🛑" : "⏳";
+        const ligne = `${e} ${r.type} <b>${r.asset}</b> → ${r.resultat}${r.tp1_franchi && r.resultat === "SL" ? " (après TP1)" : ""} · <i>${heure(r.signal_time)}</i>\n`;
+        if (texte.length + ligne.length + pied.length > 3900) break;
+        texte += ligne;
+      }
+      return { text: texte + pied, keyboard: kbCockpit };
     }
 
     case "/aide":
