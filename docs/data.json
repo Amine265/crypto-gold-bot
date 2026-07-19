@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 64575.82,
-   "rsi": 56.5,
+   "price": 64334.39,
+   "rsi": 44.3,
    "sparkline": [
     62615.49,
     63517.88,
@@ -29,13 +29,13 @@
     64024.68,
     63968.67,
     64711.7,
-    64575.82
+    64334.39
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 1875.29,
-   "rsi": 67.1,
+   "price": 1864.52,
+   "rsi": 55.2,
    "sparkline": [
     1758.99,
     1784.47,
@@ -61,7 +61,7 @@
     1842.73,
     1842.96,
     1860.66,
-    1875.29
+    1864.52
    ]
   },
   "pax-gold": {
@@ -98,49 +98,49 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 76.29,
-   "rsi": 66.9,
+   "price": 75.9,
+   "rsi": 55.9,
    "sparkline": [
-    80.34,
-    82.0,
-    80.17,
-    80.79,
-    81.64,
-    77.43,
-    77.43,
-    77.62,
-    79.0,
-    77.99,
-    77.99,
-    78.13,
-    76.68,
-    77.37,
-    76.05,
-    75.03,
-    77.22,
-    77.52,
-    77.49,
-    75.9,
+    80.5,
+    81.6,
+    81.34,
+    81.05,
+    81.29,
+    77.15,
+    77.67,
+    78.15,
+    78.91,
+    77.59,
+    77.94,
+    78.21,
+    77.05,
+    76.65,
+    75.76,
+    75.29,
+    77.14,
+    77.39,
+    77.26,
+    76.26,
+    75.16,
+    75.18,
     74.9,
-    74.94,
-    74.96,
-    75.4,
-    76.29
+    75.45,
+    75.9
    ]
   },
   "ripple": {
    "label": "XRP",
-   "price": 1.1,
-   "rsi": 60.6,
+   "price": 1.09,
+   "rsi": 51.8,
    "sparkline": [
     1.13,
     1.15,
-    1.14,
+    1.15,
     1.13,
     1.12,
     1.08,
     1.09,
-    1.1,
+    1.09,
     1.11,
     1.1,
     1.11,
@@ -157,13 +157,13 @@
     1.09,
     1.09,
     1.09,
-    1.1
+    1.09
    ]
   },
   "chainlink": {
    "label": "LINK",
-   "price": 8.37,
-   "rsi": 59.4,
+   "price": 8.33,
+   "rsi": 51.5,
    "sparkline": [
     7.88,
     8.07,
@@ -189,11 +189,39 @@
     8.22,
     8.24,
     8.34,
-    8.37
+    8.33
    ]
   }
  },
  "signals": [
+  {
+   "time": "2026-07-19T12:10:30+00:00",
+   "asset": "XRP",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "plan": {
+    "entry": 1.09,
+    "sl": 1.1,
+    "tp1": 1.09,
+    "tp2": 1.09,
+    "risk_pct": 0.21,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
+  {
+   "time": "2026-07-19T12:10:30+00:00",
+   "asset": "ETH",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "plan": {
+    "entry": 1864.52,
+    "sl": 1869.98,
+    "tp1": 1859.07,
+    "tp2": 1853.61,
+    "risk_pct": 0.29,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
   {
    "time": "2026-07-19T08:39:51+00:00",
    "asset": "LINK",
@@ -498,7 +526,7 @@
    "reason": "Croisement baissier du MACD"
   }
  ],
- "market_updated": "2026-07-19T11:23:35+00:00",
+ "market_updated": "2026-07-19T12:10:30+00:00",
  "updated": "2026-07-19T11:18:22+00:00",
  "traders": [
   {
@@ -2057,8 +2085,34 @@
    ]
   }
  },
- "plans_actifs": [],
+ "plans_actifs": [
+  {
+   "time": "2026-07-19T12:10:30+00:00",
+   "asset": "ETH",
+   "coin": "ethereum",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "entry": 1864.52,
+   "sl": 1869.98,
+   "tp1": 1859.07,
+   "tp2": 1853.61,
+   "risk_pct": 0.29,
+   "verdict": "\u2139\ufe0f",
+   "tp1_franchi": false
+  }
+ ],
  "signaux_resultats": [
+  {
+   "time": "2026-07-19T12:10:30+00:00",
+   "signal_time": "2026-07-19T12:10:30+00:00",
+   "asset": "XRP",
+   "type": "vente",
+   "resultat": "TP2",
+   "reason": "Croisement baissier du MACD",
+   "tp1_franchi": true,
+   "entry": 1.09,
+   "sortie": 1.09
+  },
   {
    "time": "2026-07-19T11:23:35+00:00",
    "signal_time": "2026-07-19T08:39:51+00:00",
@@ -2214,7 +2268,7 @@
  "agent": {
   "mode": "blanc",
   "pause": false,
-  "maj": "2026-07-19T11:23:49+00:00",
+  "maj": "2026-07-19T12:10:44+00:00",
   "trades_jour": 0,
   "sl_consecutifs": 0,
   "validations_blanc": 2,
