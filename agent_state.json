@@ -1,12 +1,12 @@
 {
  "resultats_vus": [
-  "2026-07-18T19:21:26+00:00|ETH|achat",
-  "2026-07-18T19:21:26+00:00|SOL|achat",
   "2026-07-17T17:06:37+00:00|LINK|achat",
-  "2026-07-17T16:02:03+00:00|ETH|achat",
-  "2026-07-17T13:54:39+00:00|ETH|achat",
   "2026-07-18T09:06:36+00:00|BTC|achat",
-  "2026-07-17T03:33:30+00:00|OR (once, via PAXG)|achat"
+  "2026-07-18T19:21:26+00:00|ETH|achat",
+  "2026-07-17T03:33:30+00:00|OR (once, via PAXG)|achat",
+  "2026-07-18T19:21:26+00:00|SOL|achat",
+  "2026-07-17T13:54:39+00:00|ETH|achat",
+  "2026-07-17T16:02:03+00:00|ETH|achat"
  ],
  "stats_types": {
   "autre": {
@@ -36,9 +36,10 @@
   "n": 0
  },
  "signaux_traites": [
-  "2026-07-17T13:54:39+00:00|ethereum",
   "2026-07-18T19:21:26+00:00|ethereum",
-  "2026-07-18T19:21:26+00:00|solana"
+  "2026-07-18T19:21:26+00:00|solana",
+  "2026-07-19T14:45:15+00:00|solana",
+  "2026-07-17T13:54:39+00:00|ethereum"
  ],
  "trades": [
   {
@@ -74,7 +75,24 @@
    "statut": "valide",
    "tp1_fait": false,
    "ouvert_le": "2026-07-18T19:26:40+00:00"
+  },
+  {
+   "id": "2026-07-19T14:45:15+00:00|solana",
+   "coin": "solana",
+   "pair": "SOLUSDC",
+   "asset": "SOL",
+   "entry": 76.3,
+   "sl": 76.04,
+   "tp1": 76.56,
+   "tp2": 76.82,
+   "vol_a": 0.32765399737876805,
+   "vol_b": 0.32765399737876805,
+   "txid_a": "validate",
+   "txid_b": "validate",
+   "statut": "valide",
+   "tp1_fait": false,
+   "ouvert_le": "2026-07-19T14:45:30+00:00"
   }
  ],
- "validations_blanc": 2
+ "validations_blanc": 3
 }
