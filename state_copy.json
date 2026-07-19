@@ -11,9 +11,9 @@
   "0xcfa18ed6874b0bbc3f01adbd87620c4ef3383831": {},
   "0xb294964ceb670a21d34693da52a39c9837dd651f": {},
   "0x6807f127eaf85e3d0b9dbc7971bbed2afd041f8d": {
-   "BTC": "SHORT",
    "ETH": "SHORT",
    "SOL": "SHORT",
+   "SUI": "LONG",
    "AAVE": "LONG",
    "NEAR": "LONG",
    "JUP": "LONG",
@@ -22,7 +22,8 @@
    "FARTCOIN": "LONG",
    "PUMP": "LONG",
    "ZEC": "LONG",
-   "LIT": "LONG"
+   "LIT": "LONG",
+   "CASHCAT": "SHORT"
   },
   "0x9cd0a696c7cbb9d44de99268194cb08e5684e5fe": {},
   "0x42b9594f12bddd170416e94c42e4cb5e42965f39": {
@@ -92,7 +93,7 @@
   "prudent": {
    "start": 10000.0,
    "cash": 8817.835874239021,
-   "equity": 10051.09,
+   "equity": 10051.68,
    "positions": [
     {
      "coin": "ETH",
@@ -101,8 +102,8 @@
      "amount": 300.0,
      "trader": "0xf92912",
      "opened": "2026-07-15T17:01:52+00:00",
-     "price": 1859.35,
-     "pnl": -9.423592842445265
+     "price": 1867.05,
+     "pnl": -8.220248482796363
     },
     {
      "coin": "LIT",
@@ -111,8 +112,8 @@
      "amount": 300.0492,
      "trader": "0xd487e2",
      "opened": "2026-07-15T20:11:20+00:00",
-     "price": 2.2237,
-     "pnl": -28.26386586284855
+     "price": 2.27235,
+     "pnl": -22.317759595918485
     },
     {
      "coin": "BTC",
@@ -121,8 +122,8 @@
      "amount": 299.9658,
      "trader": "0x98785f",
      "opened": "2026-07-15T23:05:37+00:00",
-     "price": 64425.5,
-     "pnl": -2.0531191885246534
+     "price": 64537.5,
+     "pnl": -1.535215249076993
     },
     {
      "coin": "CASHCAT",
@@ -133,8 +134,8 @@
      "amount": 298.4154,
      "trader": "0xb7e0b9",
      "opened": "2026-07-17T06:24:55+00:00",
-     "price": 0.074842,
-     "pnl": 74.56398154308619
+     "price": 0.073422,
+     "pnl": 67.48733044088175
     }
    ],
    "history": [
@@ -399,13 +400,17 @@
     [
      "2026-07-19T19:20:46+00:00",
      10051.09
+    ],
+    [
+     "2026-07-19T21:03:22+00:00",
+     10051.68
     ]
    ]
   },
   "equilibre": {
    "start": 10000.0,
    "cash": 8500.062999999998,
-   "equity": 9984.35,
+   "equity": 9955.58,
    "positions": [
     {
      "coin": "ETH",
@@ -414,8 +419,8 @@
      "amount": 500.0,
      "trader": "0x6807f1",
      "opened": "2026-07-15T17:01:52+00:00",
-     "price": 1859.35,
-     "pnl": 15.705988070742109
+     "price": 1867.05,
+     "pnl": 13.70041413799394
     },
     {
      "coin": "BTC",
@@ -424,8 +429,8 @@
      "amount": 499.96850000000006,
      "trader": "0x6807f1",
      "opened": "2026-07-15T22:03:03+00:00",
-     "price": 64425.5,
-     "pnl": 3.2842198098733264
+     "price": 64537.5,
+     "pnl": 2.420762958451231
     },
     {
      "coin": "PUMP",
@@ -434,8 +439,8 @@
      "amount": 499.96850000000006,
      "trader": "0x6807f1",
      "opened": "2026-07-15T22:03:03+00:00",
-     "price": 0.001775,
-     "pnl": -34.63637198795184
+     "price": 0.001861,
+     "pnl": -60.5383545180723
     }
    ],
    "history": [
@@ -662,38 +667,18 @@
     [
      "2026-07-19T19:20:46+00:00",
      9984.35
+    ],
+    [
+     "2026-07-19T21:03:22+00:00",
+     9955.58
     ]
    ]
   },
   "agressif": {
    "start": 10000.0,
-   "cash": 5953.782976419187,
-   "equity": 10045.98,
+   "cash": 6086.085275357462,
+   "equity": 10088.36,
    "positions": [
-    {
-     "coin": "PUMP",
-     "side": "LONG",
-     "entry": 0.001644,
-     "sl": 0.0016,
-     "tp": 0.0018,
-     "amount": 1008.072,
-     "trader": "@TudorCross",
-     "opened": "2026-07-17T03:31:51+00:00",
-     "price": 0.001775,
-     "pnl": 80.32690510948906
-    },
-    {
-     "coin": "BTC",
-     "side": "SHORT",
-     "entry": 64677.5,
-     "sl": 64937.1071,
-     "tp": 64158.2857,
-     "amount": 998.2049999999999,
-     "trader": "@TudorCross",
-     "opened": "2026-07-19T03:49:07+00:00",
-     "price": 64425.5,
-     "pnl": 3.8892607166325224
-    },
     {
      "coin": "ETH",
      "side": "SHORT",
@@ -703,8 +688,8 @@
      "amount": 998.2049999999999,
      "trader": "@TudorCross",
      "opened": "2026-07-19T03:49:07+00:00",
-     "price": 1859.35,
-     "pnl": 3.6906172806430493
+     "price": 1867.05,
+     "pnl": -0.4278976557267004
     },
     {
      "coin": "SOL",
@@ -715,8 +700,32 @@
      "amount": 998.2049999999999,
      "trader": "@TudorCross",
      "opened": "2026-07-19T03:49:07+00:00",
-     "price": 75.7765,
-     "pnl": 1.6045245953477325
+     "price": 76.1195,
+     "pnl": -2.9065568489496316
+    },
+    {
+     "coin": "SUI",
+     "side": "LONG",
+     "entry": 0.75191,
+     "sl": 0.7447,
+     "tp": 0.7664,
+     "amount": 1004.598,
+     "trader": "@TudorCross",
+     "opened": "2026-07-19T21:03:22+00:00",
+     "price": 0.75191,
+     "pnl": 0.0
+    },
+    {
+     "coin": "CASHCAT",
+     "side": "SHORT",
+     "entry": 0.073422,
+     "sl": 0.0832,
+     "tp": 0.0538,
+     "amount": 1004.598,
+     "trader": "@TudorCross",
+     "opened": "2026-07-19T21:03:22+00:00",
+     "price": 0.073422,
+     "pnl": -0.0
     }
    ],
    "history": [
@@ -1019,6 +1028,30 @@
      "note": "\ud83d\uded1 SL touch\u00e9 \u2014 cl\u00f4ture LONG ZEC \u00e0 549.60 $ (P&L -18 $)",
      "trader": "auto",
      "profil": "Agressif"
+    },
+    {
+     "time": "2026-07-19T21:03:22+00:00",
+     "note": "ouverture LONG SUI \u00e0 0.75 $ (1,005 $ virtuels) \u2014 SL 0.74 $ \u00b7 TP 0.77 $",
+     "trader": "@TudorCross",
+     "profil": "Agressif"
+    },
+    {
+     "time": "2026-07-19T21:03:22+00:00",
+     "note": "ouverture SHORT CASHCAT \u00e0 0.07 $ (1,005 $ virtuels) \u2014 SL 0.08 $ \u00b7 TP 0.05 $",
+     "trader": "@TudorCross",
+     "profil": "Agressif"
+    },
+    {
+     "time": "2026-07-19T21:03:22+00:00",
+     "note": "cl\u00f4ture SHORT BTC \u00e0 64,537.50 $ (P&L +2 $)",
+     "trader": "@TudorCross",
+     "profil": "Agressif"
+    },
+    {
+     "time": "2026-07-19T21:03:22+00:00",
+     "note": "\ud83c\udfaf TP touch\u00e9 \u2014 cl\u00f4ture LONG PUMP \u00e0 0.00 $ (P&L +133 $)",
+     "trader": "auto",
+     "profil": "Agressif"
     }
    ],
    "equity_curve": [
@@ -1221,6 +1254,10 @@
     [
      "2026-07-19T19:20:46+00:00",
      10045.98
+    ],
+    [
+     "2026-07-19T21:03:22+00:00",
+     10088.36
     ]
    ]
   }
