@@ -1,12 +1,13 @@
 {
  "resultats_vus": [
-  "2026-07-17T17:06:37+00:00|LINK|achat",
+  "2026-07-17T16:02:03+00:00|ETH|achat",
+  "2026-07-19T15:39:22+00:00|XRP|achat",
+  "2026-07-17T03:33:30+00:00|OR (once, via PAXG)|achat",
   "2026-07-18T09:06:36+00:00|BTC|achat",
   "2026-07-18T19:21:26+00:00|ETH|achat",
-  "2026-07-17T03:33:30+00:00|OR (once, via PAXG)|achat",
+  "2026-07-17T17:06:37+00:00|LINK|achat",
   "2026-07-18T19:21:26+00:00|SOL|achat",
-  "2026-07-17T13:54:39+00:00|ETH|achat",
-  "2026-07-17T16:02:03+00:00|ETH|achat"
+  "2026-07-17T13:54:39+00:00|ETH|achat"
  ],
  "stats_types": {
   "autre": {
@@ -25,8 +26,8 @@
    "sl": 0
   },
   "MACD": {
-   "n": 2,
-   "tp2": 2,
+   "n": 3,
+   "tp2": 3,
    "sl": 0
   }
  },
@@ -36,63 +37,11 @@
   "n": 0
  },
  "signaux_traites": [
-  "2026-07-18T19:21:26+00:00|ethereum",
-  "2026-07-18T19:21:26+00:00|solana",
+  "2026-07-17T13:54:39+00:00|ethereum",
   "2026-07-19T14:45:15+00:00|solana",
-  "2026-07-17T13:54:39+00:00|ethereum"
+  "2026-07-18T19:21:26+00:00|solana",
+  "2026-07-18T19:21:26+00:00|ethereum"
  ],
- "trades": [
-  {
-   "id": "2026-07-18T19:21:26+00:00|ethereum",
-   "coin": "ethereum",
-   "pair": "ETHUSDC",
-   "asset": "ETH",
-   "entry": 1855.92,
-   "sl": 1854.53,
-   "tp1": 1861.17,
-   "tp2": 1864.5,
-   "vol_a": 0.013470408207250312,
-   "vol_b": 0.013470408207250312,
-   "txid_a": "validate",
-   "txid_b": "validate",
-   "statut": "valide",
-   "tp1_fait": false,
-   "ouvert_le": "2026-07-18T19:26:39+00:00"
-  },
-  {
-   "id": "2026-07-18T19:21:26+00:00|solana",
-   "coin": "solana",
-   "pair": "SOLUSDC",
-   "asset": "SOL",
-   "entry": 75.32,
-   "sl": 75.14,
-   "tp1": 75.5,
-   "tp2": 75.68,
-   "vol_a": 0.3319171534784918,
-   "vol_b": 0.3319171534784918,
-   "txid_a": "validate",
-   "txid_b": "validate",
-   "statut": "valide",
-   "tp1_fait": false,
-   "ouvert_le": "2026-07-18T19:26:40+00:00"
-  },
-  {
-   "id": "2026-07-19T14:45:15+00:00|solana",
-   "coin": "solana",
-   "pair": "SOLUSDC",
-   "asset": "SOL",
-   "entry": 76.3,
-   "sl": 76.04,
-   "tp1": 76.56,
-   "tp2": 76.82,
-   "vol_a": 0.32765399737876805,
-   "vol_b": 0.32765399737876805,
-   "txid_a": "validate",
-   "txid_b": "validate",
-   "statut": "valide",
-   "tp1_fait": false,
-   "ouvert_le": "2026-07-19T14:45:30+00:00"
-  }
- ],
+ "trades": [],
  "validations_blanc": 3
 }
