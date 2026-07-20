@@ -1,17 +1,17 @@
 {
  "resultats_vus": [
-  "2026-07-20T01:11:23+00:00|ETH|achat",
-  "2026-07-17T17:06:37+00:00|LINK|achat",
-  "2026-07-17T13:54:39+00:00|ETH|achat",
-  "2026-07-19T14:45:15+00:00|SOL|achat",
-  "2026-07-18T09:06:36+00:00|BTC|achat",
-  "2026-07-19T15:39:22+00:00|XRP|achat",
   "2026-07-17T16:02:03+00:00|ETH|achat",
-  "2026-07-17T03:33:30+00:00|OR (once, via PAXG)|achat",
+  "2026-07-19T15:39:22+00:00|XRP|achat",
   "2026-07-18T19:21:26+00:00|SOL|achat",
   "2026-07-18T19:21:26+00:00|ETH|achat",
+  "2026-07-19T14:45:15+00:00|SOL|achat",
+  "2026-07-20T01:11:23+00:00|XRP|achat",
+  "2026-07-18T09:06:36+00:00|BTC|achat",
+  "2026-07-17T13:54:39+00:00|ETH|achat",
   "2026-07-20T01:11:23+00:00|BTC|achat",
-  "2026-07-20T01:11:23+00:00|XRP|achat"
+  "2026-07-20T01:11:23+00:00|ETH|achat",
+  "2026-07-17T03:33:30+00:00|OR (once, via PAXG)|achat",
+  "2026-07-17T17:06:37+00:00|LINK|achat"
  ],
  "stats_types": {
   "autre": {
@@ -38,18 +38,56 @@
  "types_suspendus": [],
  "daily": {
   "date": "2026-07-20",
-  "n": 0
+  "n": 2
  },
  "signaux_traites": [
+  "2026-07-20T16:18:57+00:00|solana",
   "2026-07-19T14:45:15+00:00|solana",
-  "2026-07-18T19:21:26+00:00|solana",
+  "2026-07-17T13:54:39+00:00|ethereum",
+  "2026-07-20T16:18:57+00:00|chainlink",
   "2026-07-18T19:21:26+00:00|ethereum",
-  "2026-07-17T13:54:39+00:00|ethereum"
+  "2026-07-18T19:21:26+00:00|solana"
  ],
- "trades": [],
+ "trades": [
+  {
+   "id": "2026-07-20T16:18:57+00:00|solana",
+   "coin": "solana",
+   "pair": "SOLUSDC",
+   "asset": "SOL",
+   "entry": 77.52,
+   "sl": 77.04,
+   "tp1": 78.38,
+   "tp2": 79.05,
+   "vol_a": 0.32249742002063986,
+   "vol_b": 0.32249742002063986,
+   "txid_a": "OECOZT-SV5GI-XNRH5O",
+   "txid_b": "O2P3VQ-YFO45-HK4HFN",
+   "statut": "ouvert",
+   "tp1_fait": false,
+   "ouvert_le": "2026-07-20T17:16:27+00:00"
+  },
+  {
+   "id": "2026-07-20T16:18:57+00:00|chainlink",
+   "coin": "chainlink",
+   "pair": "LINKUSDC",
+   "asset": "LINK",
+   "entry": 8.52594,
+   "sl": 8.47,
+   "tp1": 8.65,
+   "tp2": 8.73,
+   "vol_a": 2.932228000666202,
+   "vol_b": 2.932228000666202,
+   "txid_a": "OZUUYZ-F7SBP-2HIWME",
+   "txid_b": "ODQJUE-DTMKW-HCRN6D",
+   "statut": "ouvert",
+   "tp1_fait": false,
+   "ouvert_le": "2026-07-20T17:16:28+00:00"
+  }
+ ],
  "validations_blanc": 3,
  "proposes": [
   "2026-07-20T16:18:57+00:00|solana",
-  "2026-07-20T16:18:57+00:00|chainlink"
+  "2026-07-20T16:18:57+00:00|chainlink",
+  "2026-07-20T17:16:12+00:00|bitcoin"
  ]
 }
