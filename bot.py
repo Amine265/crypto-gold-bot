@@ -137,16 +137,22 @@ ENVELOPPE_SPOT = 100.0   # $ — même valeur que le worker (/spot)
 FRAIS_ORDRE = 0.0025     # estimation par ordre
 
 def verdict_spot(plan: dict) -> tuple[str, str]:
-    """Réplique le verdict de /spot : l'emoji apparaît dès l'alerte."""
+    """Verdict + montants nets (frais inclus), affichés dès l'alerte.
+    Règle : ✅ si le net à TP1 est ≥ 0 (au pire, TP1 rembourse les frais
+    et le gain se joue à TP2) ; ⚠️ si seul TP2 est gagnant ; ⛔ sinon."""
     taille = min(ENVELOPPE_SPOT, (ENVELOPPE_SPOT * 0.02) / (plan["risk_pct"] / 100))
-    gain_tp1 = taille * abs(plan["tp1"] - plan["entry"]) / plan["entry"]
-    gain_tp2 = taille * abs(plan["tp2"] - plan["entry"]) / plan["entry"]
     frais = taille * FRAIS_ORDRE * 2
-    if gain_tp2 - frais <= 0:
-        return "⛔", "frais ≥ gain même à TP2 — à laisser passer"
-    if gain_tp1 - frais <= 0:
-        return "⚠️", "rentable seulement si TP2 atteint"
-    return "✅", "exploitable en spot"
+    net_tp1 = taille * abs(plan["tp1"] - plan["entry"]) / plan["entry"] - frais
+    net_tp2 = taille * abs(plan["tp2"] - plan["entry"]) / plan["entry"] - frais
+    plan["net_tp1"] = round(net_tp1, 2)
+    plan["net_tp2"] = round(net_tp2, 2)
+    nets = (f"Net possible ({taille:.0f} $, frais inclus) : "
+            f"TP1 {net_tp1:+.2f} $ · TP2 {net_tp2:+.2f} $")
+    if net_tp2 <= 0:
+        return "⛔", f"frais ≥ gain même à TP2 — à laisser passer\n{nets}"
+    if net_tp1 < 0:
+        return "⚠️", f"rentable seulement si TP2 atteint\n{nets}"
+    return "✅", f"exploitable en spot\n{nets}"
 
 
 def plan_text(plan: dict, support: float, resistance: float) -> str:

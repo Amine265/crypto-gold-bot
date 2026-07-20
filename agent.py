@@ -211,13 +211,14 @@ def type_signal(reason: str) -> str:
 
 
 def verdict_ok(plan: dict) -> bool:
-    """Réplique du filtre /spot : frais vs gains, verdict ✅ exigé."""
+    """Aligné sur le verdict ✅ des alertes : net TP2 > 0 ET net TP1 ≥ 0
+    (au pire, TP1 rembourse les frais ; le gain se joue à TP2)."""
     taille = min(ENVELOPPE, (ENVELOPPE * RISQUE_MAX) / (plan["risk_pct"] / 100))
     taille = min(taille, MAX_PAR_POSITION)
-    gain_tp2 = taille * abs(plan["tp2"] - plan["entry"]) / plan["entry"]
-    gain_tp1 = taille * abs(plan["tp1"] - plan["entry"]) / plan["entry"]
     frais_ar = taille * FRAIS * 2
-    return gain_tp2 - frais_ar > 0 and gain_tp1 - frais_ar > 0
+    net_tp1 = taille * abs(plan["tp1"] - plan["entry"]) / plan["entry"] - frais_ar
+    net_tp2 = taille * abs(plan["tp2"] - plan["entry"]) / plan["entry"] - frais_ar
+    return net_tp2 > 0 and net_tp1 >= 0
 
 # ------------------------- Statistiques adaptatives -------------------------
 

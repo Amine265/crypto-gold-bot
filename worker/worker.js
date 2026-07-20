@@ -299,7 +299,7 @@ function buildReply(cmd, data) {
         const verdict =
           netTP2 <= 0
             ? "⛔ frais ≥ gain : à laisser passer"
-            : gainTP1 - fraisAR <= 0
+            : gainTP1 - fraisAR < 0
               ? "⚠️ rentable seulement si TP2 atteint"
               : "✅ exploitable";
         return (
