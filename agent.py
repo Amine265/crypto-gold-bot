@@ -119,9 +119,18 @@ def ticker_price(pair: str) -> float:
     return float(next(iter(res.values()))["c"][0])
 
 
-def solde_usdc() -> float:
+def solde_usdc_disponible() -> float:
+    """USDC réellement disponible : Balance moins les USDC déjà réservés par
+    les ordres d'achat ouverts (Kraken Balance ignore ces réservations)."""
     bal = kraken_private("/0/private/Balance", {})
-    return float(bal.get("USDC", 0) or 0)
+    total = float(bal.get("USDC", 0) or 0)
+    reserves = 0.0
+    for o in open_orders().values():
+        d = o.get("descr", {})
+        if d.get("type") == "buy" and d.get("pair", "").replace("/", "").endswith("USDC"):
+            restant = float(o.get("vol", 0) or 0) - float(o.get("vol_exec", 0) or 0)
+            reserves += float(d.get("price", 0) or 0) * max(restant, 0.0)
+    return total - reserves
 
 
 def verifier_cle_sans_retrait() -> None:
@@ -174,8 +183,11 @@ def send_telegram(text: str, buttons: list | None = None) -> None:
     body = {"chat_id": TG_CHAT_ID, "text": text, "parse_mode": "HTML"}
     if buttons:
         body["reply_markup"] = {"inline_keyboard": buttons}
-    requests.post(f"https://api.telegram.org/bot{TG_TOKEN}/sendMessage",
-                  json=body, timeout=30).raise_for_status()
+    try:
+        requests.post(f"https://api.telegram.org/bot{TG_TOKEN}/sendMessage",
+                      json=body, timeout=30).raise_for_status()
+    except Exception as e:
+        print(f"TG échec ({e}) :", text)
 
 
 def load_json(path: Path, default):
@@ -264,10 +276,13 @@ def executer(plan: dict, validate: bool) -> dict | None:
         return None
     taille = min(MAX_PAR_POSITION,
                  (ENVELOPPE * RISQUE_MAX) / (plan["risk_pct"] / 100), ENVELOPPE)
-    if not validate and solde_usdc() < taille:
-        send_telegram(f"⏭️ <b>Agent</b> — solde USDC insuffisant pour {plan['asset']} "
-                      f"({taille:.0f} $ requis).")
-        return None
+    if not validate:
+        dispo = solde_usdc_disponible()
+        if dispo < taille:
+            send_telegram(f"⏭️ <b>Agent</b> — solde USDC disponible insuffisant pour "
+                          f"{plan['asset']} : {dispo:.2f} $ dispo (ordres d'achat ouverts "
+                          f"déduits), {taille:.0f} $ requis.")
+            return None
     entry = min(plan["entry"], prix)  # jamais au-dessus du plan
     vol_a = (taille / 2) / entry
     vol_b = (taille / 2) / entry
@@ -387,7 +402,10 @@ def main() -> int:
         print("Agent en pause (drapeau).")
         # on gère quand même les positions déjà ouvertes, par sécurité
         if mode != "blanc":
-            notes += gerer_positions(state)
+            try:
+                notes += gerer_positions(state)
+            except Exception as e:
+                send_telegram(f"❌ <b>Agent</b> — échec de la gestion des positions : {e}")
         for n in notes:
             send_telegram(n)
         STATE_FILE.write_text(json.dumps(state, indent=1))
@@ -396,9 +414,13 @@ def main() -> int:
     # Stats adaptatives
     notes += maj_stats(state, data)
 
-    # Gestion des positions en cours (modes réels)
+    # Gestion des positions en cours (modes réels) — un échec ici ne doit
+    # jamais empêcher le traitement des candidats
     if mode != "blanc":
-        notes += gerer_positions(state)
+        try:
+            notes += gerer_positions(state)
+        except Exception as e:
+            send_telegram(f"❌ <b>Agent</b> — échec de la gestion des positions : {e}")
 
     # Limite journalière
     jour = now_iso()[:10]
@@ -434,7 +456,16 @@ def main() -> int:
                     f"<i>{pl.get('reason','')}</i>",
                     buttons=[[{"text": "✅ Exécuter", "callback_data": f"ap:{sid}"}]])
             continue
-        trade = executer(pl, validate=(mode == "blanc"))
+        try:
+            trade = executer(pl, validate=(mode == "blanc"))
+        except Exception as e:
+            # un échec sur un candidat ne bloque jamais les suivants : signal
+            # marqué traité, approbation consommée, on continue
+            send_telegram(f"❌ <b>Agent</b> — échec sur {pl['asset']} : {e}")
+            executes.add(sid)
+            if sid in approbations:
+                consommees.append(sid)
+            continue
         executes.add(sid)
         if sid in approbations:
             consommees.append(sid)
@@ -451,7 +482,11 @@ def main() -> int:
                 notes.append(f"🤖 <b>Agent</b> — position ouverte sur {trade['asset']} : "
                              f"2 moitiés @ {trade['entry']:,.2f} $, TP1 {trade['tp1']:,.2f} $ "
                              f"(posé), SL {trade['sl']:,.2f} $ (posé), TP2 géré aux 15 min.")
-    consume_approvals(consommees)
+    try:
+        consume_approvals(consommees)
+    except Exception as e:
+        # ne pas perdre l'état local (trades placés !) si le worker est injoignable
+        send_telegram(f"❌ <b>Agent</b> — approbations non purgées côté worker : {e}")
     state["signaux_traites"] = list(executes)[-100:]
 
     # Publication de l'état pour le cockpit et /agent

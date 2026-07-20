@@ -2,7 +2,10 @@ name: Signaux Crypto & Or
 
 on:
   schedule:
-    - cron: "*/15 * * * *"  # toutes les 15 minutes
+    # toutes les 15 min, sur des minutes creuses : les créneaux :00/:15/:30/:45
+    # sont saturés chez GitHub et les runs planifiés y sautent ou dérivent de
+    # plusieurs heures (constaté : 1h30 à 3h entre deux runs le 20/07)
+    - cron: "6,21,36,51 * * * *"
   workflow_dispatch:        # lancement manuel pour tester
     inputs:
       test_blanc:
