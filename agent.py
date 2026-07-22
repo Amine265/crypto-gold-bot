@@ -386,6 +386,26 @@ def gerer_positions(state: dict) -> list[str]:
                 # Kraken explicite vaut mieux qu'une position laissée sans stop
                 vol_stop = math.floor(min(tr["vol_b"], solde if solde > 0 else tr["vol_b"])
                                       * 10 ** dec) / 10 ** dec
+                state["sl_consecutifs"] = 0
+                pnl_log(state, tr["asset"],
+                        tr["vol_a"] * (tr["tp1"] - tr["entry"])
+                        - tr["vol_a"] * tr["entry"] * FRAIS * 2, "TP1 (moitié A)")
+                if prix <= tr["entry"]:
+                    # Le prix est déjà repassé sous l'entrée : le stop à l'entrée
+                    # aurait déjà déclenché (et Kraken refuse un stop de vente
+                    # au-dessus du cours) -> solder B au marché, sortie ~BE.
+                    sell_market(tr["pair"], vol_stop)
+                    tr["vol_b"] = vol_stop
+                    tr["statut"] = "clos_be"
+                    pnl_log(state, tr["asset"],
+                            vol_stop * (prix - tr["entry"])
+                            - vol_stop * tr["entry"] * FRAIS * 2,
+                            f"BE (TP1 détecté, prix déjà sous l'entrée, sortie ~{prix:,.2f} $)")
+                    notes.append(f"🎯⚪ <b>Agent</b> — TP1 exécuté sur {tr['asset']} (moitié A "
+                                 f"vendue) mais prix déjà repassé sous l'entrée : moitié B "
+                                 f"soldée au marché à ~{prix:,.2f} $. Trade clos proche de "
+                                 f"l'équilibre, gain TP1 conservé.")
+                    continue
                 try:
                     r = kraken_private("/0/private/AddOrder", {
                         "pair": tr["pair"], "type": "sell", "ordertype": "stop-loss",
@@ -400,10 +420,6 @@ def gerer_positions(state: dict) -> list[str]:
                 tr["txid_stop"] = (r.get("txid") or [None])[0]
                 tr["vol_b"] = vol_stop
                 tr["statut"] = "tp1_fait"
-                state["sl_consecutifs"] = 0
-                pnl_log(state, tr["asset"],
-                        tr["vol_a"] * (tr["tp1"] - tr["entry"])
-                        - tr["vol_a"] * tr["entry"] * FRAIS * 2, "TP1 (moitié A)")
                 notes.append(f"🎯 <b>Agent</b> — TP1 exécuté sur {tr['asset']} : moitié A vendue, "
                              f"SL de la moitié B remonté à l'entrée ({tr['entry']:,.2f} $). "
                              f"Le trade ne peut plus perdre.")
