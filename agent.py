@@ -120,6 +120,24 @@ def ticker_price(pair: str) -> float:
     return float(next(iter(res.values()))["c"][0])
 
 
+_ASSETS: dict = {}
+
+def solde_actif(asset: str) -> float:
+    """Solde d'un actif, tolérant aux deux nomenclatures Kraken : Balance peut
+    indexer sous le code interne (« XETH ») ou l'altname (« ETH ») selon les
+    comptes, alors qu'AssetPairs renvoie toujours le code interne."""
+    bal = kraken_private("/0/private/Balance", {})
+    if asset in bal:
+        return float(bal[asset] or 0)
+    if not _ASSETS:
+        for k, v in kraken_public("/0/public/Assets").items():
+            _ASSETS[k] = v.get("altname", k)
+    for cle in (_ASSETS.get(asset, asset), "X" + asset, asset.lstrip("X")):
+        if cle in bal:
+            return float(bal[cle] or 0)
+    return 0.0
+
+
 def solde_usdc_disponible() -> float:
     """USDC réellement disponible : Balance moins les USDC déjà réservés par
     les ordres d'achat ouverts (Kraken Balance ignore ces réservations)."""
@@ -362,19 +380,23 @@ def gerer_positions(state: dict) -> list[str]:
                             and o["descr"]["type"] == "sell"):
                         cancel(txid)
                 base = pair_info(tr["pair"])["base"]
-                solde = float(kraken_private("/0/private/Balance", {}).get(base, 0) or 0)
+                solde = solde_actif(base)
                 dec = pair_info(tr["pair"])["lot_decimals"]
-                vol_stop = math.floor(min(tr["vol_b"], solde) * 10 ** dec) / 10 ** dec
-                if vol_stop <= 0:
+                # solde introuvable -> on tente quand même vol_b : un refus
+                # Kraken explicite vaut mieux qu'une position laissée sans stop
+                vol_stop = math.floor(min(tr["vol_b"], solde if solde > 0 else tr["vol_b"])
+                                      * 10 ** dec) / 10 ** dec
+                try:
+                    r = kraken_private("/0/private/AddOrder", {
+                        "pair": tr["pair"], "type": "sell", "ordertype": "stop-loss",
+                        "price": fmt_price(tr["pair"], tr["entry"]),
+                        "volume": fmt_vol(tr["pair"], vol_stop)})
+                except RuntimeError as e:
                     tr["statut"] = "clos_desync"
-                    notes.append(f"⚠️ <b>Agent</b> — TP1 détecté sur {tr['asset']} mais aucun "
-                                 f"solde {base} pour poser le stop à l'entrée : position "
-                                 f"marquée désynchronisée. À vérifier sur Kraken.")
+                    notes.append(f"⚠️ <b>Agent</b> — TP1 détecté sur {tr['asset']} mais pose du "
+                                 f"stop à l'entrée refusée ({e}) : position marquée "
+                                 f"désynchronisée, la moitié B est SANS stop. À vérifier sur Kraken.")
                     continue
-                r = kraken_private("/0/private/AddOrder", {
-                    "pair": tr["pair"], "type": "sell", "ordertype": "stop-loss",
-                    "price": fmt_price(tr["pair"], tr["entry"]),
-                    "volume": fmt_vol(tr["pair"], vol_stop)})
                 tr["txid_stop"] = (r.get("txid") or [None])[0]
                 tr["vol_b"] = vol_stop
                 tr["statut"] = "tp1_fait"
@@ -425,7 +447,7 @@ def gerer_positions(state: dict) -> list[str]:
             elif prix >= tr["tp2"]:
                 # Filet de sécurité : vérifier le solde réel avant de vendre B
                 base = pair_info(tr["pair"])["base"]
-                solde = float(kraken_private("/0/private/Balance", {}).get(base, 0) or 0)
+                solde = solde_actif(base)
                 if solde < tr["vol_b"] * 0.99:
                     tr["statut"] = "clos_desync"
                     notes.append(f"⚠️ <b>Agent</b> — TP2 atteint sur {tr['asset']} mais solde "
