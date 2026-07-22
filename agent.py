@@ -410,6 +410,23 @@ def test_blanc() -> int:
     return 0
 
 
+def publier_etat(data: dict, state: dict, mode: str, pause: bool) -> None:
+    """Publie l'état de l'agent pour le cockpit et /agent (même en pause)."""
+    data["agent"] = {
+        "mode": mode, "pause": pause,
+        "maj": now_iso(),
+        "trades_jour": state.get("daily", {}).get("n", 0),
+        "sl_consecutifs": state.get("sl_consecutifs", 0),
+        "validations_blanc": state.get("validations_blanc", 0),
+        "types_suspendus": state.get("types_suspendus", []),
+        "stats_types": state.get("stats_types", {}),
+        "pnl": state.get("pnl", [])[-200:],
+        "positions": [{k: t[k] for k in ("asset", "entry", "sl", "tp1", "tp2", "statut")}
+                      for t in state.get("trades", []) if t["statut"] in ("ouvert", "tp1_fait")],
+    }
+    DATA_FILE.write_text(json.dumps(data, indent=1))
+
+
 def main() -> int:
     if not KRAKEN_KEY or not KRAKEN_SECRET:
         print("Clés Kraken absentes — agent inactif.")
@@ -429,6 +446,7 @@ def main() -> int:
             send_telegram(f"⛔ <b>Agent en pause automatique</b> : {MAX_SL_CONSECUTIFS} SL "
                           f"consécutifs. Tape /reprise pour réarmer après analyse.")
             state["pause_annoncee"] = True
+        publier_etat(data, state, mode, True)
         STATE_FILE.write_text(json.dumps(state, indent=1))
         return 0
     if flags.get("pause"):
@@ -441,6 +459,7 @@ def main() -> int:
                 send_telegram(f"❌ <b>Agent</b> — échec de la gestion des positions : {e}")
         for n in notes:
             send_telegram(n)
+        publier_etat(data, state, mode, True)
         STATE_FILE.write_text(json.dumps(state, indent=1))
         return 0
 
@@ -523,18 +542,7 @@ def main() -> int:
     state["signaux_traites"] = list(executes)[-100:]
 
     # Publication de l'état pour le cockpit et /agent
-    data["agent"] = {
-        "mode": mode, "pause": bool(flags.get("pause")),
-        "maj": now_iso(),
-        "trades_jour": daily["n"], "sl_consecutifs": state.get("sl_consecutifs", 0),
-        "validations_blanc": state.get("validations_blanc", 0),
-        "types_suspendus": state.get("types_suspendus", []),
-        "stats_types": state.get("stats_types", {}),
-        "pnl": state.get("pnl", [])[-200:],
-        "positions": [{k: t[k] for k in ("asset", "entry", "sl", "tp1", "tp2", "statut")}
-                      for t in state.get("trades", []) if t["statut"] in ("ouvert", "tp1_fait")],
-    }
-    DATA_FILE.write_text(json.dumps(data, indent=1))
+    publier_etat(data, state, mode, bool(flags.get("pause")))
     STATE_FILE.write_text(json.dumps(state, indent=1))
 
     for n in notes:
