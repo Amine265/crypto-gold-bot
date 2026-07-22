@@ -56,7 +56,8 @@ AGENT_SECRET = os.environ.get("AGENT_SECRET", "")  # partagé avec le worker
 MAX_PAR_POSITION = 50.0    # $ par trade (les deux moitiés incluses)
 MAX_TRADES_JOUR = 5
 MAX_SL_CONSECUTIFS = 3
-FRAIS = 0.0025             # par ordre, estimation (palier 1 Kraken)
+FRAIS = 0.004              # par ordre, taker constaté sur ETHUSDC le 22/07
+                           # (0,10 $ sur 25 $) — les paires stables sont à 0,4 %
 RISQUE_MAX = 0.02          # part de l'enveloppe risquée par trade
 ENVELOPPE = 100.0
 
@@ -395,6 +396,22 @@ def gerer_positions(state: dict) -> list[str]:
                             tr["vol_a"] * (tr["tp1"] - tr["entry"])
                             - tr["vol_a"] * tr["entry"] * FRAIS * 2, "TP1 (moitié A)")
                     tr["pnl_tp1"] = True
+                if vendu_sl >= tr["vol_b"] * 0.99:
+                    # Le stop initial de B s'était déjà exécuté avant que l'agent
+                    # ne voie le TP1 : tout est vendu côté Kraken, on constate.
+                    vs = [v for v in ventes if float(v["price"]) <= tr["sl"] * 1.001]
+                    px = (sum(float(v["price"]) * float(v["vol"]) for v in vs)
+                          / sum(float(v["vol"]) for v in vs))
+                    tr["statut"] = "clos_sl"
+                    pnl_log(state, tr["asset"],
+                            tr["vol_b"] * (px - tr["entry"])
+                            - tr["vol_b"] * tr["entry"] * FRAIS * 2,
+                            f"SL moitié B au stop initial (~{px:,.2f} $), TP1 franchi")
+                    notes.append(f"🎯🛑 <b>Agent</b> — {tr['asset']} : TP1 avait été exécuté "
+                                 f"(moitié A vendue) mais le stop de B, resté au SL initial, "
+                                 f"s'est exécuté à ~{px:,.2f} $ avant ce passage. Trade clos : "
+                                 f"gain TP1 conservé, perte limitée sur B.")
+                    continue
                 if prix <= tr["entry"]:
                     # Le prix est déjà repassé sous l'entrée : le stop à l'entrée
                     # aurait déjà déclenché (et Kraken refuse un stop de vente
