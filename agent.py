@@ -135,6 +135,9 @@ def solde_actif(asset: str) -> float:
     for cle in (_ASSETS.get(asset, asset), "X" + asset, asset.lstrip("X")):
         if cle in bal:
             return float(bal[cle] or 0)
+    alt = _ASSETS.get(asset, asset)
+    lies = sorted(k for k in bal if asset in k or alt in k)
+    print(f"solde {asset} introuvable ; clés apparentées dans Balance : {lies or 'aucune'}")
     return 0.0
 
 
@@ -387,9 +390,11 @@ def gerer_positions(state: dict) -> list[str]:
                 vol_stop = math.floor(min(tr["vol_b"], solde if solde > 0 else tr["vol_b"])
                                       * 10 ** dec) / 10 ** dec
                 state["sl_consecutifs"] = 0
-                pnl_log(state, tr["asset"],
-                        tr["vol_a"] * (tr["tp1"] - tr["entry"])
-                        - tr["vol_a"] * tr["entry"] * FRAIS * 2, "TP1 (moitié A)")
+                if not tr.get("pnl_tp1"):
+                    pnl_log(state, tr["asset"],
+                            tr["vol_a"] * (tr["tp1"] - tr["entry"])
+                            - tr["vol_a"] * tr["entry"] * FRAIS * 2, "TP1 (moitié A)")
+                    tr["pnl_tp1"] = True
                 if prix <= tr["entry"]:
                     # Le prix est déjà repassé sous l'entrée : le stop à l'entrée
                     # aurait déjà déclenché (et Kraken refuse un stop de vente
@@ -546,6 +551,7 @@ def main() -> int:
             try:
                 notes += gerer_positions(state)
             except Exception as e:
+                print(f"échec gestion positions : {e}")
                 send_telegram(f"❌ <b>Agent</b> — échec de la gestion des positions : {e}")
         for n in notes:
             send_telegram(n)
