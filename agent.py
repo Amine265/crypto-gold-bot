@@ -34,6 +34,7 @@ import base64
 import hashlib
 import hmac
 import json
+import math
 import os
 import sys
 import time
@@ -169,6 +170,18 @@ def sell_market(pair: str, volume: float) -> dict:
 
 def open_orders() -> dict:
     return kraken_private("/0/private/OpenOrders", {}).get("open", {})
+
+
+def ventes_executees(pair: str, depuis_iso: str) -> list[dict]:
+    """Ventes réellement exécutées sur la paire depuis une date (OwnTrades).
+    C'est la preuve d'exécution qui fait foi — jamais le prix instantané,
+    qui peut avoir piqué TP1 ou SL puis être revenu entre deux passages."""
+    start = datetime.fromisoformat(depuis_iso).timestamp()
+    res = kraken_private("/0/private/TradesHistory", {"start": start})
+    noms = (pair, pair.replace("XBT", "BTC"))
+    return [t for t in res.get("trades", {}).values()
+            if t.get("type") == "sell"
+            and t.get("pair", "").replace("/", "") in noms]
 
 
 def cancel(txid: str) -> None:
@@ -308,37 +321,87 @@ def pnl_log(state: dict, asset: str, usd: float, quoi: str) -> None:
 
 
 def gerer_positions(state: dict) -> list[str]:
-    """Aux quarts d'heure : TP1 -> vendre A + remonter le SL de B à l'entrée ;
-    stop à l'entrée exécuté -> clore en BE ; TP2 -> vendre B (solde vérifié) ;
-    filet SL sur A si le stop initial de B est parti."""
+    """Aux quarts d'heure. Principe : l'état Kraken (exécutions, ordres, soldes)
+    fait foi — jamais le prix instantané, qui peut avoir touché TP1 ou SL puis
+    être revenu entre deux passages. TP1 vendu -> remonter le SL de B à
+    l'entrée ; stop à l'entrée exécuté -> clore en BE ; TP2 -> vendre B
+    (solde vérifié) ; stop initial de B exécuté -> filet : vendre A."""
     notes = []
     ouverts = open_orders()
     for tr in state.get("trades", []):
         if tr["statut"] not in ("ouvert", "tp1_fait"):
             continue
         prix = ticker_price(tr["pair"])
+        paires = (tr["pair"], tr["pair"].replace("XBT", "BTC"))
         d_entree_execute = tr["txid_a"] not in ouverts  # l'entrée A n'attend plus
-        if tr["statut"] == "ouvert" and prix >= tr["tp1"] and d_entree_execute:
-            # TP1 : Kraken a normalement vendu A tout seul (take-profit posé).
-            # On remonte le SL de B à l'entrée : annuler l'ancien stop, en reposer un.
-            for txid, o in ouverts.items():
-                if (o["descr"]["pair"].replace("/", "") in (tr["pair"], tr["pair"].replace("XBT", "BTC"))
-                        and o["descr"]["ordertype"] == "stop-loss"
-                        and o["descr"]["type"] == "sell"):
-                    cancel(txid)
-            r = kraken_private("/0/private/AddOrder", {
-                "pair": tr["pair"], "type": "sell", "ordertype": "stop-loss",
-                "price": fmt_price(tr["pair"], tr["entry"]),
-                "volume": fmt_vol(tr["pair"], tr["vol_b"])})
-            tr["txid_stop"] = (r.get("txid") or [None])[0]
-            tr["statut"] = "tp1_fait"
-            state["sl_consecutifs"] = 0
-            pnl_log(state, tr["asset"],
-                    tr["vol_a"] * (tr["tp1"] - tr["entry"])
-                    - tr["vol_a"] * tr["entry"] * FRAIS * 2, "TP1 (moitié A)")
-            notes.append(f"🎯 <b>Agent</b> — TP1 exécuté sur {tr['asset']} : moitié A vendue, "
-                         f"SL de la moitié B remonté à l'entrée ({tr['entry']:,.2f} $). "
-                         f"Le trade ne peut plus perdre.")
+        if tr["statut"] == "ouvert" and d_entree_execute:
+            # Volumes réellement exécutés : les closes Kraken portent sur le
+            # vol_exec de chaque exécution, pas sur le volume théorique
+            # (source des ordres « poussière » en cas d'exécution partielle)
+            if not tr.get("vols_reels") and tr["txid_b"] not in ouverts:
+                q = kraken_private("/0/private/QueryOrders",
+                                   {"txid": f"{tr['txid_a']},{tr['txid_b']}"})
+                oa, ob = q.get(tr["txid_a"], {}), q.get(tr["txid_b"], {})
+                if oa.get("status") == "closed" and ob.get("status") == "closed":
+                    tr["vol_a"] = float(oa["vol_exec"])
+                    tr["vol_b"] = float(ob["vol_exec"])
+                    tr["vols_reels"] = True
+            ventes = ventes_executees(tr["pair"], tr["ouvert_le"])
+            vendu_tp1 = sum(float(v["vol"]) for v in ventes
+                            if float(v["price"]) >= tr["tp1"] * 0.999)
+            vendu_sl = sum(float(v["vol"]) for v in ventes
+                           if float(v["price"]) <= tr["sl"] * 1.001)
+            if vendu_tp1 >= tr["vol_a"] * 0.99:
+                # TP1 : Kraken a vendu A (preuve : historique d'exécution).
+                # Annuler TOUS les stops de la paire (y compris une éventuelle
+                # poussière d'exécution partielle) et reposer UN stop à l'entrée
+                # pour le volume réellement détenu.
+                for txid, o in ouverts.items():
+                    if (o["descr"]["pair"].replace("/", "") in paires
+                            and o["descr"]["ordertype"].startswith("stop-loss")
+                            and o["descr"]["type"] == "sell"):
+                        cancel(txid)
+                base = pair_info(tr["pair"])["base"]
+                solde = float(kraken_private("/0/private/Balance", {}).get(base, 0) or 0)
+                dec = pair_info(tr["pair"])["lot_decimals"]
+                vol_stop = math.floor(min(tr["vol_b"], solde) * 10 ** dec) / 10 ** dec
+                if vol_stop <= 0:
+                    tr["statut"] = "clos_desync"
+                    notes.append(f"⚠️ <b>Agent</b> — TP1 détecté sur {tr['asset']} mais aucun "
+                                 f"solde {base} pour poser le stop à l'entrée : position "
+                                 f"marquée désynchronisée. À vérifier sur Kraken.")
+                    continue
+                r = kraken_private("/0/private/AddOrder", {
+                    "pair": tr["pair"], "type": "sell", "ordertype": "stop-loss",
+                    "price": fmt_price(tr["pair"], tr["entry"]),
+                    "volume": fmt_vol(tr["pair"], vol_stop)})
+                tr["txid_stop"] = (r.get("txid") or [None])[0]
+                tr["vol_b"] = vol_stop
+                tr["statut"] = "tp1_fait"
+                state["sl_consecutifs"] = 0
+                pnl_log(state, tr["asset"],
+                        tr["vol_a"] * (tr["tp1"] - tr["entry"])
+                        - tr["vol_a"] * tr["entry"] * FRAIS * 2, "TP1 (moitié A)")
+                notes.append(f"🎯 <b>Agent</b> — TP1 exécuté sur {tr['asset']} : moitié A vendue, "
+                             f"SL de la moitié B remonté à l'entrée ({tr['entry']:,.2f} $). "
+                             f"Le trade ne peut plus perdre.")
+            elif vendu_sl >= tr["vol_b"] * 0.99:
+                # Le stop initial de B s'est exécuté (preuve : historique).
+                # Filet : libérer A de son take-profit puis la vendre au marché.
+                for txid, o in ouverts.items():
+                    if (o["descr"]["pair"].replace("/", "") in paires
+                            and o["descr"]["ordertype"].startswith("take-profit")
+                            and o["descr"]["type"] == "sell"):
+                        cancel(txid)
+                sell_market(tr["pair"], tr["vol_a"])
+                tr["statut"] = "clos_sl"
+                pnl_log(state, tr["asset"],
+                        tr["vol_b"] * (tr["sl"] - tr["entry"])
+                        + tr["vol_a"] * (prix - tr["entry"])
+                        - (tr["vol_a"] + tr["vol_b"]) * tr["entry"] * FRAIS * 2, "SL")
+                state["sl_consecutifs"] = state.get("sl_consecutifs", 0) + 1
+                notes.append(f"🛑 <b>Agent</b> — SL sur {tr['asset']} : position soldée "
+                             f"({state['sl_consecutifs']} SL consécutif(s)).")
         elif tr["statut"] == "tp1_fait":
             # Retrouver le stop à l'entrée si son txid n'a pas été enregistré
             # (positions ouvertes avant ce correctif)
@@ -378,17 +441,6 @@ def gerer_positions(state: dict) -> list[str]:
                             - tr["vol_b"] * tr["entry"] * FRAIS * 2, "TP2 (moitié B)")
                     notes.append(f"🎯🎯 <b>Agent</b> — TP2 atteint sur {tr['asset']} : moitié B vendue "
                                  f"à ~{prix:,.2f} $. Trade complet gagnant.")
-        elif prix <= tr["sl"] * 0.999 and d_entree_execute and tr["statut"] == "ouvert":
-            # Le stop de B s'est déclenché côté Kraken ; filet : vendre A si encore détenu
-            sell_market(tr["pair"], tr["vol_a"])
-            tr["statut"] = "clos_sl"
-            pnl_log(state, tr["asset"],
-                    tr["vol_b"] * (tr["sl"] - tr["entry"])
-                    + tr["vol_a"] * (prix - tr["entry"])
-                    - (tr["vol_a"] + tr["vol_b"]) * tr["entry"] * FRAIS * 2, "SL")
-            state["sl_consecutifs"] = state.get("sl_consecutifs", 0) + 1
-            notes.append(f"🛑 <b>Agent</b> — SL sur {tr['asset']} : position soldée "
-                         f"({state['sl_consecutifs']} SL consécutif(s)).")
     state["trades"] = [t for t in state.get("trades", []) if t["statut"] != "valide"][-30:]
     return notes
 
