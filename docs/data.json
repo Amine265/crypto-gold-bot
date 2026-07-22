@@ -2,7 +2,7 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 65982.77,
+   "price": 65982.62,
    "rsi": 50.3,
    "sparkline": [
     62144.73,
@@ -29,12 +29,12 @@
     65513.83,
     66138.74,
     65804.86,
-    65982.77
+    65982.62
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 1935.73,
+   "price": 1935.67,
    "rsi": 54.3,
    "sparkline": [
     1739.09,
@@ -130,7 +130,7 @@
   "ripple": {
    "label": "XRP",
    "price": 1.14,
-   "rsi": 50.8,
+   "rsi": 50.7,
    "sparkline": [
     1.09,
     1.09,
@@ -162,7 +162,7 @@
   "chainlink": {
    "label": "LINK",
    "price": 8.64,
-   "rsi": 49.6,
+   "rsi": 49.7,
    "sparkline": [
     7.63,
     7.71,
@@ -928,7 +928,7 @@
    }
   }
  ],
- "market_updated": "2026-07-22T22:13:52+00:00",
+ "market_updated": "2026-07-22T22:14:26+00:00",
  "updated": "2026-07-22T22:13:31+00:00",
  "traders": [
   {
@@ -3744,7 +3744,7 @@
  "agent": {
   "mode": "auto",
   "pause": false,
-  "maj": "2026-07-22T22:14:06+00:00",
+  "maj": "2026-07-22T22:14:41+00:00",
   "trades_jour": 1,
   "sl_consecutifs": 0,
   "validations_blanc": 3,
@@ -3801,14 +3801,6 @@
     "tp1": 8.65,
     "tp2": 8.73,
     "statut": "tp1_fait"
-   },
-   {
-    "asset": "ETH",
-    "entry": 1942.34,
-    "sl": 1931.99,
-    "tp1": 1952.69,
-    "tp2": 1963.05,
-    "statut": "ouvert"
    }
   ]
  }
