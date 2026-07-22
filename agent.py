@@ -568,6 +568,7 @@ def main() -> int:
         try:
             notes += gerer_positions(state)
         except Exception as e:
+            print(f"échec gestion positions : {e}")
             send_telegram(f"❌ <b>Agent</b> — échec de la gestion des positions : {e}")
 
     # Limite journalière
