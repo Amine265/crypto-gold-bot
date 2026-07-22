@@ -929,44 +929,81 @@
   }
  ],
  "market_updated": "2026-07-22T19:50:20+00:00",
- "updated": "2026-07-22T18:17:52+00:00",
+ "updated": "2026-07-22T20:18:36+00:00",
  "traders": [
   {
-   "address": "0x37b81ab9e3ab04b9e3738e4891621205aaa31fd5",
-   "name": "0x37b81a",
-   "account_value": 7795692.615363,
-   "roi_30d": 2.8295004721,
-   "pnl_30d": 1440812.68,
+   "address": "0xb7e0b9fbc9479330d70bcc82a7d4325a20e8d1aa",
+   "name": "0xb7e0b9",
+   "account_value": 1182773.229392,
+   "roi_30d": 2.9383122478,
+   "pnl_30d": 882448.330048,
    "positions": [
     {
-     "coin": "HYPE",
+     "coin": "CASHCAT",
+     "side": "LONG",
+     "size": 3097812.0,
+     "entry": 0.128861,
+     "pnl": -235298.22021
+    },
+    {
+     "coin": "ETH",
      "side": "SHORT",
-     "size": 159700.0,
-     "entry": 66.7431,
-     "pnl": 1260053.02559
+     "size": 1538.4232,
+     "entry": 1941.9,
+     "pnl": 22935.48696
+    },
+    {
+     "coin": "PUMP",
+     "side": "LONG",
+     "size": 1209955405.0,
+     "entry": 0.001782,
+     "pnl": 155964.283583
+    },
+    {
+     "coin": "SOL",
+     "side": "SHORT",
+     "size": 17884.68,
+     "entry": 78.2525,
+     "pnl": 8219.27572
     }
    ]
   },
   {
-   "address": "0xbf49647d017805fcc576ac10f33a788e636f4258",
-   "name": "0xbf4964",
-   "account_value": 22929319.409556,
-   "roi_30d": 2.8247872142,
-   "pnl_30d": 99211.894057,
+   "address": "0x9cd0a696c7cbb9d44de99268194cb08e5684e5fe",
+   "name": "0x9cd0a6",
+   "account_value": 1410123.707792,
+   "roi_30d": 2.7997758048,
+   "pnl_30d": 3307343.754291,
    "positions": []
   },
   {
-   "address": "0x9cd0a696c7cbb9d44de99268194cb08e5684e5fe",
-   "name": "0x9cd0a6",
-   "account_value": 1400027.412737,
-   "roi_30d": 2.7912289573,
-   "pnl_30d": 3297247.459236,
+   "address": "0x0c6150ccada83c564aca79ead230e3c766525123",
+   "name": "0x0c6150",
+   "account_value": 883834.272109,
+   "roi_30d": 2.437,
+   "pnl_30d": 243.7,
    "positions": []
+  },
+  {
+   "address": "0x732f7178048a7329cb37e251845d4d39d62ab4ae",
+   "name": "0x732f71",
+   "account_value": 164512.393955,
+   "roi_30d": 638.97467488,
+   "pnl_30d": 63897.467488,
+   "positions": [
+    {
+     "coin": "XMR",
+     "side": "LONG",
+     "size": 69.2,
+     "entry": 361.27,
+     "pnl": -824.518
+    }
+   ]
   },
   {
    "address": "0xacee3f5bfdf6bfc8ac03f534059252b14204b330",
    "name": "0xacee3f",
-   "account_value": 182695.828802,
+   "account_value": 182698.100349,
    "roi_30d": 318.4263,
    "pnl_30d": 31842.63,
    "positions": []
@@ -974,7 +1011,7 @@
   {
    "address": "0xeaf2a783b50f1e692c2c3bb95c71efacdb53414a",
    "name": "0xeaf2a7",
-   "account_value": 312137.055978,
+   "account_value": 315733.66608,
    "roi_30d": 192.8218,
    "pnl_30d": 19282.18,
    "positions": []
@@ -982,53 +1019,53 @@
   {
    "address": "0x58e1b0e63c905d5982324fcd9108582623b8132e",
    "name": "0x58e1b0",
-   "account_value": 719820.167248,
-   "roi_30d": 117.235,
-   "pnl_30d": 11723.5,
-   "positions": []
-  },
-  {
-   "address": "0x99999999666044e4947cb725715e2a19762e15fe",
-   "name": "0x999999",
-   "account_value": 3081860.905269,
-   "roi_30d": 85.983,
-   "pnl_30d": 17196.6,
+   "account_value": 719861.417248,
+   "roi_30d": 117.6475,
+   "pnl_30d": 11764.75,
    "positions": []
   },
   {
    "address": "0x6807f127eaf85e3d0b9dbc7971bbed2afd041f8d",
    "name": "@TudorCross",
-   "account_value": 460459.357515,
-   "roi_30d": 78.9903791746,
-   "pnl_30d": 454953.474001,
+   "account_value": 510930.294906,
+   "roi_30d": 87.72215312,
+   "pnl_30d": 505245.052952,
    "positions": [
     {
      "coin": "BTC",
      "side": "SHORT",
-     "size": 79.24094,
+     "size": 61.33286,
      "entry": 65969.6,
-     "pnl": 1478.80609
+     "pnl": 5744.567232
     },
     {
      "coin": "HYPE",
      "side": "SHORT",
      "size": 1725.95,
      "entry": 58.2789,
-     "pnl": -991.573405
+     "pnl": -2498.327755
     },
     {
      "coin": "PUMP",
      "side": "SHORT",
-     "size": 594949290.0,
+     "size": 218831853.0,
      "entry": 0.002018,
-     "pnl": 63430.283615
+     "pnl": 23549.503283
     }
    ]
   },
   {
+   "address": "0x99999999666044e4947cb725715e2a19762e15fe",
+   "name": "0x999999",
+   "account_value": 3166604.598723,
+   "roi_30d": 85.983,
+   "pnl_30d": 17196.6,
+   "positions": []
+  },
+  {
    "address": "0x114d261bc6700f3da34c1dedfe3c6108c762576d",
    "name": "0x114d26",
-   "account_value": 116513.011422,
+   "account_value": 117219.378604,
    "roi_30d": 53.3829,
    "pnl_30d": 5338.29,
    "positions": []
@@ -1036,25 +1073,17 @@
   {
    "address": "0xbb28694c31aee7055cac720fefd347774b04aa78",
    "name": "0xbb2869",
-   "account_value": 147088.923916,
+   "account_value": 147088.939433,
    "roi_30d": 45.7515,
    "pnl_30d": 4575.15,
-   "positions": []
-  },
-  {
-   "address": "0x76184c92c5e17122a496fe1799adc77f4139c96e",
-   "name": "0x76184c",
-   "account_value": 537917.579986,
-   "roi_30d": 39.4102,
-   "pnl_30d": 3941.02,
    "positions": []
   }
  ],
  "paper": {
   "label": "\u00c9quilibr\u00e9",
   "start": 10000.0,
-  "cash": 8491.378105472015,
-  "equity": 9904.85,
+  "cash": 8482.150643364625,
+  "equity": 9899.86,
   "positions": [
    {
     "coin": "ETH",
@@ -1063,8 +1092,8 @@
     "amount": 500.0,
     "trader": "0x6807f1",
     "opened": "2026-07-15T17:01:52+00:00",
-    "price": 1935.95,
-    "pnl": -4.245565597895438
+    "price": 1926.95,
+    "pnl": -1.9013882739040853
    },
    {
     "coin": "PUMP",
@@ -1077,16 +1106,16 @@
     "pnl": -75.59764668674698
    },
    {
-    "coin": "HYPE",
-    "side": "SHORT",
-    "entry": 58.646,
-    "sl": 59.5194,
-    "tp": 56.8991,
-    "amount": 495.0945,
-    "trader": "@TudorCross",
-    "opened": "2026-07-22T09:34:10+00:00",
-    "price": 58.8535,
-    "pnl": -1.7517325776693724
+    "coin": "XMR",
+    "side": "LONG",
+    "entry": 349.435,
+    "sl": 345.9004,
+    "tp": 356.5043,
+    "amount": 495.24250000000006,
+    "trader": "0x732f71",
+    "opened": "2026-07-22T20:18:36+00:00",
+    "price": 349.435,
+    "pnl": 0.0
    }
   ],
   "history": [
@@ -1129,6 +1158,18 @@
    {
     "time": "2026-07-22T16:39:25+00:00",
     "note": "\ud83d\uded1 SL touch\u00e9 \u2014 cl\u00f4ture SHORT BTC \u00e0 66,349.50 $ (P&L -3 $)",
+    "trader": "auto",
+    "profil": "\u00c9quilibr\u00e9"
+   },
+   {
+    "time": "2026-07-22T20:18:36+00:00",
+    "note": "ouverture LONG XMR \u00e0 349.44 $ (495 $ virtuels) \u2014 SL 345.90 $ \u00b7 TP 356.50 $",
+    "trader": "0x732f71",
+    "profil": "\u00c9quilibr\u00e9"
+   },
+   {
+    "time": "2026-07-22T20:18:36+00:00",
+    "note": "\ud83d\uded1 SL touch\u00e9 \u2014 cl\u00f4ture SHORT HYPE \u00e0 59.72 $ (P&L -9 $)",
     "trader": "auto",
     "profil": "\u00c9quilibr\u00e9"
    }
@@ -1449,13 +1490,17 @@
    [
     "2026-07-22T18:17:52+00:00",
     9904.85
+   ],
+   [
+    "2026-07-22T20:18:36+00:00",
+    9899.86
    ]
   ],
   "traders": [
+   "0x732f71",
    "0xacee3f",
    "0xeaf2a7",
    "0x58e1b0",
-   "0x999999",
    "@TudorCross"
   ]
  },
@@ -1464,19 +1509,9 @@
   "prudent": {
    "label": "Prudent",
    "start": 10000.0,
-   "cash": 8817.835874239021,
-   "equity": 9988.67,
+   "cash": 9118.976707203363,
+   "equity": 9970.83,
    "positions": [
-    {
-     "coin": "ETH",
-     "side": "LONG",
-     "entry": 1919.65,
-     "amount": 300.0,
-     "trader": "0xf92912",
-     "opened": "2026-07-15T17:01:52+00:00",
-     "price": 1935.95,
-     "pnl": 2.5473393587372626
-    },
     {
      "coin": "LIT",
      "side": "LONG",
@@ -1484,8 +1519,8 @@
      "amount": 300.0492,
      "trader": "0xd487e2",
      "opened": "2026-07-15T20:11:20+00:00",
-     "price": 2.3235,
-     "pnl": -16.066098022362986
+     "price": 2.32095,
+     "pnl": -16.37776443512092
     },
     {
      "coin": "BTC",
@@ -1494,8 +1529,8 @@
      "amount": 299.9658,
      "trader": "0x98785f",
      "opened": "2026-07-15T23:05:37+00:00",
-     "price": 65950.5,
-     "pnl": 4.998697844133222
+     "price": 65881.5,
+     "pnl": 4.67963202429493
     },
     {
      "coin": "CASHCAT",
@@ -1506,8 +1541,8 @@
      "amount": 298.4154,
      "trader": "0xb7e0b9",
      "opened": "2026-07-17T06:24:55+00:00",
-     "price": 0.056053,
-     "pnl": -19.07207307615232
+     "price": 0.052881,
+     "pnl": -34.879916242484995
     }
    ],
    "history": [
@@ -1569,6 +1604,12 @@
      "time": "2026-07-19T19:20:46+00:00",
      "note": "\ud83c\udfaf TP touch\u00e9 \u2014 cl\u00f4ture LONG PUMP \u00e0 0.00 $ (P&L +26 $)",
      "trader": "auto",
+     "profil": "Prudent"
+    },
+    {
+     "time": "2026-07-22T20:18:36+00:00",
+     "note": "cl\u00f4ture LONG ETH \u00e0 1,926.95 $ (P&L +1 $)",
+     "trader": "0xb7e0b9",
      "profil": "Prudent"
     }
    ],
@@ -1884,19 +1925,23 @@
     [
      "2026-07-22T18:17:52+00:00",
      9988.67
+    ],
+    [
+     "2026-07-22T20:18:36+00:00",
+     9970.83
     ]
    ],
    "traders": [
-    "0x37b81a",
-    "0xbf4964",
-    "0x9cd0a6"
+    "0xb7e0b9",
+    "0x9cd0a6",
+    "0x0c6150"
    ]
   },
   "equilibre": {
    "label": "\u00c9quilibr\u00e9",
    "start": 10000.0,
-   "cash": 8491.378105472015,
-   "equity": 9904.85,
+   "cash": 8482.150643364625,
+   "equity": 9899.86,
    "positions": [
     {
      "coin": "ETH",
@@ -1905,8 +1950,8 @@
      "amount": 500.0,
      "trader": "0x6807f1",
      "opened": "2026-07-15T17:01:52+00:00",
-     "price": 1935.95,
-     "pnl": -4.245565597895438
+     "price": 1926.95,
+     "pnl": -1.9013882739040853
     },
     {
      "coin": "PUMP",
@@ -1919,16 +1964,16 @@
      "pnl": -75.59764668674698
     },
     {
-     "coin": "HYPE",
-     "side": "SHORT",
-     "entry": 58.646,
-     "sl": 59.5194,
-     "tp": 56.8991,
-     "amount": 495.0945,
-     "trader": "@TudorCross",
-     "opened": "2026-07-22T09:34:10+00:00",
-     "price": 58.8535,
-     "pnl": -1.7517325776693724
+     "coin": "XMR",
+     "side": "LONG",
+     "entry": 349.435,
+     "sl": 345.9004,
+     "tp": 356.5043,
+     "amount": 495.24250000000006,
+     "trader": "0x732f71",
+     "opened": "2026-07-22T20:18:36+00:00",
+     "price": 349.435,
+     "pnl": 0.0
     }
    ],
    "history": [
@@ -1971,6 +2016,18 @@
     {
      "time": "2026-07-22T16:39:25+00:00",
      "note": "\ud83d\uded1 SL touch\u00e9 \u2014 cl\u00f4ture SHORT BTC \u00e0 66,349.50 $ (P&L -3 $)",
+     "trader": "auto",
+     "profil": "\u00c9quilibr\u00e9"
+    },
+    {
+     "time": "2026-07-22T20:18:36+00:00",
+     "note": "ouverture LONG XMR \u00e0 349.44 $ (495 $ virtuels) \u2014 SL 345.90 $ \u00b7 TP 356.50 $",
+     "trader": "0x732f71",
+     "profil": "\u00c9quilibr\u00e9"
+    },
+    {
+     "time": "2026-07-22T20:18:36+00:00",
+     "note": "\ud83d\uded1 SL touch\u00e9 \u2014 cl\u00f4ture SHORT HYPE \u00e0 59.72 $ (P&L -9 $)",
      "trader": "auto",
      "profil": "\u00c9quilibr\u00e9"
     }
@@ -2291,21 +2348,25 @@
     [
      "2026-07-22T18:17:52+00:00",
      9904.85
+    ],
+    [
+     "2026-07-22T20:18:36+00:00",
+     9899.86
     ]
    ],
    "traders": [
+    "0x732f71",
     "0xacee3f",
     "0xeaf2a7",
     "0x58e1b0",
-    "0x999999",
     "@TudorCross"
    ]
   },
   "agressif": {
    "label": "Agressif",
    "start": 10000.0,
-   "cash": 8080.334487883373,
-   "equity": 10152.86,
+   "cash": 8060.63155972118,
+   "equity": 10137.85,
    "positions": [
     {
      "coin": "PUMP",
@@ -2320,16 +2381,16 @@
      "pnl": 50.30482347091012
     },
     {
-     "coin": "HYPE",
-     "side": "SHORT",
-     "entry": 58.646,
-     "sl": 59.5194,
-     "tp": 56.8991,
-     "amount": 1014.182,
-     "trader": "@TudorCross",
-     "opened": "2026-07-22T09:34:10+00:00",
-     "price": 58.8535,
-     "pnl": -3.5883566654161574
+     "coin": "XMR",
+     "side": "LONG",
+     "entry": 349.435,
+     "sl": 345.9004,
+     "tp": 356.5043,
+     "amount": 1015.2860000000001,
+     "trader": "0x732f71",
+     "opened": "2026-07-22T20:18:36+00:00",
+     "price": 349.435,
+     "pnl": 0.0
     }
    ],
    "history": [
@@ -2812,6 +2873,18 @@
      "note": "\ud83d\uded1 SL touch\u00e9 \u2014 cl\u00f4ture SHORT BTC \u00e0 66,349.50 $ (P&L -6 $)",
      "trader": "auto",
      "profil": "Agressif"
+    },
+    {
+     "time": "2026-07-22T20:18:36+00:00",
+     "note": "ouverture LONG XMR \u00e0 349.44 $ (1,015 $ virtuels) \u2014 SL 345.90 $ \u00b7 TP 356.50 $",
+     "trader": "0x732f71",
+     "profil": "Agressif"
+    },
+    {
+     "time": "2026-07-22T20:18:36+00:00",
+     "note": "\ud83d\uded1 SL touch\u00e9 \u2014 cl\u00f4ture SHORT HYPE \u00e0 59.72 $ (P&L -19 $)",
+     "trader": "auto",
+     "profil": "Agressif"
     }
    ],
    "equity_curve": [
@@ -3126,17 +3199,21 @@
     [
      "2026-07-22T18:17:52+00:00",
      10152.86
+    ],
+    [
+     "2026-07-22T20:18:36+00:00",
+     10137.85
     ]
    ],
    "traders": [
+    "0x732f71",
     "0xacee3f",
     "0xeaf2a7",
     "0x58e1b0",
-    "0x999999",
     "@TudorCross",
+    "0x999999",
     "0x114d26",
-    "0xbb2869",
-    "0x76184c"
+    "0xbb2869"
    ]
   }
  },
