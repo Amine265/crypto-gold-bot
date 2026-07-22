@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 65952.61,
-   "rsi": 49.5,
+   "price": 65925.83,
+   "rsi": 48.8,
    "sparkline": [
     62267.37,
     62570.82,
@@ -29,12 +29,12 @@
     65471.62,
     66253.73,
     65941.44,
-    65952.61
+    65925.83
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 1932.8,
+   "price": 1932.75,
    "rsi": 52.9,
    "sparkline": [
     1739.09,
@@ -97,8 +97,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 77.99,
-   "rsi": 52.8,
+   "price": 77.95,
+   "rsi": 52.3,
    "sparkline": [
     77.43,
     77.62,
@@ -124,13 +124,13 @@
     78.06,
     77.79,
     77.37,
-    77.99
+    77.95
    ]
   },
   "ripple": {
    "label": "XRP",
    "price": 1.14,
-   "rsi": 50.9,
+   "rsi": 50.7,
    "sparkline": [
     1.09,
     1.09,
@@ -162,7 +162,7 @@
   "chainlink": {
    "label": "LINK",
    "price": 8.63,
-   "rsi": 48.8,
+   "rsi": 48.4,
    "sparkline": [
     7.63,
     7.71,
@@ -928,7 +928,7 @@
    }
   }
  ],
- "market_updated": "2026-07-22T22:21:39+00:00",
+ "market_updated": "2026-07-22T22:24:40+00:00",
  "updated": "2026-07-22T22:13:31+00:00",
  "traders": [
   {
@@ -3744,7 +3744,7 @@
  "agent": {
   "mode": "auto",
   "pause": false,
-  "maj": "2026-07-22T22:21:54+00:00",
+  "maj": "2026-07-22T22:24:56+00:00",
   "trades_jour": 1,
   "sl_consecutifs": 0,
   "validations_blanc": 3,
