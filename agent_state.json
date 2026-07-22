@@ -66,7 +66,7 @@
    "vol_b": 0.32249742002063986,
    "txid_a": "OECOZT-SV5GI-XNRH5O",
    "txid_b": "O2P3VQ-YFO45-HK4HFN",
-   "statut": "tp1_fait",
+   "statut": "clos_be",
    "tp1_fait": false,
    "ouvert_le": "2026-07-20T17:16:27+00:00"
   },
@@ -124,6 +124,12 @@
    "asset": "LINK",
    "usd": 0.24,
    "quoi": "TP1 (moiti\u00e9 A)"
+  },
+  {
+   "time": "2026-07-21T17:46:00+00:00",
+   "asset": "SOL",
+   "usd": -0.2,
+   "quoi": "BE (stop \u00e0 l'entr\u00e9e, sortie ~77,30 $)"
   }
  ]
 }

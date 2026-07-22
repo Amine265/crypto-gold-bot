@@ -309,7 +309,8 @@ def pnl_log(state: dict, asset: str, usd: float, quoi: str) -> None:
 
 def gerer_positions(state: dict) -> list[str]:
     """Aux quarts d'heure : TP1 -> vendre A + remonter le SL de B à l'entrée ;
-    TP2 -> vendre B ; filet SL sur A si le stop de B est parti."""
+    stop à l'entrée exécuté -> clore en BE ; TP2 -> vendre B (solde vérifié) ;
+    filet SL sur A si le stop initial de B est parti."""
     notes = []
     ouverts = open_orders()
     for tr in state.get("trades", []):
@@ -325,10 +326,11 @@ def gerer_positions(state: dict) -> list[str]:
                         and o["descr"]["ordertype"] == "stop-loss"
                         and o["descr"]["type"] == "sell"):
                     cancel(txid)
-            kraken_private("/0/private/AddOrder", {
+            r = kraken_private("/0/private/AddOrder", {
                 "pair": tr["pair"], "type": "sell", "ordertype": "stop-loss",
                 "price": fmt_price(tr["pair"], tr["entry"]),
                 "volume": fmt_vol(tr["pair"], tr["vol_b"])})
+            tr["txid_stop"] = (r.get("txid") or [None])[0]
             tr["statut"] = "tp1_fait"
             state["sl_consecutifs"] = 0
             pnl_log(state, tr["asset"],
@@ -337,14 +339,45 @@ def gerer_positions(state: dict) -> list[str]:
             notes.append(f"🎯 <b>Agent</b> — TP1 exécuté sur {tr['asset']} : moitié A vendue, "
                          f"SL de la moitié B remonté à l'entrée ({tr['entry']:,.2f} $). "
                          f"Le trade ne peut plus perdre.")
-        elif tr["statut"] == "tp1_fait" and prix >= tr["tp2"]:
-            sell_market(tr["pair"], tr["vol_b"])
-            tr["statut"] = "clos_tp2"
-            pnl_log(state, tr["asset"],
-                    tr["vol_b"] * (prix - tr["entry"])
-                    - tr["vol_b"] * tr["entry"] * FRAIS * 2, "TP2 (moitié B)")
-            notes.append(f"🎯🎯 <b>Agent</b> — TP2 atteint sur {tr['asset']} : moitié B vendue "
-                         f"à ~{prix:,.2f} $. Trade complet gagnant.")
+        elif tr["statut"] == "tp1_fait":
+            # Retrouver le stop à l'entrée si son txid n'a pas été enregistré
+            # (positions ouvertes avant ce correctif)
+            if not tr.get("txid_stop"):
+                for txid, o in ouverts.items():
+                    if (o["descr"]["pair"].replace("/", "") in (tr["pair"], tr["pair"].replace("XBT", "BTC"))
+                            and o["descr"]["ordertype"] == "stop-loss"
+                            and o["descr"]["type"] == "sell"):
+                        tr["txid_stop"] = txid
+                        print(f"Stop adopté pour {tr['asset']} : {txid}")
+                        break
+            if tr.get("txid_stop") and tr["txid_stop"] not in ouverts:
+                # Le stop remonté à l'entrée s'est exécuté côté Kraken :
+                # la moitié B est déjà sortie, ne pas laisser la position fantôme
+                tr["statut"] = "clos_be"
+                pnl_log(state, tr["asset"],
+                        -tr["vol_b"] * tr["entry"] * FRAIS * 2, "BE (stop à l'entrée)")
+                notes.append(f"⚪ <b>Agent</b> — moitié B de {tr['asset']} stoppée à l'entrée "
+                             f"({tr['entry']:,.2f} $) : trade soldé à l'équilibre, "
+                             f"perte limitée aux frais.")
+            elif prix >= tr["tp2"]:
+                # Filet de sécurité : vérifier le solde réel avant de vendre B
+                base = pair_info(tr["pair"])["base"]
+                solde = float(kraken_private("/0/private/Balance", {}).get(base, 0) or 0)
+                if solde < tr["vol_b"] * 0.99:
+                    tr["statut"] = "clos_desync"
+                    notes.append(f"⚠️ <b>Agent</b> — TP2 atteint sur {tr['asset']} mais solde "
+                                 f"{base} insuffisant ({solde:.6f} vs {tr['vol_b']:.6f} attendu) : "
+                                 f"position marquée désynchronisée, rien vendu. À vérifier sur Kraken.")
+                else:
+                    if tr.get("txid_stop") and tr["txid_stop"] in ouverts:
+                        cancel(tr["txid_stop"])  # libérer la moitié B retenue par le stop
+                    sell_market(tr["pair"], tr["vol_b"])
+                    tr["statut"] = "clos_tp2"
+                    pnl_log(state, tr["asset"],
+                            tr["vol_b"] * (prix - tr["entry"])
+                            - tr["vol_b"] * tr["entry"] * FRAIS * 2, "TP2 (moitié B)")
+                    notes.append(f"🎯🎯 <b>Agent</b> — TP2 atteint sur {tr['asset']} : moitié B vendue "
+                                 f"à ~{prix:,.2f} $. Trade complet gagnant.")
         elif prix <= tr["sl"] * 0.999 and d_entree_execute and tr["statut"] == "ouvert":
             # Le stop de B s'est déclenché côté Kraken ; filet : vendre A si encore détenu
             sell_market(tr["pair"], tr["vol_a"])
