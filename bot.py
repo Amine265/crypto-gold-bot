@@ -133,6 +133,29 @@ def build_plan(price: float, atr: float, side: str) -> dict:
     }
 
 
+# Simulation multi-calibrage : 3 variantes de plan suivies en silence à chaque
+# signal d'achat, pour comparer les réglages SL/TP sur données réelles (/calibrages).
+# Aucun effet sur les alertes, verdicts ni l'agent.
+CALIBRAGES = {
+    "A": {"sl": 1.5, "tp1": 1.5, "tp2": 3.0},   # témoin (réglage actuel)
+    "B": {"sl": 1.5, "tp1": 2.5, "tp2": 5.0},   # ample
+    "C": {"sl": 2.5, "tp1": 2.5, "tp2": 5.0},   # large
+}
+
+
+def enregistrer_calibrages(data: dict, now: str, label: str, coin_id: str,
+                           price: float, atr: float) -> None:
+    for variante, k in CALIBRAGES.items():
+        data.setdefault("calibrages_actifs", []).append({
+            "time": now, "asset": label, "coin": coin_id, "variante": variante,
+            "entry": round(price, 2),
+            "sl": round(price - k["sl"] * atr, 2),
+            "tp1": round(price + k["tp1"] * atr, 2),
+            "tp2": round(price + k["tp2"] * atr, 2),
+            "tp1_franchi": False,
+        })
+
+
 ENVELOPPE_SPOT = 100.0   # $ — même valeur que le worker (/spot)
 FRAIS_ORDRE = 0.0025     # estimation par ordre
 
@@ -250,6 +273,43 @@ def suivre_plans(data: dict, now: str) -> list[str]:
     return alerts
 
 
+def suivre_calibrages(data: dict, now: str) -> None:
+    """Jumelle silencieuse de suivre_plans pour les variantes de calibrage.
+
+    Mêmes règles (franchissements sur le dernier prix connu, expiration 7 jours),
+    achats uniquement, aucun message Telegram — uniquement de la donnée pour
+    la commande /calibrages du worker.
+    """
+    from datetime import datetime, timedelta
+    restants = []
+    for pl in data.get("calibrages_actifs", []):
+        m = data.get("market", {}).get(pl["coin"])
+        if not m:
+            restants.append(pl)
+            continue
+        price = m["price"]
+        resultat = None
+        if price <= pl["sl"]:
+            resultat = "SL"
+        elif price >= pl["tp2"]:
+            resultat = "TP2"
+        elif not pl.get("tp1_franchi") and price >= pl["tp1"]:
+            pl["tp1_franchi"] = True
+        age = datetime.fromisoformat(now) - datetime.fromisoformat(pl["time"])
+        if not resultat and age > timedelta(days=7):
+            resultat = "expiré"
+        if resultat:
+            data.setdefault("calibrages_resultats", []).insert(0, {
+                **pl,
+                "time": now, "signal_time": pl["time"], "resultat": resultat,
+                "tp1_franchi": bool(pl.get("tp1_franchi")) or resultat == "TP2",
+                "sortie": price})
+        else:
+            restants.append(pl)
+    data["calibrages_actifs"] = restants[-60:]
+    data["calibrages_resultats"] = data.get("calibrages_resultats", [])[:200]
+
+
 def main() -> int:
     if not TG_TOKEN or not TG_CHAT_ID:
         print("ERREUR : définis TELEGRAM_TOKEN et TELEGRAM_CHAT_ID.")
@@ -314,6 +374,9 @@ def main() -> int:
                 {"time": now, "asset": label, "coin": coin_id, "type": side,
                  "reason": (res["buy"] + res["sell"])[0],
                  **plan, "tp1_franchi": False})
+            if side == "achat":
+                enregistrer_calibrages(data, now, label, coin_id,
+                                       res["price"], res["atr"])
 
         state[coin_id] = signature
         print(f"[{label}] prix={res['price']:,.2f}$ rsi={res['rsi']:.1f} "
@@ -343,6 +406,9 @@ def main() -> int:
     if suivis:
         send_telegram("📡 <b>Suivi des signaux</b>\n\n" + "\n\n".join(suivis))
         print(f"{len(suivis)} franchissement(s) de niveau annoncé(s).")
+
+    # Suivi silencieux des variantes de calibrage (données pour /calibrages)
+    suivre_calibrages(data, now)
 
     save_state(state)
     data["signals"] = data["signals"][:50]

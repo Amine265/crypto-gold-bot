@@ -374,6 +374,69 @@ function buildReply(cmd, data) {
       return { text: texte + pied, keyboard: kbCockpit };
     }
 
+    case "/calibrages": {
+      // Simulation multi-calibrage : compare 3 réglages SL/TP suivis en
+      // silence sur chaque signal d'achat. Purement informatif — aucun lien
+      // avec l'agent ni les verdicts des alertes.
+      const res = data.calibrages_resultats || [];
+      const DEFS = {
+        A: "témoin — SL 1,5 ATR · TP 1,5/3",
+        B: "ample — SL 1,5 ATR · TP 2,5/5",
+        C: "large — SL 2,5 ATR · TP 2,5/5",
+      };
+      if (!res.length)
+        return {
+          text:
+            "🧪 <b>Calibrages</b> — aucun résultat pour l'instant.\n" +
+            "À chaque signal d'achat, 3 variantes de plan sont suivies en silence :\n" +
+            Object.entries(DEFS).map(([v, d]) => `${v} : ${d}`).join("\n") +
+            "\nLes issues (TP2/SL/expiré) s'accumuleront ici.",
+          keyboard: kbCockpit,
+        };
+      const POS = 50;        // $ par trade simulé
+      const FR = 0.004;      // frais 0,40 % par ordre
+      const fraisAR = POS * FR * 2;  // achat + sortie(s), approx. sur le notionnel
+      // Logique deux moitiés : la moitié A sort à TP1 ; la moitié B sort à TP2,
+      // ou au BE (entrée) si TP1 était franchi avant le SL, sinon tout sort au SL.
+      const netTrade = (r) => {
+        const rel = (x) => (x - r.entry) / r.entry;
+        const demi = POS / 2;
+        let brut;
+        if (r.resultat === "TP2") brut = demi * rel(r.tp1) + demi * rel(r.tp2);
+        else if (r.tp1_franchi)
+          brut = demi * rel(r.tp1) + (r.resultat === "SL" ? 0 : demi * rel(r.sortie));
+        else brut = POS * rel(r.resultat === "SL" ? r.sl : r.sortie);
+        return brut - fraisAR;
+      };
+      const blocs = Object.entries(DEFS).map(([v, def]) => {
+        const arr = res.filter((r) => r.variante === v);
+        const n = arr.length;
+        if (!n) return `<b>${v}</b> (${def})\n  aucun résultat pour l'instant`;
+        const nb = (f) => arr.filter(f).length;
+        const pc = (x) => ((x / n) * 100).toFixed(0);
+        const tp2 = nb((r) => r.resultat === "TP2");
+        const sl = nb((r) => r.resultat === "SL");
+        const exp = n - tp2 - sl;
+        const esp = arr.reduce((s, r) => s + netTrade(r), 0) / n;
+        const ok = nb((r) => POS * (r.tp1 - r.entry) / r.entry - fraisAR >= 0);
+        return (
+          `<b>${v}</b> (${def}) — ${n} résolu${n > 1 ? "s" : ""}\n` +
+          `  🎯 TP2 ${tp2} (${pc(tp2)}%) · 🛑 SL ${sl} (${pc(sl)}%) · ⏳ expirés ${exp}\n` +
+          `  Espérance nette/trade : <b>${esp >= 0 ? "+" : ""}${esp.toFixed(2)} $</b>\n` +
+          `  Signaux ✅ avec frais réels : ${ok}/${n}`
+        );
+      });
+      return {
+        text:
+          `🧪 <b>Calibrages</b> — position ${POS} $ · frais ${(FR * 100).toFixed(2).replace(".", ",")} %/ordre\n\n` +
+          blocs.join("\n\n") +
+          "\n\n<i>Sortie deux moitiés : ½ à TP1, ½ à TP2 (ou BE après TP1, sinon SL). " +
+          "Expirés comptés au prix de sortie. Simulation sur niveaux de prix — " +
+          "pas un conseil financier.</i>",
+        keyboard: kbCockpit,
+      };
+    }
+
     case "/aide":
       return {
         text:
