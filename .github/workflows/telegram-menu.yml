@@ -1,0 +1,53 @@
+# Enregistre le menu officiel des commandes du bot (bouton / de Telegram)
+# et fait un diagnostic du webhook. À relancer manuellement (onglet Actions)
+# après tout ajout ou renommage de commande.
+name: telegram-menu
+
+on:
+  workflow_dispatch:
+
+jobs:
+  menu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Diagnostic webhook (sans afficher l'URL)
+        env:
+          TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        run: |
+          curl -s "https://api.telegram.org/bot$TOKEN/getWebhookInfo" \
+            | jq '{ok, webhook_defini: (.result.url != ""), en_attente: .result.pending_update_count, derniere_erreur: .result.last_error_message, date_derniere_erreur: (.result.last_error_date // empty | todate? // .)}'
+
+      - name: Enregistrer le menu des commandes
+        env:
+          TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        run: |
+          cat > menu.json <<'EOF'
+          {
+            "commands": [
+              { "command": "prix",         "description": "BTC, ETH, Or + RSI" },
+              { "command": "spot",         "description": "Plans d'achat dimensionnés pour l'enveloppe" },
+              { "command": "signaux",      "description": "Derniers signaux détectés" },
+              { "command": "bilan",        "description": "Historique et taux de réussite des signaux" },
+              { "command": "calibrages",   "description": "Comparatif des 3 réglages SL/TP simulés" },
+              { "command": "gains",        "description": "P&L réalisés : jour, 7 j, 30 j" },
+              { "command": "portefeuille", "description": "Les 3 profils simulés" },
+              { "command": "traders",      "description": "Top traders suivis" },
+              { "command": "agent",        "description": "État et pilotage de l'agent Kraken" },
+              { "command": "pause",        "description": "Suspendre les nouvelles entrées" },
+              { "command": "reprise",      "description": "Réarmer l'agent" },
+              { "command": "mode_blanc",   "description": "Validation Kraken sans exécution" },
+              { "command": "mode_bouton",  "description": "Chaque trade attend ton ✅" },
+              { "command": "mode_auto",    "description": "Exécution directe des signaux validés" },
+              { "command": "aide",         "description": "Rappel des commandes" }
+            ]
+          }
+          EOF
+          curl -s -X POST "https://api.telegram.org/bot$TOKEN/setMyCommands" \
+            -H "Content-Type: application/json" -d @menu.json | jq .
+
+      - name: Vérifier le menu enregistré
+        env:
+          TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        run: |
+          curl -s "https://api.telegram.org/bot$TOKEN/getMyCommands" \
+            | jq '{ok, nb_commandes: (.result | length), commandes: [.result[].command]}'

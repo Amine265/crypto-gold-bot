@@ -71,7 +71,8 @@ export default {
     if (!msg || !msg.text) return new Response("ok");
 
     const chatId = msg.chat.id;
-    const cmd = msg.text.trim().split(/[\s@]/)[0].toLowerCase();
+    let cmd = msg.text.trim().split(/[\s@]/)[0].toLowerCase();
+    if (cmd === "/calibrage") cmd = "/calibrages";
 
     // --- Commandes de pilotage de l'agent (écrivent dans KV) ---
     const pilotage = {
