@@ -90,6 +90,9 @@
   "0x877129026b8cb3ff1ed6c44c4a968bb92d67a302": {},
   "0xbf49647d017805fcc576ac10f33a788e636f4258": {},
   "0x732f7178048a7329cb37e251845d4d39d62ab4ae": {
+   "BTC": "SHORT",
+   "ETH": "SHORT",
+   "DOGE": "SHORT",
    "XMR": "LONG"
   },
   "0xc672604d798d8cbd0cf2cc654099f82bd02647ab": {},
@@ -111,7 +114,7 @@
   "prudent": {
    "start": 10000.0,
    "cash": 9119.25826764135,
-   "equity": 9937.57,
+   "equity": 9954.21,
    "positions": [
     {
      "coin": "LIT",
@@ -120,8 +123,8 @@
      "amount": 300.0492,
      "trader": "0xd487e2",
      "opened": "2026-07-15T20:11:20+00:00",
-     "price": 2.0741,
-     "pnl": -46.54829541131185
+     "price": 2.0715,
+     "pnl": -46.86607293020227
     },
     {
      "coin": "BTC",
@@ -130,8 +133,8 @@
      "amount": 299.9658,
      "trader": "0x98785f",
      "opened": "2026-07-15T23:05:37+00:00",
-     "price": 64243.5,
-     "pnl": -2.894713090127101
+     "price": 64204.5,
+     "pnl": -3.075054640470483
     },
     {
      "coin": "CASHCAT",
@@ -142,8 +145,8 @@
      "amount": 298.4154,
      "trader": "0xb7e0b9",
      "opened": "2026-07-17T06:24:55+00:00",
-     "price": 0.053724,
-     "pnl": -30.678777595190386
+     "price": 0.057164,
+     "pnl": -13.535341122244503
     }
    ],
    "history": [
@@ -686,13 +689,17 @@
     [
      "2026-07-25T15:14:35+00:00",
      9937.57
+    ],
+    [
+     "2026-07-25T17:11:07+00:00",
+     9954.21
     ]
    ]
   },
   "equilibre": {
    "start": 10000.0,
-   "cash": 8987.647066089881,
-   "equity": 9965.01,
+   "cash": 7991.146066089881,
+   "equity": 9962.65,
    "positions": [
     {
      "coin": "ETH",
@@ -701,8 +708,8 @@
      "amount": 500.0,
      "trader": "0x6807f1",
      "opened": "2026-07-15T17:01:52+00:00",
-     "price": 1868.85,
-     "pnl": 13.231578673195681
+     "price": 1868.65,
+     "pnl": 13.283671502617665
     },
     {
      "coin": "PUMP",
@@ -711,8 +718,32 @@
      "amount": 499.96850000000006,
      "trader": "0x6807f1",
      "opened": "2026-07-15T22:03:03+00:00",
-     "price": 0.001779,
-     "pnl": -35.84111536144578
+     "price": 0.001787,
+     "pnl": -38.250602108433725
+    },
+    {
+     "coin": "BTC",
+     "side": "SHORT",
+     "entry": 64204.5,
+     "sl": 64384.8214,
+     "tp": 63843.8571,
+     "amount": 498.25050000000005,
+     "trader": "0x732f71",
+     "opened": "2026-07-25T17:11:07+00:00",
+     "price": 64204.5,
+     "pnl": -0.0
+    },
+    {
+     "coin": "DOGE",
+     "side": "SHORT",
+     "entry": 0.072407,
+     "sl": 0.0731,
+     "tp": 0.0711,
+     "amount": 498.25050000000005,
+     "trader": "0x732f71",
+     "opened": "2026-07-25T17:11:07+00:00",
+     "price": 0.072407,
+     "pnl": -0.0
     }
    ],
    "history": [
@@ -774,6 +805,18 @@
      "time": "2026-07-23T23:07:13+00:00",
      "note": "\ud83c\udfaf TP touch\u00e9 \u2014 cl\u00f4ture LONG XMR \u00e0 356.67 $ (P&L +10 $)",
      "trader": "auto",
+     "profil": "\u00c9quilibr\u00e9"
+    },
+    {
+     "time": "2026-07-25T17:11:07+00:00",
+     "note": "ouverture SHORT BTC \u00e0 64,204.50 $ (498 $ virtuels) \u2014 SL 64,384.82 $ \u00b7 TP 63,843.86 $",
+     "trader": "0x732f71",
+     "profil": "\u00c9quilibr\u00e9"
+    },
+    {
+     "time": "2026-07-25T17:11:07+00:00",
+     "note": "ouverture SHORT DOGE \u00e0 0.07 $ (498 $ virtuels) \u2014 SL 0.07 $ \u00b7 TP 0.07 $",
+     "trader": "0x732f71",
      "profil": "\u00c9quilibr\u00e9"
     }
    ],
@@ -1205,33 +1248,56 @@
     [
      "2026-07-25T15:14:35+00:00",
      9965.01
+    ],
+    [
+     "2026-07-25T17:11:07+00:00",
+     9962.65
     ]
    ]
   },
   "agressif": {
    "start": 10000.0,
-   "cash": 10149.58064346149,
+   "cash": 7104.706643461488,
    "equity": 10149.58,
-   "positions": [],
+   "positions": [
+    {
+     "coin": "BTC",
+     "side": "SHORT",
+     "entry": 64204.5,
+     "sl": 64384.8214,
+     "tp": 63843.8571,
+     "amount": 1014.9580000000001,
+     "trader": "0x732f71",
+     "opened": "2026-07-25T17:11:07+00:00",
+     "price": 64204.5,
+     "pnl": -0.0
+    },
+    {
+     "coin": "ETH",
+     "side": "SHORT",
+     "entry": 1868.65,
+     "sl": 1875.7536,
+     "tp": 1854.4429,
+     "amount": 1014.9580000000001,
+     "trader": "0x732f71",
+     "opened": "2026-07-25T17:11:07+00:00",
+     "price": 1868.65,
+     "pnl": -0.0
+    },
+    {
+     "coin": "DOGE",
+     "side": "SHORT",
+     "entry": 0.072407,
+     "sl": 0.0731,
+     "tp": 0.0711,
+     "amount": 1014.9580000000001,
+     "trader": "0x732f71",
+     "opened": "2026-07-25T17:11:07+00:00",
+     "price": 0.072407,
+     "pnl": -0.0
+    }
+   ],
    "history": [
-    {
-     "time": "2026-07-17T03:31:51+00:00",
-     "note": "cl\u00f4ture SHORT HYPE \u00e0 60.57 $ (P&L +15 $)",
-     "trader": "@TudorCross",
-     "profil": "Agressif"
-    },
-    {
-     "time": "2026-07-17T03:31:51+00:00",
-     "note": "ouverture LONG HYPE \u00e0 60.57 $ (1,008 $ virtuels) \u2014 SL 59.04 $ \u00b7 TP 63.62 $",
-     "trader": "@TudorCross",
-     "profil": "Agressif"
-    },
-    {
-     "time": "2026-07-17T03:31:51+00:00",
-     "note": "cl\u00f4ture SHORT PUMP \u00e0 0.00 $ (P&L +10 $)",
-     "trader": "@TudorCross",
-     "profil": "Agressif"
-    },
     {
      "time": "2026-07-17T03:31:51+00:00",
      "note": "ouverture LONG PUMP \u00e0 0.00 $ (1,008 $ virtuels) \u2014 SL 0.00 $ \u00b7 TP 0.00 $",
@@ -1813,6 +1879,24 @@
      "note": "cl\u00f4ture LONG BTC \u00e0 64,151.50 $ (P&L +0 $)",
      "trader": "@TudorCross",
      "profil": "Agressif"
+    },
+    {
+     "time": "2026-07-25T17:11:07+00:00",
+     "note": "ouverture SHORT BTC \u00e0 64,204.50 $ (1,015 $ virtuels) \u2014 SL 64,384.82 $ \u00b7 TP 63,843.86 $",
+     "trader": "0x732f71",
+     "profil": "Agressif"
+    },
+    {
+     "time": "2026-07-25T17:11:07+00:00",
+     "note": "ouverture SHORT ETH \u00e0 1,868.65 $ (1,015 $ virtuels) \u2014 SL 1,875.75 $ \u00b7 TP 1,854.44 $",
+     "trader": "0x732f71",
+     "profil": "Agressif"
+    },
+    {
+     "time": "2026-07-25T17:11:07+00:00",
+     "note": "ouverture SHORT DOGE \u00e0 0.07 $ (1,015 $ virtuels) \u2014 SL 0.07 $ \u00b7 TP 0.07 $",
+     "trader": "0x732f71",
+     "profil": "Agressif"
     }
    ],
    "equity_curve": [
@@ -2238,6 +2322,10 @@
     ],
     [
      "2026-07-25T15:14:35+00:00",
+     10149.58
+    ],
+    [
+     "2026-07-25T17:11:07+00:00",
      10149.58
     ]
    ]
