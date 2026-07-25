@@ -15,7 +15,7 @@ jobs:
           TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
         run: |
           curl -s "https://api.telegram.org/bot$TOKEN/getWebhookInfo" \
-            | jq '{ok, webhook_defini: (.result.url != ""), en_attente: .result.pending_update_count, derniere_erreur: .result.last_error_message, date_derniere_erreur: (.result.last_error_date // empty | todate? // .)}'
+            | jq '{ok, webhook_defini: (.result.url != ""), en_attente: .result.pending_update_count, derniere_erreur: (.result.last_error_message // "aucune"), date_derniere_erreur: (.result.last_error_date | if . then todate else "—" end)}'
 
       - name: Enregistrer le menu des commandes
         env:
