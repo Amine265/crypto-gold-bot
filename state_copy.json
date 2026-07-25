@@ -11,6 +11,7 @@
   "0xcfa18ed6874b0bbc3f01adbd87620c4ef3383831": {},
   "0xb294964ceb670a21d34693da52a39c9837dd651f": {},
   "0x6807f127eaf85e3d0b9dbc7971bbed2afd041f8d": {
+   "SOL": "LONG",
    "AVAX": "LONG",
    "ARB": "LONG",
    "DOGE": "LONG",
@@ -27,7 +28,8 @@
    "HYPE": "SHORT",
    "PUMP": "SHORT",
    "ZEC": "LONG",
-   "LIT": "LONG"
+   "LIT": "LONG",
+   "CASHCAT": "SHORT"
   },
   "0x9cd0a696c7cbb9d44de99268194cb08e5684e5fe": {},
   "0x42b9594f12bddd170416e94c42e4cb5e42965f39": {
@@ -114,7 +116,7 @@
   "prudent": {
    "start": 10000.0,
    "cash": 9119.25826764135,
-   "equity": 9942.23,
+   "equity": 9934.07,
    "positions": [
     {
      "coin": "LIT",
@@ -123,8 +125,8 @@
      "amount": 300.0492,
      "trader": "0xd487e2",
      "opened": "2026-07-15T20:11:20+00:00",
-     "price": 2.05635,
-     "pnl": -48.71773808835211
+     "price": 2.04645,
+     "pnl": -49.92773710258865
     },
     {
      "coin": "BTC",
@@ -133,8 +135,8 @@
      "amount": 299.9658,
      "trader": "0x98785f",
      "opened": "2026-07-15T23:05:37+00:00",
-     "price": 64400.5,
-     "pnl": -2.1687227464370777
+     "price": 64280.5,
+     "pnl": -2.723619824416714
     },
     {
      "coin": "CASHCAT",
@@ -145,8 +147,8 @@
      "amount": 298.4154,
      "trader": "0xb7e0b9",
      "opened": "2026-07-17T06:24:55+00:00",
-     "price": 0.05495,
-     "pnl": -24.56893657314631
+     "price": 0.053667,
+     "pnl": -30.962840350701413
     }
    ],
    "history": [
@@ -697,13 +699,17 @@
     [
      "2026-07-25T19:22:26+00:00",
      9942.23
+    ],
+    [
+     "2026-07-25T21:05:06+00:00",
+     9934.07
     ]
    ]
   },
   "equilibre": {
    "start": 10000.0,
    "cash": 9495.739780363288,
-   "equity": 9958.36,
+   "equity": 9962.28,
    "positions": [
     {
      "coin": "PUMP",
@@ -712,8 +718,8 @@
      "amount": 499.96850000000006,
      "trader": "0x6807f1",
      "opened": "2026-07-15T22:03:03+00:00",
-     "price": 0.001784,
-     "pnl": -37.34704457831325
+     "price": 0.001771,
+     "pnl": -33.431628614457836
     }
    ],
    "history": [
@@ -1244,13 +1250,17 @@
     [
      "2026-07-25T19:22:26+00:00",
      9958.36
+    ],
+    [
+     "2026-07-25T21:05:06+00:00",
+     9962.28
     ]
    ]
   },
   "agressif": {
    "start": 10000.0,
-   "cash": 7094.0582530879,
-   "equity": 10138.93,
+   "cash": 5066.2722530879,
+   "equity": 10128.98,
    "positions": [
     {
      "coin": "WLD",
@@ -1261,8 +1271,8 @@
      "amount": 1014.9580000000001,
      "trader": "@TudorCross",
      "opened": "2026-07-25T19:22:26+00:00",
-     "price": 0.34906,
-     "pnl": 0.0
+     "price": 0.346,
+     "pnl": -8.89752902079874
     },
     {
      "coin": "HYPE",
@@ -1273,8 +1283,8 @@
      "amount": 1014.9580000000001,
      "trader": "@TudorCross",
      "opened": "2026-07-25T19:22:26+00:00",
-     "price": 58.3055,
-     "pnl": -0.0
+     "price": 58.0395,
+     "pnl": 4.63041785080319
     },
     {
      "coin": "ZEC",
@@ -1285,23 +1295,35 @@
      "amount": 1014.9580000000001,
      "trader": "@TudorCross",
      "opened": "2026-07-25T19:22:26+00:00",
-     "price": 485.845,
+     "price": 483.125,
+     "pnl": -5.6822356101226275
+    },
+    {
+     "coin": "SOL",
+     "side": "LONG",
+     "entry": 74.3205,
+     "sl": 73.9728,
+     "tp": 75.0159,
+     "amount": 1013.893,
+     "trader": "@TudorCross",
+     "opened": "2026-07-25T21:05:06+00:00",
+     "price": 74.3205,
      "pnl": 0.0
+    },
+    {
+     "coin": "CASHCAT",
+     "side": "SHORT",
+     "entry": 0.053667,
+     "sl": 0.0562,
+     "tp": 0.0487,
+     "amount": 1013.893,
+     "trader": "@TudorCross",
+     "opened": "2026-07-25T21:05:06+00:00",
+     "price": 0.053667,
+     "pnl": -0.0
     }
    ],
    "history": [
-    {
-     "time": "2026-07-17T13:58:03+00:00",
-     "note": "\ud83d\uded1 SL touch\u00e9 \u2014 cl\u00f4ture LONG UNI \u00e0 3.49 $ (P&L -23 $)",
-     "trader": "auto",
-     "profil": "Agressif"
-    },
-    {
-     "time": "2026-07-17T15:23:14+00:00",
-     "note": "\ud83c\udfaf TP touch\u00e9 \u2014 cl\u00f4ture LONG INJ \u00e0 5.05 $ (P&L +36 $)",
-     "trader": "auto",
-     "profil": "Agressif"
-    },
     {
      "time": "2026-07-17T17:20:32+00:00",
      "note": "ouverture LONG ZEC \u00e0 550.58 $ (1,009 $ virtuels) \u2014 SL 537.39 $ \u00b7 TP 576.94 $",
@@ -1889,6 +1911,18 @@
      "note": "ouverture LONG ZEC \u00e0 485.85 $ (1,015 $ virtuels) \u2014 SL 480.31 $ \u00b7 TP 496.91 $",
      "trader": "@TudorCross",
      "profil": "Agressif"
+    },
+    {
+     "time": "2026-07-25T21:05:06+00:00",
+     "note": "ouverture LONG SOL \u00e0 74.32 $ (1,014 $ virtuels) \u2014 SL 73.97 $ \u00b7 TP 75.02 $",
+     "trader": "@TudorCross",
+     "profil": "Agressif"
+    },
+    {
+     "time": "2026-07-25T21:05:06+00:00",
+     "note": "ouverture SHORT CASHCAT \u00e0 0.05 $ (1,014 $ virtuels) \u2014 SL 0.06 $ \u00b7 TP 0.05 $",
+     "trader": "@TudorCross",
+     "profil": "Agressif"
     }
    ],
    "equity_curve": [
@@ -2323,6 +2357,10 @@
     [
      "2026-07-25T19:22:26+00:00",
      10138.93
+    ],
+    [
+     "2026-07-25T21:05:06+00:00",
+     10128.98
     ]
    ]
   }
