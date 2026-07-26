@@ -950,68 +950,97 @@
   }
  ],
  "market_updated": "2026-07-25T23:45:55+00:00",
- "updated": "2026-07-25T22:07:31+00:00",
+ "updated": "2026-07-26T00:08:25+00:00",
  "traders": [
   {
-   "address": "0xadff7a767451023496724a8a10b8b43c5c7cc264",
-   "name": "0xadff7a",
-   "account_value": 840184.892536,
-   "roi_30d": 2.6805771811,
-   "pnl_30d": 93390.746823,
+   "address": "0x5624de00e8ae3527524a87b2112a162e76d3aa71",
+   "name": "0x5624de",
+   "account_value": 546088.9320319999,
+   "roi_30d": 2.7120521256,
+   "pnl_30d": 21968.504632,
    "positions": []
   },
   {
    "address": "0xb228e0b041f76f0431fe5106b96b1c60950211cb",
    "name": "0xb228e0",
-   "account_value": 551033.670361,
-   "roi_30d": 2.6260606952,
-   "pnl_30d": 67242.696164,
+   "account_value": 550508.645078,
+   "roi_30d": 2.6260607111,
+   "pnl_30d": 67242.696572,
    "positions": [
     {
      "coin": "PUMP",
      "side": "LONG",
      "size": 24.0,
      "entry": 0.001693,
-     "pnl": 0.002004
+     "pnl": 0.002148
     }
    ]
   },
   {
-   "address": "0x0c6150ccada83c564aca79ead230e3c766525123",
-   "name": "0x0c6150",
-   "account_value": 869063.863692,
-   "roi_30d": 2.437,
-   "pnl_30d": 243.7,
-   "positions": []
+   "address": "0xb0026ca48937bd18c5941c05decab68b0fcced8a",
+   "name": "0xb0026c",
+   "account_value": 2482061.313571,
+   "roi_30d": 2.3298494902,
+   "pnl_30d": 559632.762547,
+   "positions": [
+    {
+     "coin": "CASHCAT",
+     "side": "SHORT",
+     "size": 203428.0,
+     "entry": 0.122696,
+     "pnl": 14229.746145
+    },
+    {
+     "coin": "ETH",
+     "side": "SHORT",
+     "size": 674.2121,
+     "entry": 1925.48,
+     "pnl": 32837.271582
+    }
+   ]
   },
   {
    "address": "0x732f7178048a7329cb37e251845d4d39d62ab4ae",
    "name": "0x732f71",
-   "account_value": 163245.887358,
-   "roi_30d": 627.82971637,
-   "pnl_30d": 62782.971637,
+   "account_value": 163282.001519,
+   "roi_30d": 628.13800611,
+   "pnl_30d": 62813.800611,
    "positions": [
+    {
+     "coin": "AVAX",
+     "side": "LONG",
+     "size": 291.2,
+     "entry": 6.7746,
+     "pnl": 6.755944
+    },
+    {
+     "coin": "HYPE",
+     "side": "LONG",
+     "size": 10.07,
+     "entry": 58.115,
+     "pnl": 0.61427
+    },
     {
      "coin": "XMR",
      "side": "LONG",
      "size": 61.547,
      "entry": 361.27,
-     "pnl": 128.63323
+     "pnl": 228.95484
     }
    ]
   },
   {
    "address": "0x6d6d7c05ef7f31b31b618400495b4ce4092a5089",
    "name": "0x6d6d7c",
-   "account_value": 150279.863748,
-   "roi_30d": 491.111,
-   "pnl_30d": 49111.1,
+   "account_value": 150280.29405,
+   "roi_30d": 488.9161,
+   "pnl_30d": 48891.61,
    "positions": []
   },
   {
    "address": "0xacee3f5bfdf6bfc8ac03f534059252b14204b330",
    "name": "0xacee3f",
-   "account_value": 182671.268733,
+   "account_value": 182671.592499,
    "roi_30d": 318.4263,
    "pnl_30d": 31842.63,
    "positions": []
@@ -1019,7 +1048,7 @@
   {
    "address": "0xeaf2a783b50f1e692c2c3bb95c71efacdb53414a",
    "name": "0xeaf2a7",
-   "account_value": 312553.430002,
+   "account_value": 312539.072277,
    "roi_30d": 192.8218,
    "pnl_30d": 19282.18,
    "positions": []
@@ -1027,15 +1056,15 @@
   {
    "address": "0x58e1b0e63c905d5982324fcd9108582623b8132e",
    "name": "0x58e1b0",
-   "account_value": 721016.167248,
-   "roi_30d": 117.2725,
-   "pnl_30d": 11727.25,
+   "account_value": 721036.167248,
+   "roi_30d": 117.4725,
+   "pnl_30d": 11747.25,
    "positions": []
   },
   {
    "address": "0x042dc5e8d63a155860788c6f8cdde53a91d78c1f",
    "name": "0x042dc5",
-   "account_value": 164961.408945,
+   "account_value": 164966.627146,
    "roi_30d": 94.1336,
    "pnl_30d": 9413.36,
    "positions": []
@@ -1043,101 +1072,101 @@
   {
    "address": "0x8da9e2e97cfea9006512d9f25757e9c0a4982bfd",
    "name": "0x8da9e2",
-   "account_value": 185860.833244,
-   "roi_30d": 65.44195,
-   "pnl_30d": 13088.39,
+   "account_value": 185870.404754,
+   "roi_30d": 65.44225,
+   "pnl_30d": 13088.45,
    "positions": []
   },
   {
    "address": "0x6807f127eaf85e3d0b9dbc7971bbed2afd041f8d",
    "name": "@TudorCross",
-   "account_value": 526809.427851,
-   "roi_30d": 61.6485609631,
-   "pnl_30d": 518597.007022,
+   "account_value": 529223.99507,
+   "roi_30d": 47.254051255,
+   "pnl_30d": 518439.960034,
    "positions": [
     {
      "coin": "APT",
      "side": "LONG",
      "size": 48169.55,
      "entry": 0.6176,
-     "pnl": -186.985079
+     "pnl": -307.408954
     },
     {
      "coin": "ARB",
      "side": "LONG",
      "size": 529820.6,
      "entry": 0.08714,
-     "pnl": -2154.3947
+     "pnl": -2530.567326
     },
     {
      "coin": "AVAX",
      "side": "LONG",
      "size": 1548.28,
      "entry": 6.2843,
-     "pnl": 758.830568
+     "pnl": 794.441008
     },
     {
      "coin": "CASHCAT",
      "side": "SHORT",
-     "size": 41681.0,
-     "entry": 0.054026,
-     "pnl": 28.817274
+     "size": 67386.0,
+     "entry": 0.053635,
+     "pnl": 59.883202
     },
     {
      "coin": "DOGE",
      "side": "LONG",
-     "size": 763151.0,
-     "entry": 0.071847,
-     "pnl": 304.125475
+     "size": 1148008.0,
+     "entry": 0.071864,
+     "pnl": -90.847594
     },
     {
      "coin": "HBAR",
      "side": "LONG",
      "size": 234695.0,
      "entry": 0.072253,
-     "pnl": -379.643529
+     "pnl": -319.326914
     },
     {
      "coin": "HYPE",
      "side": "SHORT",
-     "size": 9977.9,
-     "entry": 58.2225,
-     "pnl": 1547.850885
+     "size": 10213.03,
+     "entry": 58.2178,
+     "pnl": 437.406635
     },
     {
      "coin": "JUP",
      "side": "LONG",
      "size": 210981.0,
      "entry": 0.189774,
-     "pnl": -524.11992
+     "pnl": -912.32496
     },
     {
      "coin": "LINK",
      "side": "LONG",
      "size": 9080.8,
      "entry": 8.43092,
-     "pnl": -531.44547
+     "pnl": -398.86579
     },
     {
      "coin": "LIT",
      "side": "LONG",
      "size": 87465.0,
      "entry": 2.099145,
-     "pnl": -3747.475113
+     "pnl": -1998.175113
     },
     {
      "coin": "NEAR",
      "side": "LONG",
      "size": 52913.1,
      "entry": 1.87237,
-     "pnl": -3771.12872
+     "pnl": -4130.9378
     },
     {
      "coin": "PUMP",
      "side": "SHORT",
      "size": 120073554.0,
      "entry": 0.001846,
-     "pnl": 8372.693627
+     "pnl": 7652.252303
     },
     {
      "coin": "SEI",
@@ -1151,42 +1180,42 @@
      "side": "LONG",
      "size": 205.36,
      "entry": 74.5149,
-     "pnl": -13.75627
+     "pnl": 11.09229
     },
     {
      "coin": "SUI",
      "side": "LONG",
      "size": 362053.4,
      "entry": 0.72464,
-     "pnl": -4217.982861
+     "pnl": -4685.031747
     },
     {
      "coin": "UNI",
      "side": "LONG",
      "size": 24542.0,
      "entry": 3.74053,
-     "pnl": -1534.83132
+     "pnl": -1512.74352
     },
     {
      "coin": "WLD",
      "side": "LONG",
      "size": 136898.7,
      "entry": 0.34975,
-     "pnl": -260.901588
+     "pnl": -645.586935
     },
     {
      "coin": "XRP",
      "side": "LONG",
      "size": 25714.0,
      "entry": 1.111673,
-     "pnl": -338.7532
+     "pnl": -343.896
     },
     {
      "coin": "ZEC",
      "side": "LONG",
      "size": 259.0,
      "entry": 483.9996,
-     "pnl": 220.2536
+     "pnl": 479.2536
     }
    ]
   }
@@ -1194,8 +1223,8 @@
  "paper": {
   "label": "\u00c9quilibr\u00e9",
   "start": 10000.0,
-  "cash": 9495.739780363288,
-  "equity": 9960.47,
+  "cash": 8499.69278036329,
+  "equity": 9958.66,
   "positions": [
    {
     "coin": "PUMP",
@@ -1204,8 +1233,32 @@
     "amount": 499.96850000000006,
     "trader": "0x6807f1",
     "opened": "2026-07-15T22:03:03+00:00",
-    "price": 0.001777,
-    "pnl": -35.238743674698775
+    "price": 0.001783,
+    "pnl": -37.045858734939785
+   },
+   {
+    "coin": "AVAX",
+    "side": "LONG",
+    "entry": 6.7978,
+    "sl": 6.6778,
+    "tp": 7.0379,
+    "amount": 498.0235,
+    "trader": "0x732f71",
+    "opened": "2026-07-26T00:08:25+00:00",
+    "price": 6.7978,
+    "pnl": 0.0
+   },
+   {
+    "coin": "HYPE",
+    "side": "LONG",
+    "entry": 58.1795,
+    "sl": 57.6407,
+    "tp": 59.2571,
+    "amount": 498.0235,
+    "trader": "0x732f71",
+    "opened": "2026-07-26T00:08:25+00:00",
+    "price": 58.1795,
+    "pnl": 0.0
    }
   ],
   "history": [
@@ -1296,6 +1349,18 @@
    {
     "time": "2026-07-25T19:22:26+00:00",
     "note": "cl\u00f4ture SHORT DOGE \u00e0 0.07 $ (P&L -2 $)",
+    "trader": "0x732f71",
+    "profil": "\u00c9quilibr\u00e9"
+   },
+   {
+    "time": "2026-07-26T00:08:25+00:00",
+    "note": "ouverture LONG AVAX \u00e0 6.80 $ (498 $ virtuels) \u2014 SL 6.68 $ \u00b7 TP 7.04 $",
+    "trader": "0x732f71",
+    "profil": "\u00c9quilibr\u00e9"
+   },
+   {
+    "time": "2026-07-26T00:08:25+00:00",
+    "note": "ouverture LONG HYPE \u00e0 58.18 $ (498 $ virtuels) \u2014 SL 57.64 $ \u00b7 TP 59.26 $",
     "trader": "0x732f71",
     "profil": "\u00c9quilibr\u00e9"
    }
@@ -1744,6 +1809,10 @@
    [
     "2026-07-25T22:07:31+00:00",
     9960.47
+   ],
+   [
+    "2026-07-26T00:08:25+00:00",
+    9958.66
    ]
   ],
   "traders": [
@@ -1760,7 +1829,7 @@
    "label": "Prudent",
    "start": 10000.0,
    "cash": 9119.25826764135,
-   "equity": 9933.87,
+   "equity": 9933.54,
    "positions": [
     {
      "coin": "LIT",
@@ -1769,8 +1838,8 @@
      "amount": 300.0492,
      "trader": "0xd487e2",
      "opened": "2026-07-15T20:11:20+00:00",
-     "price": 2.05655,
-     "pnl": -48.693293663822075
+     "price": 2.07595,
+     "pnl": -46.32218448440905
     },
     {
      "coin": "BTC",
@@ -1779,8 +1848,8 @@
      "amount": 299.9658,
      "trader": "0x98785f",
      "opened": "2026-07-15T23:05:37+00:00",
-     "price": 64367.5,
-     "pnl": -2.3213194428814776
+     "price": 64419.5,
+     "pnl": -2.0808640424236353
     },
     {
      "coin": "CASHCAT",
@@ -1791,8 +1860,8 @@
      "amount": 298.4154,
      "trader": "0xb7e0b9",
      "opened": "2026-07-17T06:24:55+00:00",
-     "price": 0.053297,
-     "pnl": -32.80675648296596
+     "price": 0.052707,
+     "pnl": -35.747055180360746
     }
    ],
    "history": [
@@ -2351,19 +2420,23 @@
     [
      "2026-07-25T22:07:31+00:00",
      9933.87
+    ],
+    [
+     "2026-07-26T00:08:25+00:00",
+     9933.54
     ]
    ],
    "traders": [
-    "0xadff7a",
+    "0x5624de",
     "0xb228e0",
-    "0x0c6150"
+    "0xb0026c"
    ]
   },
   "equilibre": {
    "label": "\u00c9quilibr\u00e9",
    "start": 10000.0,
-   "cash": 9495.739780363288,
-   "equity": 9960.47,
+   "cash": 8499.69278036329,
+   "equity": 9958.66,
    "positions": [
     {
      "coin": "PUMP",
@@ -2372,8 +2445,32 @@
      "amount": 499.96850000000006,
      "trader": "0x6807f1",
      "opened": "2026-07-15T22:03:03+00:00",
-     "price": 0.001777,
-     "pnl": -35.238743674698775
+     "price": 0.001783,
+     "pnl": -37.045858734939785
+    },
+    {
+     "coin": "AVAX",
+     "side": "LONG",
+     "entry": 6.7978,
+     "sl": 6.6778,
+     "tp": 7.0379,
+     "amount": 498.0235,
+     "trader": "0x732f71",
+     "opened": "2026-07-26T00:08:25+00:00",
+     "price": 6.7978,
+     "pnl": 0.0
+    },
+    {
+     "coin": "HYPE",
+     "side": "LONG",
+     "entry": 58.1795,
+     "sl": 57.6407,
+     "tp": 59.2571,
+     "amount": 498.0235,
+     "trader": "0x732f71",
+     "opened": "2026-07-26T00:08:25+00:00",
+     "price": 58.1795,
+     "pnl": 0.0
     }
    ],
    "history": [
@@ -2464,6 +2561,18 @@
     {
      "time": "2026-07-25T19:22:26+00:00",
      "note": "cl\u00f4ture SHORT DOGE \u00e0 0.07 $ (P&L -2 $)",
+     "trader": "0x732f71",
+     "profil": "\u00c9quilibr\u00e9"
+    },
+    {
+     "time": "2026-07-26T00:08:25+00:00",
+     "note": "ouverture LONG AVAX \u00e0 6.80 $ (498 $ virtuels) \u2014 SL 6.68 $ \u00b7 TP 7.04 $",
+     "trader": "0x732f71",
+     "profil": "\u00c9quilibr\u00e9"
+    },
+    {
+     "time": "2026-07-26T00:08:25+00:00",
+     "note": "ouverture LONG HYPE \u00e0 58.18 $ (498 $ virtuels) \u2014 SL 57.64 $ \u00b7 TP 59.26 $",
      "trader": "0x732f71",
      "profil": "\u00c9quilibr\u00e9"
     }
@@ -2912,6 +3021,10 @@
     [
      "2026-07-25T22:07:31+00:00",
      9960.47
+    ],
+    [
+     "2026-07-26T00:08:25+00:00",
+     9958.66
     ]
    ],
    "traders": [
@@ -2925,8 +3038,8 @@
   "agressif": {
    "label": "Agressif",
    "start": 10000.0,
-   "cash": 5066.2722530879,
-   "equity": 10146.27,
+   "cash": 3037.0182530879,
+   "equity": 10151.45,
    "positions": [
     {
      "coin": "WLD",
@@ -2937,8 +3050,8 @@
      "amount": 1014.9580000000001,
      "trader": "@TudorCross",
      "opened": "2026-07-25T19:22:26+00:00",
-     "price": 0.34788,
-     "pnl": -3.4310732825301047
+     "price": 0.34501,
+     "pnl": -11.776141351057122
     },
     {
      "coin": "HYPE",
@@ -2949,8 +3062,8 @@
      "amount": 1014.9580000000001,
      "trader": "@TudorCross",
      "opened": "2026-07-25T19:22:26+00:00",
-     "price": 58.0725,
-     "pnl": 4.0559675159291
+     "price": 58.1795,
+     "pnl": 2.1933558240647084
     },
     {
      "coin": "ZEC",
@@ -2961,8 +3074,8 @@
      "amount": 1014.9580000000001,
      "trader": "@TudorCross",
      "opened": "2026-07-25T19:22:26+00:00",
-     "price": 484.885,
-     "pnl": -2.0054949212198068
+     "price": 486.095,
+     "pnl": 0.5222643024009715
     },
     {
      "coin": "SOL",
@@ -2973,8 +3086,8 @@
      "amount": 1013.893,
      "trader": "@TudorCross",
      "opened": "2026-07-25T21:05:06+00:00",
-     "price": 74.4475,
-     "pnl": 1.732555768596951
+     "price": 74.5725,
+     "pnl": 3.437827194381223
     },
     {
      "coin": "CASHCAT",
@@ -2985,23 +3098,35 @@
      "amount": 1013.893,
      "trader": "@TudorCross",
      "opened": "2026-07-25T21:05:06+00:00",
-     "price": 0.053297,
-     "pnl": 6.990150558071111
+     "price": 0.052707,
+     "pnl": 18.13660685337363
+    },
+    {
+     "coin": "AVAX",
+     "side": "LONG",
+     "entry": 6.7978,
+     "sl": 6.6778,
+     "tp": 7.0379,
+     "amount": 1014.6270000000001,
+     "trader": "0x732f71",
+     "opened": "2026-07-26T00:08:25+00:00",
+     "price": 6.7978,
+     "pnl": 0.0
+    },
+    {
+     "coin": "HYPE",
+     "side": "LONG",
+     "entry": 58.1795,
+     "sl": 57.6407,
+     "tp": 59.2571,
+     "amount": 1014.6270000000001,
+     "trader": "0x732f71",
+     "opened": "2026-07-26T00:08:25+00:00",
+     "price": 58.1795,
+     "pnl": 0.0
     }
    ],
    "history": [
-    {
-     "time": "2026-07-17T17:20:32+00:00",
-     "note": "ouverture LONG ZEC \u00e0 550.58 $ (1,009 $ virtuels) \u2014 SL 537.39 $ \u00b7 TP 576.94 $",
-     "trader": "@TudorCross",
-     "profil": "Agressif"
-    },
-    {
-     "time": "2026-07-18T03:23:00+00:00",
-     "note": "ouverture LONG ETH \u00e0 1,843.65 $ (1,003 $ virtuels) \u2014 SL 1,828.10 $ \u00b7 TP 1,874.74 $",
-     "trader": "@TudorCross",
-     "profil": "Agressif"
-    },
     {
      "time": "2026-07-18T03:23:00+00:00",
      "note": "\ud83d\uded1 SL touch\u00e9 \u2014 cl\u00f4ture LONG AAVE \u00e0 89.28 $ (P&L -20 $)",
@@ -3589,6 +3714,18 @@
      "note": "ouverture SHORT CASHCAT \u00e0 0.05 $ (1,014 $ virtuels) \u2014 SL 0.06 $ \u00b7 TP 0.05 $",
      "trader": "@TudorCross",
      "profil": "Agressif"
+    },
+    {
+     "time": "2026-07-26T00:08:25+00:00",
+     "note": "ouverture LONG AVAX \u00e0 6.80 $ (1,015 $ virtuels) \u2014 SL 6.68 $ \u00b7 TP 7.04 $",
+     "trader": "0x732f71",
+     "profil": "Agressif"
+    },
+    {
+     "time": "2026-07-26T00:08:25+00:00",
+     "note": "ouverture LONG HYPE \u00e0 58.18 $ (1,015 $ virtuels) \u2014 SL 57.64 $ \u00b7 TP 59.26 $",
+     "trader": "0x732f71",
+     "profil": "Agressif"
     }
    ],
    "equity_curve": [
@@ -4031,6 +4168,10 @@
     [
      "2026-07-25T22:07:31+00:00",
      10146.27
+    ],
+    [
+     "2026-07-26T00:08:25+00:00",
+     10151.45
     ]
    ],
    "traders": [
