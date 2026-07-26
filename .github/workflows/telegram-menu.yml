@@ -32,6 +32,7 @@ jobs:
               { "command": "gains",        "description": "P&L réalisés : jour, 7 j, 30 j" },
               { "command": "portefeuille", "description": "Les 3 profils simulés" },
               { "command": "traders",      "description": "Top traders suivis" },
+              { "command": "b0",           "description": "Agent B0 : position vs SMA200 journalière" },
               { "command": "agent",        "description": "État et pilotage de l'agent Kraken" },
               { "command": "pause",        "description": "Suspendre les nouvelles entrées" },
               { "command": "reprise",      "description": "Réarmer l'agent" },

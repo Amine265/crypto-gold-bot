@@ -1,0 +1,64 @@
+# Agent B0 — croisement SMA200 journalière (b0_agent.py), la seule stratégie
+# exécutée sur Kraken. Un passage par jour, juste après la clôture UTC.
+name: Agent B0
+
+on:
+  schedule:
+    # 00:15 UTC : la bougie journalière vient de clôturer (minute creuse —
+    # les créneaux :00 saturés chez GitHub sautent ou dérivent, cf. signaux)
+    - cron: "15 0 * * *"
+  workflow_dispatch:
+    inputs:
+      TEST_B0:
+        description: "Test : tout dérouler (données, SMA200, décision) SANS passer d'ordre réel"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write           # nécessaire pour publier b0_state.json et data.json
+
+concurrency:
+  group: bot-crypto-or      # partagé avec les signaux : jamais deux runs en même temps
+  cancel-in-progress: false
+
+jobs:
+  b0:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # checkout fige le commit du déclenchement ; un run mis en file par la
+      # concurrence doit d'abord récupérer ce que le run précédent a poussé
+      - name: Se placer sur la pointe de main
+        run: git pull --rebase origin main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt
+
+      - name: Agent B0
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          KRAKEN_KEY: ${{ secrets.KRAKEN_KEY }}
+          KRAKEN_SECRET: ${{ secrets.KRAKEN_SECRET }}
+          FLAGS_URL: ${{ secrets.FLAGS_URL }}
+        run: |
+          if [ "${{ inputs.TEST_B0 }}" = "true" ]; then
+            TEST_B0=1 python b0_agent.py
+          else
+            python b0_agent.py
+          fi
+
+      - name: Publier l'état B0 (jamais en test)
+        if: ${{ inputs.TEST_B0 != true }}
+        run: |
+          git config user.name "bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add -A b0_state.json docs/data.json || true
+          git diff --cached --quiet || git commit -m "maj données cockpit (B0)"
+          git pull --rebase origin main
+          git push

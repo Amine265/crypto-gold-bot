@@ -76,8 +76,8 @@ export default {
 
     // --- Commandes de pilotage de l'agent (écrivent dans KV) ---
     const pilotage = {
-      "/pause": { pause: true, texte: "⏸️ Agent en pause. Les positions ouvertes restent gérées ; aucune nouvelle entrée." },
-      "/reprise": { pause: false, texte: "▶️ Agent réarmé." },
+      "/pause": { pause: true, texte: "⏸️ Agent en pause : B0 ne passera plus aucun ordre (un signal survenu pendant la pause est notifié mais pas exécuté)." },
+      "/reprise": { pause: false, texte: "▶️ Agent réarmé : B0 reprend au prochain passage quotidien." },
       "/mode_blanc": { mode: "blanc", texte: "🧪 Mode À BLANC : validation Kraken sans exécution." },
       "/mode_bouton": { mode: "bouton", texte: "🔘 Mode BOUTON : chaque trade attend ton ✅." },
       "/mode_auto": { mode: "auto", texte: "🤖 Mode AUTO : exécution directe des signaux ✅. Garde-fous actifs." },
@@ -375,6 +375,51 @@ function buildReply(cmd, data) {
       return { text: texte + pied, keyboard: kbCockpit };
     }
 
+    case "/b0": {
+      // État de l'agent B0 (croisement SMA200 journalière) publié par b0.yml
+      const b0 = data.b0;
+      if (!b0)
+        return {
+          text:
+            "📉 <b>B0</b> — pas encore d'état publié.\n" +
+            "L'agent tourne chaque jour à 00h15 UTC, juste après la clôture " +
+            "journalière ; son état apparaîtra ici après le premier passage.",
+          keyboard: kbCockpit,
+        };
+      const COINS = { BTC: "bitcoin", ETH: "ethereum" };
+      const blocs = Object.entries(b0.actifs || {}).map(([nom, a]) => {
+        const cote = a.au_dessus ? "🟢 AU-DESSUS" : "🔴 EN DESSOUS";
+        let pos = "  · aucune position";
+        if (a.position) {
+          const px = data.market?.[COINS[nom]]?.price;
+          const latent = px ? px * a.position.vol - a.position.cout_usd : null;
+          pos =
+            `  · position : ${a.position.vol} ${nom} — coût ${fmt(a.position.cout_usd, 2)} $` +
+            (latent !== null
+              ? `\n  · P&L latent : <b>${latent >= 0 ? "+" : ""}${latent.toFixed(2)} $</b> (prix ${fmt(px, 2)} $)`
+              : "");
+        }
+        const ev = a.dernier_evenement
+          ? `\n  · dernier événement : ${a.dernier_evenement.texte} <i>${heure(a.dernier_evenement.time)}</i>`
+          : "";
+        return (
+          `<b>${nom}</b> ${cote} de sa SMA200 depuis le ${a.depuis}\n` +
+          `  · clôture ${fmt(a.cloture, 2)} $ vs SMA200 ${fmt(a.sma200, 2)} $ (${a.date_cloture})\n` +
+          pos + ev
+        );
+      });
+      return {
+        text:
+          `📉 <b>Agent B0</b> — croisement SMA200 journalière · ${fmt(b0.alloc, 0)} $/actif` +
+          `${b0.pause ? " · ⏸️ EN PAUSE" : ""}\n\n` +
+          blocs.join("\n\n") +
+          `\n\n<i>Maj ${heure(b0.maj)} — un seul passage par jour, après la clôture UTC. ` +
+          `Achat au croisement haussier, vente totale au croisement baissier, rien d'autre. ` +
+          `/pause et /reprise s'appliquent aussi à B0.</i>`,
+        keyboard: kbCockpit,
+      };
+    }
+
     case "/calibrages": {
       // Simulation multi-calibrage : compare 3 réglages SL/TP suivis en
       // silence sur chaque signal d'achat. Purement informatif — aucun lien
@@ -442,7 +487,7 @@ function buildReply(cmd, data) {
       return {
         text:
           "📌 /prix — marchés + RSI\n/portefeuille — profils simulés\n" +
-          "/traders — top traders\n/signaux — derniers signaux\n/spot — plan spot\n/bilan — historique des signaux",
+          "/traders — top traders\n/signaux — derniers signaux\n/spot — plan spot\n/bilan — historique des signaux\n/b0 — agent B0 (SMA200 journalière)",
         keyboard: kbCockpit,
       };
 
