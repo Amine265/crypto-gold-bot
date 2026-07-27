@@ -5308,5 +5308,32 @@
    "resultat": "TP2",
    "sortie": 1901.45
   }
- ]
+ ],
+ "b0": {
+  "maj": "2026-07-27T04:01:59+00:00",
+  "pause": true,
+  "alloc": 45.0,
+  "actifs": {
+   "BTC": {
+    "au_dessus": false,
+    "depuis": "2026-04-27",
+    "cloture": 65319.74,
+    "sma200": 72146.36,
+    "source": "Kraken XBTUSDC",
+    "date_cloture": "2026-07-26",
+    "position": null,
+    "dernier_evenement": null
+   },
+   "ETH": {
+    "au_dessus": false,
+    "depuis": "2026-04-27",
+    "cloture": 1953.16,
+    "sma200": 2140.52,
+    "source": "Kraken ETHUSDC",
+    "date_cloture": "2026-07-26",
+    "position": null,
+    "dernier_evenement": null
+   }
+  }
+ }
 }
