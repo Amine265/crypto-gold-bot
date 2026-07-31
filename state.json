@@ -1,8 +1,8 @@
 {
-  "bitcoin": "Croisement baissier SMA20/SMA50 (death cross)",
+  "bitcoin": "",
   "ethereum": "",
-  "pax-gold": "",
-  "solana": "",
+  "pax-gold": "Croisement baissier SMA20/SMA50 (death cross)",
+  "solana": "Croisement baissier SMA20/SMA50 (death cross)",
   "ripple": "",
-  "chainlink": "Croisement baissier SMA20/SMA50 (death cross)"
+  "chainlink": ""
 }
