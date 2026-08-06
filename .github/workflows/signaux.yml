@@ -18,6 +18,10 @@ concurrency:
 jobs:
   analyse:
     runs-on: ubuntu-latest
+    # un run normal dure ~35 s ; au-delà de 5 min quelque chose pend,
+    # autant échouer vite que brûler du quota (ne couvre pas l'attente
+    # de runner en file, décomptée avant le démarrage du job)
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
 
