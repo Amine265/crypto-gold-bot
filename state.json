@@ -1,8 +1,8 @@
 {
-  "bitcoin": "Croisement haussier SMA20/SMA50 (golden cross)",
-  "ethereum": "",
+  "bitcoin": "",
+  "ethereum": "Croisement baissier du MACD",
   "pax-gold": "Croisement haussier du MACD",
-  "solana": "",
+  "solana": "Croisement baissier du MACD",
   "ripple": "",
-  "chainlink": ""
+  "chainlink": "Croisement baissier du MACD"
 }
