@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 65086.94,
-   "rsi": 58.2,
+   "price": 65152.27,
+   "rsi": 63.1,
    "sparkline": [
     65048.7,
     65106.23,
@@ -29,13 +29,13 @@
     65007.09,
     65071.64,
     64817.42,
-    65086.94
+    65152.27
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 1919.99,
-   "rsi": 52.5,
+   "price": 1924.24,
+   "rsi": 59.4,
    "sparkline": [
     1935.0,
     1961.34,
@@ -61,7 +61,7 @@
     1917.69,
     1922.27,
     1919.28,
-    1919.99
+    1924.24
    ]
   },
   "pax-gold": {
@@ -98,8 +98,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 77.16,
-   "rsi": 71.1,
+   "price": 77.39,
+   "rsi": 75.6,
    "sparkline": [
     76.0,
     76.59,
@@ -125,13 +125,13 @@
     74.93,
     76.28,
     76.35,
-    77.16
+    77.39
    ]
   },
   "ripple": {
    "label": "XRP",
    "price": 1.04,
-   "rsi": 54.9,
+   "rsi": 58.6,
    "sparkline": [
     1.11,
     1.11,
@@ -163,37 +163,53 @@
   "chainlink": {
    "label": "LINK",
    "price": 8.33,
-   "rsi": 54.6,
+   "rsi": 56.4,
    "sparkline": [
-    8.58,
-    8.78,
-    8.34,
-    8.3,
-    8.36,
-    8.4,
+    8.7,
+    8.77,
     8.32,
-    8.47,
-    8.26,
-    8.22,
-    8.08,
-    8.36,
-    8.34,
-    8.2,
-    8.12,
-    8.24,
-    8.14,
+    8.37,
+    8.39,
     8.21,
-    8.18,
+    8.36,
+    8.46,
+    8.13,
+    8.21,
+    8.03,
+    8.38,
+    8.39,
+    8.17,
+    8.21,
     8.19,
-    8.28,
+    8.17,
     8.18,
-    8.34,
+    8.09,
+    8.2,
+    8.27,
+    8.26,
+    8.33,
     8.34,
     8.33
    ]
   }
  },
  "signals": [
+  {
+   "time": "2026-08-09T21:53:34+00:00",
+   "asset": "BTC",
+   "type": "achat",
+   "reason": "Croisement haussier SMA20/SMA50 (golden cross)",
+   "plan": {
+    "entry": 65152.27,
+    "sl": 65083.1,
+    "tp1": 65221.43,
+    "tp2": 65290.59,
+    "risk_pct": 0.11,
+    "net_tp1": -0.39,
+    "net_tp2": -0.29,
+    "verdict": "\u26d4"
+   }
+  },
   {
    "time": "2026-08-09T21:17:21+00:00",
    "asset": "LINK",
@@ -927,23 +943,9 @@
     "net_tp2": 0.36,
     "verdict": "\u26a0\ufe0f"
    }
-  },
-  {
-   "time": "2026-08-05T14:39:47+00:00",
-   "asset": "LINK",
-   "type": "vente",
-   "reason": "Croisement baissier du MACD",
-   "plan": {
-    "entry": 8.12,
-    "sl": 8.16,
-    "tp1": 8.09,
-    "tp2": 8.05,
-    "risk_pct": 0.43,
-    "verdict": "\u2139\ufe0f"
-   }
   }
  ],
- "market_updated": "2026-08-09T21:17:21+00:00",
+ "market_updated": "2026-08-09T21:53:34+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
@@ -4242,7 +4244,7 @@
    "net_tp1": -0.23,
    "net_tp2": 0.04,
    "verdict": "\u26a0\ufe0f",
-   "tp1_franchi": false
+   "tp1_franchi": true
   },
   {
    "time": "2026-08-09T15:40:50+00:00",
@@ -4304,24 +4306,21 @@
    "net_tp1": -0.4,
    "net_tp2": -0.3,
    "verdict": "\u26d4",
-   "tp1_franchi": false
-  },
-  {
-   "time": "2026-08-09T21:17:21+00:00",
-   "asset": "ETH",
-   "coin": "ethereum",
-   "type": "vente",
-   "reason": "Croisement baissier du MACD",
-   "entry": 1919.99,
-   "sl": 1923.05,
-   "tp1": 1916.93,
-   "tp2": 1913.86,
-   "risk_pct": 0.16,
-   "verdict": "\u2139\ufe0f",
-   "tp1_franchi": false
+   "tp1_franchi": true
   }
  ],
  "signaux_resultats": [
+  {
+   "time": "2026-08-09T21:53:34+00:00",
+   "signal_time": "2026-08-09T21:17:21+00:00",
+   "asset": "ETH",
+   "type": "vente",
+   "resultat": "SL",
+   "reason": "Croisement baissier du MACD",
+   "tp1_franchi": false,
+   "entry": 1919.99,
+   "sortie": 1924.24
+  },
   {
    "time": "2026-08-09T19:52:07+00:00",
    "signal_time": "2026-08-09T16:59:41+00:00",
@@ -4860,17 +4859,6 @@
    "tp1_franchi": false,
    "entry": 1864.71,
    "sortie": 1850.96
-  },
-  {
-   "time": "2026-08-03T15:11:54+00:00",
-   "signal_time": "2026-08-03T12:02:56+00:00",
-   "asset": "BTC",
-   "type": "vente",
-   "resultat": "SL",
-   "reason": "Croisement baissier SMA20/SMA50 (death cross)",
-   "tp1_franchi": false,
-   "entry": 62506.17,
-   "sortie": 63756.71
   }
  ],
  "agent": {
@@ -5032,7 +5020,7 @@
    "sl": 76.87,
    "tp1": 77.29,
    "tp2": 77.5,
-   "tp1_franchi": false
+   "tp1_franchi": true
   },
   {
    "time": "2026-08-09T15:40:50+00:00",
@@ -5142,7 +5130,7 @@
    "sl": 65022.54,
    "tp1": 65151.35,
    "tp2": 65215.75,
-   "tp1_franchi": false
+   "tp1_franchi": true
   },
   {
    "time": "2026-08-09T21:17:21+00:00",
