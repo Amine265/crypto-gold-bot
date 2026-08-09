@@ -3,6 +3,6 @@
   "ethereum": "Croisement baissier du MACD",
   "pax-gold": "Croisement haussier du MACD",
   "solana": "Croisement baissier du MACD",
-  "ripple": "",
-  "chainlink": "Croisement baissier du MACD"
+  "ripple": "Croisement baissier du MACD",
+  "chainlink": ""
 }
