@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 62974.6,
-   "rsi": 48.7,
+   "price": 62990.41,
+   "rsi": 49.5,
    "sparkline": [
     63061.43,
     63509.78,
@@ -29,13 +29,13 @@
     63378.8,
     62781.08,
     62950.23,
-    62974.6
+    62990.41
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 1880.52,
-   "rsi": 52.0,
+   "price": 1882.17,
+   "rsi": 54.7,
    "sparkline": [
     1871.99,
     1878.81,
@@ -61,7 +61,7 @@
     1885.71,
     1875.04,
     1880.24,
-    1880.52
+    1882.17
    ]
   },
   "pax-gold": {
@@ -98,8 +98,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 75.43,
-   "rsi": 52.4,
+   "price": 75.45,
+   "rsi": 53.0,
    "sparkline": [
     72.92,
     73.47,
@@ -125,13 +125,13 @@
     76.2,
     75.41,
     75.29,
-    75.43
+    75.45
    ]
   },
   "ripple": {
    "label": "XRP",
    "price": 1.0,
-   "rsi": 45.4,
+   "rsi": 48.4,
    "sparkline": [
     1.06,
     1.08,
@@ -163,7 +163,7 @@
   "chainlink": {
    "label": "LINK",
    "price": 9.49,
-   "rsi": 66.4,
+   "rsi": 66.2,
    "sparkline": [
     8.1,
     8.39,
@@ -194,6 +194,22 @@
   }
  },
  "signals": [
+  {
+   "time": "2026-08-15T14:56:15+00:00",
+   "asset": "ETH",
+   "type": "achat",
+   "reason": "Croisement haussier SMA20/SMA50 (golden cross)",
+   "plan": {
+    "entry": 1882.17,
+    "sl": 1879.45,
+    "tp1": 1884.89,
+    "tp2": 1887.6,
+    "risk_pct": 0.14,
+    "net_tp1": -0.36,
+    "net_tp2": -0.21,
+    "verdict": "\u26d4"
+   }
+  },
   {
    "time": "2026-08-15T14:34:49+00:00",
    "asset": "ETH",
@@ -927,25 +943,9 @@
     "net_tp2": 0.43,
     "verdict": "\u26a0\ufe0f"
    }
-  },
-  {
-   "time": "2026-08-11T20:31:35+00:00",
-   "asset": "SOL",
-   "type": "achat",
-   "reason": "Croisement haussier du MACD",
-   "plan": {
-    "entry": 76.0,
-    "sl": 75.64,
-    "tp1": 76.35,
-    "tp2": 76.7,
-    "risk_pct": 0.46,
-    "net_tp1": -0.04,
-    "net_tp2": 0.42,
-    "verdict": "\u26a0\ufe0f"
-   }
   }
  ],
- "market_updated": "2026-08-15T14:34:49+00:00",
+ "market_updated": "2026-08-15T14:56:15+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
