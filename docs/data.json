@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 63039.82,
-   "rsi": 52.4,
+   "price": 63035.65,
+   "rsi": 52.1,
    "sparkline": [
     62885.13,
     63433.93,
@@ -29,13 +29,13 @@
     63452.96,
     62655.82,
     63075.01,
-    63039.82
+    63035.65
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 1882.98,
-   "rsi": 56.0,
+   "price": 1883.47,
+   "rsi": 56.8,
    "sparkline": [
     1866.66,
     1875.54,
@@ -61,7 +61,7 @@
     1885.88,
     1870.94,
     1883.22,
-    1882.98
+    1883.47
    ]
   },
   "pax-gold": {
@@ -98,8 +98,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 75.4,
-   "rsi": 51.2,
+   "price": 75.46,
+   "rsi": 53.1,
    "sparkline": [
     72.65,
     73.36,
@@ -125,13 +125,13 @@
     76.16,
     75.38,
     75.58,
-    75.4
+    75.46
    ]
   },
   "ripple": {
    "label": "XRP",
    "price": 1.0,
-   "rsi": 48.0,
+   "rsi": 50.6,
    "sparkline": [
     1.06,
     1.08,
@@ -162,8 +162,8 @@
   },
   "chainlink": {
    "label": "LINK",
-   "price": 9.55,
-   "rsi": 69.4,
+   "price": 9.6,
+   "rsi": 71.2,
    "sparkline": [
     8.08,
     8.36,
@@ -189,11 +189,41 @@
     8.84,
     8.82,
     9.7,
-    9.55
+    9.6
    ]
   }
  },
  "signals": [
+  {
+   "time": "2026-08-15T17:06:38+00:00",
+   "asset": "LINK",
+   "type": "vente",
+   "reason": "RSI pass\u00e9 en zone de surachat (71.2)",
+   "plan": {
+    "entry": 9.6,
+    "sl": 9.68,
+    "tp1": 9.51,
+    "tp2": 9.43,
+    "risk_pct": 0.88,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
+  {
+   "time": "2026-08-15T17:06:38+00:00",
+   "asset": "LINK",
+   "type": "achat",
+   "reason": "Croisement haussier du MACD",
+   "plan": {
+    "entry": 9.6,
+    "sl": 9.51,
+    "tp1": 9.68,
+    "tp2": 9.77,
+    "risk_pct": 0.88,
+    "net_tp1": 0.33,
+    "net_tp2": 1.27,
+    "verdict": "\u2705"
+   }
+  },
   {
    "time": "2026-08-15T16:36:17+00:00",
    "asset": "LINK",
@@ -913,39 +943,9 @@
     "risk_pct": 0.29,
     "verdict": "\u2139\ufe0f"
    }
-  },
-  {
-   "time": "2026-08-11T21:26:15+00:00",
-   "asset": "LINK",
-   "type": "vente",
-   "reason": "RSI pass\u00e9 en zone de surachat (72.9)",
-   "plan": {
-    "entry": 8.75,
-    "sl": 8.82,
-    "tp1": 8.68,
-    "tp2": 8.62,
-    "risk_pct": 0.79,
-    "verdict": "\u2139\ufe0f"
-   }
-  },
-  {
-   "time": "2026-08-11T21:26:15+00:00",
-   "asset": "LINK",
-   "type": "achat",
-   "reason": "Croisement haussier du MACD",
-   "plan": {
-    "entry": 8.75,
-    "sl": 8.68,
-    "tp1": 8.82,
-    "tp2": 8.89,
-    "risk_pct": 0.79,
-    "net_tp1": 0.3,
-    "net_tp2": 1.1,
-    "verdict": "\u2705"
-   }
   }
  ],
- "market_updated": "2026-08-15T16:36:17+00:00",
+ "market_updated": "2026-08-15T17:06:38+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
@@ -4245,6 +4245,22 @@
    "net_tp2": 1.18,
    "verdict": "\u2705",
    "tp1_franchi": false
+  },
+  {
+   "time": "2026-08-15T17:06:38+00:00",
+   "asset": "LINK",
+   "coin": "chainlink",
+   "type": "achat",
+   "reason": "Croisement haussier du MACD",
+   "entry": 9.6,
+   "sl": 9.51,
+   "tp1": 9.68,
+   "tp2": 9.77,
+   "risk_pct": 0.88,
+   "net_tp1": 0.33,
+   "net_tp2": 1.27,
+   "verdict": "\u2705",
+   "tp1_franchi": false
   }
  ],
  "signaux_resultats": [
@@ -4958,6 +4974,39 @@
    "sl": 9.42,
    "tp1": 9.68,
    "tp2": 9.81,
+   "tp1_franchi": false
+  },
+  {
+   "time": "2026-08-15T17:06:38+00:00",
+   "asset": "LINK",
+   "coin": "chainlink",
+   "variante": "A",
+   "entry": 9.6,
+   "sl": 9.51,
+   "tp1": 9.68,
+   "tp2": 9.77,
+   "tp1_franchi": false
+  },
+  {
+   "time": "2026-08-15T17:06:38+00:00",
+   "asset": "LINK",
+   "coin": "chainlink",
+   "variante": "B",
+   "entry": 9.6,
+   "sl": 9.51,
+   "tp1": 9.74,
+   "tp2": 9.88,
+   "tp1_franchi": false
+  },
+  {
+   "time": "2026-08-15T17:06:38+00:00",
+   "asset": "LINK",
+   "coin": "chainlink",
+   "variante": "C",
+   "entry": 9.6,
+   "sl": 9.46,
+   "tp1": 9.74,
+   "tp2": 9.88,
    "tp1_franchi": false
   }
  ],
