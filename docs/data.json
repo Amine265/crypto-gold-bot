@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 62994.03,
-   "rsi": 46.1,
+   "price": 62890.66,
+   "rsi": 38.8,
    "sparkline": [
     63657.31,
     62520.57,
@@ -29,13 +29,13 @@
     63017.31,
     63008.73,
     63009.35,
-    62994.03
+    62890.66
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 1878.99,
-   "rsi": 45.3,
+   "price": 1873.62,
+   "rsi": 36.6,
    "sparkline": [
     1894.7,
     1837.91,
@@ -60,45 +60,46 @@
     1866.2,
     1881.26,
     1882.53,
-    1879.83
+    1879.83,
+    1873.62
    ]
   },
   "pax-gold": {
    "label": "OR (once, via PAXG)",
-   "price": 4374.81,
-   "rsi": 52.2,
+   "price": 4370.71,
+   "rsi": 42.3,
    "sparkline": [
-    4061.56,
-    4048.6,
-    4054.91,
-    4076.42,
-    4120.94,
-    4242.74,
-    4254.8,
-    4232.68,
-    4313.97,
-    4335.41,
-    4341.32,
-    4344.15,
-    4353.58,
-    4331.6,
-    4390.32,
-    4382.32,
-    4395.56,
-    4389.88,
-    4363.2,
-    4348.67,
-    4369.51,
-    4370.5,
-    4372.38,
-    4378.27,
-    4374.81
+    4070.88,
+    4055.08,
+    4052.53,
+    4078.0,
+    4151.28,
+    4237.91,
+    4264.4,
+    4242.44,
+    4331.14,
+    4337.92,
+    4339.06,
+    4351.27,
+    4337.13,
+    4326.5,
+    4418.13,
+    4378.5,
+    4387.06,
+    4403.25,
+    4379.89,
+    4356.02,
+    4381.25,
+    4375.37,
+    4373.0,
+    4375.95,
+    4370.71
    ]
   },
   "solana": {
    "label": "SOL",
-   "price": 74.92,
-   "rsi": 35.7,
+   "price": 74.33,
+   "rsi": 24.8,
    "sparkline": [
     74.05,
     72.37,
@@ -124,13 +125,13 @@
     75.39,
     75.58,
     75.39,
-    74.92
+    74.33
    ]
   },
   "ripple": {
    "label": "XRP",
-   "price": 1.0,
-   "rsi": 40.8,
+   "price": 0.99,
+   "rsi": 32.7,
    "sparkline": [
     1.09,
     1.06,
@@ -156,13 +157,13 @@
     1.0,
     1.0,
     1.0,
-    1.0
+    0.99
    ]
   },
   "chainlink": {
    "label": "LINK",
-   "price": 9.41,
-   "rsi": 51.6,
+   "price": 9.38,
+   "rsi": 48.9,
    "sparkline": [
     8.39,
     8.17,
@@ -188,11 +189,69 @@
     9.58,
     9.55,
     9.37,
-    9.41
+    9.38
    ]
   }
  },
  "signals": [
+  {
+   "time": "2026-08-16T21:50:55+00:00",
+   "asset": "LINK",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "plan": {
+    "entry": 9.38,
+    "sl": 9.43,
+    "tp1": 9.33,
+    "tp2": 9.28,
+    "risk_pct": 0.54,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
+  {
+   "time": "2026-08-16T21:50:55+00:00",
+   "asset": "SOL",
+   "type": "achat",
+   "reason": "RSI pass\u00e9 en zone de survente (24.8)",
+   "plan": {
+    "entry": 74.33,
+    "sl": 74.14,
+    "tp1": 74.53,
+    "tp2": 74.72,
+    "risk_pct": 0.26,
+    "net_tp1": -0.23,
+    "net_tp2": 0.02,
+    "verdict": "\u26a0\ufe0f"
+   }
+  },
+  {
+   "time": "2026-08-16T21:50:55+00:00",
+   "asset": "ETH",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "plan": {
+    "entry": 1873.62,
+    "sl": 1876.55,
+    "tp1": 1870.68,
+    "tp2": 1867.74,
+    "risk_pct": 0.16,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
+  {
+   "time": "2026-08-16T21:50:55+00:00",
+   "asset": "BTC",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "plan": {
+    "entry": 62890.66,
+    "sl": 62962.53,
+    "tp1": 62818.78,
+    "tp2": 62746.9,
+    "risk_pct": 0.11,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
   {
    "time": "2026-08-16T21:29:44+00:00",
    "asset": "BTC",
@@ -882,73 +941,9 @@
     "net_tp2": 0.08,
     "verdict": "\u26a0\ufe0f"
    }
-  },
-  {
-   "time": "2026-08-14T23:31:15+00:00",
-   "asset": "SOL",
-   "type": "achat",
-   "reason": "Croisement haussier du MACD",
-   "plan": {
-    "entry": 75.26,
-    "sl": 75.05,
-    "tp1": 75.48,
-    "tp2": 75.69,
-    "risk_pct": 0.28,
-    "net_tp1": -0.21,
-    "net_tp2": 0.07,
-    "verdict": "\u26a0\ufe0f"
-   }
-  },
-  {
-   "time": "2026-08-14T22:57:30+00:00",
-   "asset": "XRP",
-   "type": "achat",
-   "reason": "RSI pass\u00e9 en zone de survente (28.4)",
-   "plan": {
-    "entry": 0.99,
-    "sl": 0.99,
-    "tp1": 0.99,
-    "tp2": 1.0,
-    "risk_pct": 0.29,
-    "net_tp1": -0.5,
-    "net_tp2": 0.51,
-    "verdict": "\u26a0\ufe0f"
-   }
-  },
-  {
-   "time": "2026-08-14T22:36:03+00:00",
-   "asset": "XRP",
-   "type": "achat",
-   "reason": "RSI pass\u00e9 en zone de survente (27.1)",
-   "plan": {
-    "entry": 0.99,
-    "sl": 0.99,
-    "tp1": 0.99,
-    "tp2": 1.0,
-    "risk_pct": 0.3,
-    "net_tp1": -0.5,
-    "net_tp2": 0.51,
-    "verdict": "\u26a0\ufe0f"
-   }
-  },
-  {
-   "time": "2026-08-14T16:27:15+00:00",
-   "asset": "LINK",
-   "type": "achat",
-   "reason": "Croisement haussier du MACD",
-   "plan": {
-    "entry": 8.84,
-    "sl": 8.8,
-    "tp1": 8.88,
-    "tp2": 8.92,
-    "risk_pct": 0.46,
-    "net_tp1": -0.05,
-    "net_tp2": 0.4,
-    "verdict": "\u26a0\ufe0f"
-   }
   }
  ],
- "market_updated": "2026-08-16T21:29:44+00:00",
+ "market_updated": "2026-08-16T21:50:55+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
@@ -4229,6 +4224,50 @@
    "tp2": 62872.43,
    "risk_pct": 0.1,
    "verdict": "\u2139\ufe0f",
+   "tp1_franchi": true
+  },
+  {
+   "time": "2026-08-16T21:50:55+00:00",
+   "asset": "ETH",
+   "coin": "ethereum",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "entry": 1873.62,
+   "sl": 1876.55,
+   "tp1": 1870.68,
+   "tp2": 1867.74,
+   "risk_pct": 0.16,
+   "verdict": "\u2139\ufe0f",
+   "tp1_franchi": false
+  },
+  {
+   "time": "2026-08-16T21:50:55+00:00",
+   "asset": "SOL",
+   "coin": "solana",
+   "type": "achat",
+   "reason": "RSI pass\u00e9 en zone de survente (24.8)",
+   "entry": 74.33,
+   "sl": 74.14,
+   "tp1": 74.53,
+   "tp2": 74.72,
+   "risk_pct": 0.26,
+   "net_tp1": -0.23,
+   "net_tp2": 0.02,
+   "verdict": "\u26a0\ufe0f",
+   "tp1_franchi": false
+  },
+  {
+   "time": "2026-08-16T21:50:55+00:00",
+   "asset": "LINK",
+   "coin": "chainlink",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "entry": 9.38,
+   "sl": 9.43,
+   "tp1": 9.33,
+   "tp2": 9.28,
+   "risk_pct": 0.54,
+   "verdict": "\u2139\ufe0f",
    "tp1_franchi": false
   }
  ],
@@ -4869,40 +4908,42 @@
    "tp1_franchi": true
   },
   {
-   "time": "2026-08-14T23:31:15+00:00",
+   "time": "2026-08-16T21:50:55+00:00",
    "asset": "SOL",
    "coin": "solana",
-   "variante": "C",
-   "entry": 75.26,
-   "sl": 74.91,
-   "tp1": 75.62,
-   "tp2": 75.97,
+   "variante": "A",
+   "entry": 74.33,
+   "sl": 74.14,
+   "tp1": 74.53,
+   "tp2": 74.72,
    "tp1_franchi": false
   },
   {
-   "time": "2026-08-15T14:34:49+00:00",
-   "asset": "ETH",
-   "coin": "ethereum",
+   "time": "2026-08-16T21:50:55+00:00",
+   "asset": "SOL",
+   "coin": "solana",
    "variante": "B",
-   "entry": 1880.52,
-   "sl": 1877.7,
-   "tp1": 1885.23,
-   "tp2": 1889.93,
-   "tp1_franchi": true
+   "entry": 74.33,
+   "sl": 74.14,
+   "tp1": 74.66,
+   "tp2": 74.99,
+   "tp1_franchi": false
   },
   {
-   "time": "2026-08-15T14:34:49+00:00",
-   "asset": "ETH",
-   "coin": "ethereum",
+   "time": "2026-08-16T21:50:55+00:00",
+   "asset": "SOL",
+   "coin": "solana",
    "variante": "C",
-   "entry": 1880.52,
-   "sl": 1875.82,
-   "tp1": 1885.23,
-   "tp2": 1889.93,
-   "tp1_franchi": true
-  },
+   "entry": 74.33,
+   "sl": 74.01,
+   "tp1": 74.66,
+   "tp2": 74.99,
+   "tp1_franchi": false
+  }
+ ],
+ "calibrages_resultats": [
   {
-   "time": "2026-08-16T20:34:00+00:00",
+   "time": "2026-08-16T21:50:55+00:00",
    "asset": "LINK",
    "coin": "chainlink",
    "variante": "C",
@@ -4910,10 +4951,53 @@
    "sl": 9.38,
    "tp1": 9.54,
    "tp2": 9.62,
-   "tp1_franchi": false
-  }
- ],
- "calibrages_resultats": [
+   "tp1_franchi": false,
+   "signal_time": "2026-08-16T20:34:00+00:00",
+   "resultat": "SL",
+   "sortie": 9.38
+  },
+  {
+   "time": "2026-08-16T21:50:55+00:00",
+   "asset": "ETH",
+   "coin": "ethereum",
+   "variante": "C",
+   "entry": 1880.52,
+   "sl": 1875.82,
+   "tp1": 1885.23,
+   "tp2": 1889.93,
+   "tp1_franchi": true,
+   "signal_time": "2026-08-15T14:34:49+00:00",
+   "resultat": "SL",
+   "sortie": 1873.62
+  },
+  {
+   "time": "2026-08-16T21:50:55+00:00",
+   "asset": "ETH",
+   "coin": "ethereum",
+   "variante": "B",
+   "entry": 1880.52,
+   "sl": 1877.7,
+   "tp1": 1885.23,
+   "tp2": 1889.93,
+   "tp1_franchi": true,
+   "signal_time": "2026-08-15T14:34:49+00:00",
+   "resultat": "SL",
+   "sortie": 1873.62
+  },
+  {
+   "time": "2026-08-16T21:50:55+00:00",
+   "asset": "SOL",
+   "coin": "solana",
+   "variante": "C",
+   "entry": 75.26,
+   "sl": 74.91,
+   "tp1": 75.62,
+   "tp2": 75.97,
+   "tp1_franchi": false,
+   "signal_time": "2026-08-14T23:31:15+00:00",
+   "resultat": "SL",
+   "sortie": 74.33
+  },
   {
    "time": "2026-08-16T21:29:44+00:00",
    "asset": "LINK",
@@ -7657,62 +7741,6 @@
    "signal_time": "2026-08-07T09:27:20+00:00",
    "resultat": "TP2",
    "sortie": 1927.77
-  },
-  {
-   "time": "2026-08-07T11:26:30+00:00",
-   "asset": "ETH",
-   "coin": "ethereum",
-   "variante": "A",
-   "entry": 1910.53,
-   "sl": 1906.73,
-   "tp1": 1914.34,
-   "tp2": 1918.15,
-   "tp1_franchi": true,
-   "signal_time": "2026-08-07T09:27:20+00:00",
-   "resultat": "TP2",
-   "sortie": 1918.25
-  },
-  {
-   "time": "2026-08-07T05:21:49+00:00",
-   "asset": "LINK",
-   "coin": "chainlink",
-   "variante": "B",
-   "entry": 8.2,
-   "sl": 8.15,
-   "tp1": 8.28,
-   "tp2": 8.36,
-   "tp1_franchi": false,
-   "signal_time": "2026-08-06T14:57:58+00:00",
-   "resultat": "SL",
-   "sortie": 8.14
-  },
-  {
-   "time": "2026-08-07T05:21:49+00:00",
-   "asset": "LINK",
-   "coin": "chainlink",
-   "variante": "A",
-   "entry": 8.2,
-   "sl": 8.15,
-   "tp1": 8.25,
-   "tp2": 8.29,
-   "tp1_franchi": false,
-   "signal_time": "2026-08-06T14:57:58+00:00",
-   "resultat": "SL",
-   "sortie": 8.14
-  },
-  {
-   "time": "2026-08-06T10:15:11+00:00",
-   "asset": "BTC",
-   "coin": "bitcoin",
-   "variante": "C",
-   "entry": 64853.2,
-   "sl": 64680.03,
-   "tp1": 65026.37,
-   "tp2": 65199.55,
-   "tp1_franchi": false,
-   "signal_time": "2026-08-06T07:22:33+00:00",
-   "resultat": "SL",
-   "sortie": 64538.19
   }
  ],
  "b0": {
