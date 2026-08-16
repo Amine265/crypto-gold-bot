@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 63305.54,
-   "rsi": 72.3,
+   "price": 63190.02,
+   "rsi": 66.4,
    "sparkline": [
     63118.23,
     62555.67,
@@ -29,13 +29,13 @@
     62833.64,
     62968.4,
     63068.05,
-    63305.54
+    63190.02
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 1889.06,
-   "rsi": 69.3,
+   "price": 1887.8,
+   "rsi": 67.5,
    "sparkline": [
     1861.3,
     1846.52,
@@ -61,7 +61,7 @@
     1878.22,
     1880.74,
     1882.2,
-    1889.06
+    1887.8
    ]
   },
   "pax-gold": {
@@ -98,8 +98,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 75.59,
-   "rsi": 59.3,
+   "price": 75.47,
+   "rsi": 54.8,
    "sparkline": [
     73.08,
     72.52,
@@ -125,13 +125,13 @@
     75.12,
     75.35,
     75.53,
-    75.59
+    75.47
    ]
   },
   "ripple": {
    "label": "XRP",
    "price": 1.0,
-   "rsi": 57.2,
+   "rsi": 53.2,
    "sparkline": [
     1.08,
     1.07,
@@ -163,7 +163,7 @@
   "chainlink": {
    "label": "LINK",
    "price": 9.38,
-   "rsi": 49.7,
+   "rsi": 50.0,
    "sparkline": [
     8.28,
     8.22,
@@ -953,7 +953,7 @@
    }
   }
  ],
- "market_updated": "2026-08-16T16:36:25+00:00",
+ "market_updated": "2026-08-16T17:05:25+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
@@ -4250,7 +4250,7 @@
    "tp2": 63188.76,
    "risk_pct": 0.09,
    "verdict": "\u2139\ufe0f",
-   "tp1_franchi": false
+   "tp1_franchi": true
   }
  ],
  "signaux_resultats": [
