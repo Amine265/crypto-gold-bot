@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 62798.73,
-   "rsi": 33.5,
+   "price": 62858.91,
+   "rsi": 37.8,
    "sparkline": [
     63466.47,
     63112.26,
@@ -29,13 +29,13 @@
     63029.84,
     63062.36,
     62928.09,
-    62798.73
+    62858.91
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 1872.49,
-   "rsi": 35.2,
+   "price": 1874.79,
+   "rsi": 39.5,
    "sparkline": [
     1881.71,
     1851.9,
@@ -60,7 +60,8 @@
     1880.07,
     1879.16,
     1882.62,
-    1878.5
+    1878.5,
+    1874.79
    ]
   },
   "pax-gold": {
@@ -97,8 +98,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 74.46,
-   "rsi": 30.0,
+   "price": 74.57,
+   "rsi": 34.2,
    "sparkline": [
     73.49,
     73.07,
@@ -124,13 +125,13 @@
     75.31,
     75.49,
     75.24,
-    74.46
+    74.57
    ]
   },
   "ripple": {
    "label": "XRP",
    "price": 0.99,
-   "rsi": 25.1,
+   "rsi": 26.7,
    "sparkline": [
     1.09,
     1.07,
@@ -162,7 +163,7 @@
   "chainlink": {
    "label": "LINK",
    "price": 9.39,
-   "rsi": 49.7,
+   "rsi": 49.8,
    "sparkline": [
     8.37,
     8.26,
@@ -193,6 +194,20 @@
   }
  },
  "signals": [
+  {
+   "time": "2026-08-16T23:51:15+00:00",
+   "asset": "BTC",
+   "type": "vente",
+   "reason": "Croisement baissier SMA20/SMA50 (death cross)",
+   "plan": {
+    "entry": 62858.91,
+    "sl": 62928.54,
+    "tp1": 62789.29,
+    "tp2": 62719.67,
+    "risk_pct": 0.11,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
   {
    "time": "2026-08-16T23:30:06+00:00",
    "asset": "ETH",
@@ -922,23 +937,9 @@
     "risk_pct": 0.62,
     "verdict": "\u2139\ufe0f"
    }
-  },
-  {
-   "time": "2026-08-15T20:34:30+00:00",
-   "asset": "LINK",
-   "type": "vente",
-   "reason": "Croisement baissier du MACD",
-   "plan": {
-    "entry": 9.56,
-    "sl": 9.62,
-    "tp1": 9.5,
-    "tp2": 9.44,
-    "risk_pct": 0.63,
-    "verdict": "\u2139\ufe0f"
-   }
   }
  ],
- "market_updated": "2026-08-16T23:30:06+00:00",
+ "market_updated": "2026-08-16T23:51:15+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
@@ -4235,7 +4236,7 @@
    "net_tp1": -0.23,
    "net_tp2": 0.02,
    "verdict": "\u26a0\ufe0f",
-   "tp1_franchi": false
+   "tp1_franchi": true
   },
   {
    "time": "2026-08-16T21:50:55+00:00",
@@ -4265,7 +4266,7 @@
    "net_tp1": -0.24,
    "net_tp2": 0.01,
    "verdict": "\u26a0\ufe0f",
-   "tp1_franchi": false
+   "tp1_franchi": true
   },
   {
    "time": "2026-08-16T22:41:21+00:00",
@@ -4946,7 +4947,7 @@
    "sl": 74.14,
    "tp1": 74.53,
    "tp2": 74.72,
-   "tp1_franchi": false
+   "tp1_franchi": true
   },
   {
    "time": "2026-08-16T21:50:55+00:00",
@@ -4979,7 +4980,7 @@
    "sl": 74.19,
    "tp1": 74.57,
    "tp2": 74.76,
-   "tp1_franchi": false
+   "tp1_franchi": true
   },
   {
    "time": "2026-08-16T22:10:33+00:00",
@@ -5023,7 +5024,7 @@
    "sl": 62606.19,
    "tp1": 62850.84,
    "tp2": 63003.74,
-   "tp1_franchi": false
+   "tp1_franchi": true
   },
   {
    "time": "2026-08-16T22:41:21+00:00",
@@ -5034,7 +5035,7 @@
    "sl": 62545.02,
    "tp1": 62850.84,
    "tp2": 63003.74,
-   "tp1_franchi": false
+   "tp1_franchi": true
   }
  ],
  "calibrages_resultats": [
