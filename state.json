@@ -1,8 +1,8 @@
 {
-  "bitcoin": "",
+  "bitcoin": "Croisement baissier SMA20/SMA50 (death cross)",
   "ethereum": "Croisement baissier SMA20/SMA50 (death cross)",
   "pax-gold": "",
   "solana": "",
-  "ripple": "RSI pass\u00e9 en zone de survente (29.0)",
-  "chainlink": "Croisement baissier SMA20/SMA50 (death cross)"
+  "ripple": "",
+  "chainlink": ""
 }
