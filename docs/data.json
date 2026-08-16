@@ -7787,27 +7787,27 @@
   }
  ],
  "b0": {
-  "maj": "2026-08-15T01:49:09+00:00",
+  "maj": "2026-08-16T01:56:30+00:00",
   "pause": false,
   "alloc": 45.0,
   "actifs": {
    "BTC": {
     "au_dessus": false,
-    "depuis": "2026-05-16",
-    "cloture": 62982.84,
-    "sma200": 69517.07,
+    "depuis": "2026-05-17",
+    "cloture": 63032.87,
+    "sma200": 69386.44,
     "source": "Kraken XBTUSDC",
-    "date_cloture": "2026-08-14",
+    "date_cloture": "2026-08-15",
     "position": null,
     "dernier_evenement": null
    },
    "ETH": {
     "au_dessus": false,
-    "depuis": "2026-05-16",
-    "cloture": 1880.37,
-    "sma200": 2024.65,
+    "depuis": "2026-05-17",
+    "cloture": 1881.28,
+    "sma200": 2018.93,
     "source": "Kraken ETHUSDC",
-    "date_cloture": "2026-08-14",
+    "date_cloture": "2026-08-15",
     "position": null,
     "dernier_evenement": null
    }
