@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 64468.08,
-   "rsi": 72.8,
+   "price": 64465.0,
+   "rsi": 72.7,
    "sparkline": [
     63472.83,
     63631.07,
@@ -29,13 +29,13 @@
     63015.11,
     63060.2,
     63264.5,
-    64468.08
+    64465.0
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 1915.17,
-   "rsi": 65.6,
+   "price": 1912.33,
+   "rsi": 63.7,
    "sparkline": [
     1858.2,
     1859.78,
@@ -61,13 +61,13 @@
     1878.67,
     1884.05,
     1891.82,
-    1915.17
+    1912.33
    ]
   },
   "pax-gold": {
    "label": "OR (once, via PAXG)",
-   "price": 4411.58,
-   "rsi": 59.0,
+   "price": 4414.15,
+   "rsi": 60.1,
    "sparkline": [
     4054.91,
     4076.42,
@@ -93,13 +93,13 @@
     4378.27,
     4374.13,
     4389.42,
-    4411.58
+    4414.15
    ]
   },
   "solana": {
    "label": "SOL",
-   "price": 75.95,
-   "rsi": 57.5,
+   "price": 75.97,
+   "rsi": 57.8,
    "sparkline": [
     73.49,
     73.52,
@@ -125,13 +125,13 @@
     75.31,
     75.15,
     75.28,
-    75.95
+    75.97
    ]
   },
   "ripple": {
    "label": "XRP",
    "price": 1.0,
-   "rsi": 54.5,
+   "rsi": 54.9,
    "sparkline": [
     1.07,
     1.07,
@@ -162,8 +162,8 @@
   },
   "chainlink": {
    "label": "LINK",
-   "price": 9.52,
-   "rsi": 57.1,
+   "price": 9.54,
+   "rsi": 59.0,
    "sparkline": [
     8.18,
     8.18,
@@ -189,11 +189,57 @@
     9.37,
     9.45,
     9.41,
-    9.52
+    9.54
    ]
   }
  },
  "signals": [
+  {
+   "time": "2026-08-17T23:54:51+00:00",
+   "asset": "OR (once, via PAXG)",
+   "type": "achat",
+   "reason": "Croisement haussier du MACD",
+   "plan": {
+    "entry": 4414.15,
+    "sl": 4402.32,
+    "tp1": 4425.97,
+    "tp2": 4437.8,
+    "risk_pct": 0.27,
+    "net_tp1": -0.23,
+    "net_tp2": 0.04,
+    "verdict": "\u26a0\ufe0f"
+   }
+  },
+  {
+   "time": "2026-08-17T23:54:51+00:00",
+   "asset": "LINK",
+   "type": "achat",
+   "reason": "Croisement haussier du MACD",
+   "plan": {
+    "entry": 9.54,
+    "sl": 9.5,
+    "tp1": 9.59,
+    "tp2": 9.63,
+    "risk_pct": 0.45,
+    "net_tp1": 0.02,
+    "net_tp2": 0.44,
+    "verdict": "\u2705"
+   }
+  },
+  {
+   "time": "2026-08-17T23:54:51+00:00",
+   "asset": "BTC",
+   "type": "vente",
+   "reason": "RSI pass\u00e9 en zone de surachat (72.7)",
+   "plan": {
+    "entry": 64465.0,
+    "sl": 64678.42,
+    "tp1": 64251.59,
+    "tp2": 64038.17,
+    "risk_pct": 0.33,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
   {
    "time": "2026-08-17T23:33:53+00:00",
    "asset": "OR (once, via PAXG)",
@@ -897,53 +943,9 @@
     "risk_pct": 0.11,
     "verdict": "\u2139\ufe0f"
    }
-  },
-  {
-   "time": "2026-08-16T21:29:44+00:00",
-   "asset": "BTC",
-   "type": "vente",
-   "reason": "Croisement baissier du MACD",
-   "plan": {
-    "entry": 62994.03,
-    "sl": 63054.83,
-    "tp1": 62933.23,
-    "tp2": 62872.43,
-    "risk_pct": 0.1,
-    "verdict": "\u2139\ufe0f"
-   }
-  },
-  {
-   "time": "2026-08-16T20:54:46+00:00",
-   "asset": "LINK",
-   "type": "achat",
-   "reason": "Croisement haussier du MACD",
-   "plan": {
-    "entry": 9.45,
-    "sl": 9.4,
-    "tp1": 9.5,
-    "tp2": 9.54,
-    "risk_pct": 0.5,
-    "net_tp1": 0.03,
-    "net_tp2": 0.45,
-    "verdict": "\u2705"
-   }
-  },
-  {
-   "time": "2026-08-16T20:54:46+00:00",
-   "asset": "XRP",
-   "type": "vente",
-   "reason": "Croisement baissier du MACD",
-   "plan": {
-    "entry": 1.0,
-    "sl": 1.0,
-    "tp1": 1.0,
-    "tp2": 1.0,
-    "risk_pct": 0.15,
-    "verdict": "\u2139\ufe0f"
-   }
   }
  ],
- "market_updated": "2026-08-17T23:33:53+00:00",
+ "market_updated": "2026-08-17T23:54:51+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
@@ -4347,6 +4349,36 @@
    "net_tp2": 0.02,
    "verdict": "\u26a0\ufe0f",
    "tp1_franchi": false
+  },
+  {
+   "time": "2026-08-17T23:54:51+00:00",
+   "asset": "BTC",
+   "coin": "bitcoin",
+   "type": "vente",
+   "reason": "RSI pass\u00e9 en zone de surachat (72.7)",
+   "entry": 64465.0,
+   "sl": 64678.42,
+   "tp1": 64251.59,
+   "tp2": 64038.17,
+   "risk_pct": 0.33,
+   "verdict": "\u2139\ufe0f",
+   "tp1_franchi": false
+  },
+  {
+   "time": "2026-08-17T23:54:51+00:00",
+   "asset": "LINK",
+   "coin": "chainlink",
+   "type": "achat",
+   "reason": "Croisement haussier du MACD",
+   "entry": 9.54,
+   "sl": 9.5,
+   "tp1": 9.59,
+   "tp2": 9.63,
+   "risk_pct": 0.45,
+   "net_tp1": 0.02,
+   "net_tp2": 0.44,
+   "verdict": "\u2705",
+   "tp1_franchi": false
   }
  ],
  "signaux_resultats": [
@@ -5192,6 +5224,39 @@
    "sl": 4392.33,
    "tp1": 4430.84,
    "tp2": 4450.09,
+   "tp1_franchi": false
+  },
+  {
+   "time": "2026-08-17T23:54:51+00:00",
+   "asset": "LINK",
+   "coin": "chainlink",
+   "variante": "A",
+   "entry": 9.54,
+   "sl": 9.5,
+   "tp1": 9.59,
+   "tp2": 9.63,
+   "tp1_franchi": false
+  },
+  {
+   "time": "2026-08-17T23:54:51+00:00",
+   "asset": "LINK",
+   "coin": "chainlink",
+   "variante": "B",
+   "entry": 9.54,
+   "sl": 9.5,
+   "tp1": 9.62,
+   "tp2": 9.69,
+   "tp1_franchi": false
+  },
+  {
+   "time": "2026-08-17T23:54:51+00:00",
+   "asset": "LINK",
+   "coin": "chainlink",
+   "variante": "C",
+   "entry": 9.54,
+   "sl": 9.47,
+   "tp1": 9.62,
+   "tp2": 9.69,
    "tp1_franchi": false
   }
  ],
