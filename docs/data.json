@@ -2,40 +2,40 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 63623.51,
-   "rsi": 63.4,
+   "price": 63556.37,
+   "rsi": 60.7,
    "sparkline": [
-    63112.26,
-    63738.89,
-    63985.86,
-    64135.02,
-    64624.98,
-    64490.21,
-    64352.92,
-    64911.41,
-    64963.35,
-    65026.69,
-    64846.98,
-    64860.52,
-    64610.23,
-    64098.22,
-    63557.53,
-    63763.8,
-    63415.53,
-    63400.65,
-    63497.41,
-    62944.31,
-    63029.84,
-    63062.36,
-    62928.09,
-    62852.86,
-    63623.51
+    63854.92,
+    63922.69,
+    64251.15,
+    64058.51,
+    64547.73,
+    64335.91,
+    64295.39,
+    64733.74,
+    64971.66,
+    65034.46,
+    64913.94,
+    64964.81,
+    64612.78,
+    63963.0,
+    63304.52,
+    63733.95,
+    63369.42,
+    63696.91,
+    63387.1,
+    63097.13,
+    63057.98,
+    63041.54,
+    62952.37,
+    62999.83,
+    63556.37
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 1901.16,
-   "rsi": 58.1,
+   "price": 1899.59,
+   "rsi": 56.6,
    "sparkline": [
     1869.34,
     1865.43,
@@ -61,7 +61,7 @@
     1881.54,
     1879.03,
     1884.91,
-    1901.16
+    1899.59
    ]
   },
   "pax-gold": {
@@ -98,8 +98,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 75.59,
-   "rsi": 54.9,
+   "price": 75.57,
+   "rsi": 54.5,
    "sparkline": [
     73.68,
     73.72,
@@ -125,13 +125,13 @@
     75.47,
     75.2,
     74.81,
-    75.59
+    75.57
    ]
   },
   "ripple": {
    "label": "XRP",
    "price": 1.0,
-   "rsi": 49.1,
+   "rsi": 51.1,
    "sparkline": [
     1.08,
     1.08,
@@ -163,7 +163,7 @@
   "chainlink": {
    "label": "LINK",
    "price": 9.49,
-   "rsi": 54.7,
+   "rsi": 55.2,
    "sparkline": [
     8.29,
     8.21,
@@ -194,6 +194,22 @@
   }
  },
  "signals": [
+  {
+   "time": "2026-08-17T14:49:09+00:00",
+   "asset": "XRP",
+   "type": "achat",
+   "reason": "Croisement haussier du MACD",
+   "plan": {
+    "entry": 1.0,
+    "sl": 1.0,
+    "tp1": 1.0,
+    "tp2": 1.01,
+    "risk_pct": 0.34,
+    "net_tp1": -0.5,
+    "net_tp2": 0.5,
+    "verdict": "\u26a0\ufe0f"
+   }
+  },
   {
    "time": "2026-08-17T13:49:03+00:00",
    "asset": "XRP",
@@ -933,25 +949,9 @@
     "net_tp2": -0.5,
     "verdict": "\u26d4"
    }
-  },
-  {
-   "time": "2026-08-16T07:41:23+00:00",
-   "asset": "XRP",
-   "type": "achat",
-   "reason": "Croisement haussier SMA20/SMA50 (golden cross)",
-   "plan": {
-    "entry": 1.0,
-    "sl": 1.0,
-    "tp1": 1.0,
-    "tp2": 1.0,
-    "risk_pct": 0.12,
-    "net_tp1": -0.5,
-    "net_tp2": -0.5,
-    "verdict": "\u26d4"
-   }
   }
  ],
- "market_updated": "2026-08-17T14:14:31+00:00",
+ "market_updated": "2026-08-17T14:49:09+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
@@ -4287,6 +4287,17 @@
  ],
  "signaux_resultats": [
   {
+   "time": "2026-08-17T14:49:09+00:00",
+   "signal_time": "2026-08-17T14:49:09+00:00",
+   "asset": "XRP",
+   "type": "achat",
+   "resultat": "SL",
+   "reason": "Croisement haussier du MACD",
+   "tp1_franchi": false,
+   "entry": 1.0,
+   "sortie": 1.0
+  },
+  {
    "time": "2026-08-17T13:49:03+00:00",
    "signal_time": "2026-08-17T13:49:03+00:00",
    "asset": "XRP",
@@ -4824,17 +4835,6 @@
    "tp1_franchi": true,
    "entry": 8.84,
    "sortie": 8.96
-  },
-  {
-   "time": "2026-08-14T19:38:16+00:00",
-   "signal_time": "2026-08-14T16:27:15+00:00",
-   "asset": "BTC",
-   "type": "achat",
-   "resultat": "SL",
-   "reason": "Croisement haussier du MACD",
-   "tp1_franchi": false,
-   "entry": 63034.48,
-   "sortie": 62865.15
   }
  ],
  "agent": {
@@ -5074,9 +5074,48 @@
    "tp1": 1.01,
    "tp2": 1.01,
    "tp1_franchi": false
+  },
+  {
+   "time": "2026-08-17T14:49:09+00:00",
+   "asset": "XRP",
+   "coin": "ripple",
+   "variante": "C",
+   "entry": 1.0,
+   "sl": 0.99,
+   "tp1": 1.01,
+   "tp2": 1.01,
+   "tp1_franchi": false
   }
  ],
  "calibrages_resultats": [
+  {
+   "time": "2026-08-17T14:49:09+00:00",
+   "asset": "XRP",
+   "coin": "ripple",
+   "variante": "B",
+   "entry": 1.0,
+   "sl": 1.0,
+   "tp1": 1.01,
+   "tp2": 1.01,
+   "tp1_franchi": false,
+   "signal_time": "2026-08-17T14:49:09+00:00",
+   "resultat": "SL",
+   "sortie": 1.0
+  },
+  {
+   "time": "2026-08-17T14:49:09+00:00",
+   "asset": "XRP",
+   "coin": "ripple",
+   "variante": "A",
+   "entry": 1.0,
+   "sl": 1.0,
+   "tp1": 1.0,
+   "tp2": 1.01,
+   "tp1_franchi": false,
+   "signal_time": "2026-08-17T14:49:09+00:00",
+   "resultat": "SL",
+   "sortie": 1.0
+  },
   {
    "time": "2026-08-17T13:49:03+00:00",
    "asset": "XRP",
@@ -7848,34 +7887,6 @@
    "signal_time": "2026-08-09T16:59:41+00:00",
    "resultat": "SL",
    "sortie": 8.31
-  },
-  {
-   "time": "2026-08-09T19:52:07+00:00",
-   "asset": "LINK",
-   "coin": "chainlink",
-   "variante": "A",
-   "entry": 8.34,
-   "sl": 8.31,
-   "tp1": 8.36,
-   "tp2": 8.39,
-   "tp1_franchi": false,
-   "signal_time": "2026-08-09T16:59:41+00:00",
-   "resultat": "SL",
-   "sortie": 8.31
-  },
-  {
-   "time": "2026-08-09T15:40:50+00:00",
-   "asset": "ETH",
-   "coin": "ethereum",
-   "variante": "A",
-   "entry": 1918.9,
-   "sl": 1916.0,
-   "tp1": 1921.79,
-   "tp2": 1924.69,
-   "tp1_franchi": true,
-   "signal_time": "2026-08-09T10:48:17+00:00",
-   "resultat": "TP2",
-   "sortie": 1924.78
   }
  ],
  "b0": {
