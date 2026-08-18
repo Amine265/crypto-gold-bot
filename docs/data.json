@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 64578.86,
-   "rsi": 58.8,
+   "price": 64570.15,
+   "rsi": 58.5,
    "sparkline": [
     64108.73,
     64031.4,
@@ -29,13 +29,13 @@
     63430.97,
     64256.29,
     64150.87,
-    64578.86
+    64570.15
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 1911.99,
-   "rsi": 57.8,
+   "price": 1910.9,
+   "rsi": 56.6,
    "sparkline": [
     1868.36,
     1867.28,
@@ -61,7 +61,7 @@
     1900.87,
     1906.58,
     1896.79,
-    1911.99
+    1910.9
    ]
   },
   "pax-gold": {
@@ -98,8 +98,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 76.9,
-   "rsi": 60.4,
+   "price": 76.92,
+   "rsi": 60.7,
    "sparkline": [
     73.96,
     73.71,
@@ -125,13 +125,13 @@
     75.49,
     75.83,
     75.98,
-    76.9
+    76.92
    ]
   },
   "ripple": {
    "label": "XRP",
    "price": 1.0,
-   "rsi": 53.6,
+   "rsi": 52.7,
    "sparkline": [
     1.07,
     1.06,
@@ -163,7 +163,7 @@
   "chainlink": {
    "label": "LINK",
    "price": 9.5,
-   "rsi": 54.6,
+   "rsi": 55.2,
    "sparkline": [
     8.16,
     8.14,
@@ -194,6 +194,20 @@
   }
  },
  "signals": [
+  {
+   "time": "2026-08-18T21:54:31+00:00",
+   "asset": "BTC",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "plan": {
+    "entry": 64570.15,
+    "sl": 64758.91,
+    "tp1": 64381.39,
+    "tp2": 64192.63,
+    "risk_pct": 0.29,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
   {
    "time": "2026-08-18T21:33:35+00:00",
    "asset": "BTC",
@@ -935,25 +949,9 @@
     "net_tp2": 0.45,
     "verdict": "\u26a0\ufe0f"
    }
-  },
-  {
-   "time": "2026-08-17T00:41:53+00:00",
-   "asset": "OR (once, via PAXG)",
-   "type": "achat",
-   "reason": "Croisement haussier du MACD",
-   "plan": {
-    "entry": 4384.33,
-    "sl": 4378.62,
-    "tp1": 4390.05,
-    "tp2": 4395.77,
-    "risk_pct": 0.13,
-    "net_tp1": -0.37,
-    "net_tp2": -0.24,
-    "verdict": "\u26d4"
-   }
   }
  ],
- "market_updated": "2026-08-18T21:33:35+00:00",
+ "market_updated": "2026-08-18T21:54:31+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
