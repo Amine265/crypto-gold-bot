@@ -1,8 +1,8 @@
 {
-  "bitcoin": "RSI pass\u00e9 en zone de surachat (72.7)",
+  "bitcoin": "",
   "ethereum": "",
   "pax-gold": "Croisement haussier du MACD",
-  "solana": "",
-  "ripple": "",
-  "chainlink": "Croisement haussier du MACD"
+  "solana": "Croisement baissier du MACD",
+  "ripple": "Croisement baissier du MACD",
+  "chainlink": ""
 }
