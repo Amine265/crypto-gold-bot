@@ -2,40 +2,40 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 69443.66,
-   "rsi": 74.8,
+   "price": 69372.81,
+   "rsi": 73.8,
    "sparkline": [
-    64702.93,
-    64392.98,
-    64605.16,
-    64850.57,
-    64969.88,
-    64770.24,
-    65177.98,
-    65234.54,
-    64064.61,
-    64281.72,
-    63689.06,
-    63317.67,
-    63633.49,
-    63278.6,
-    62846.21,
-    62833.64,
-    62968.4,
-    63068.05,
-    63196.87,
-    63553.1,
-    64353.76,
-    64208.89,
-    64405.44,
-    65914.16,
-    69443.66
+    64801.43,
+    64459.42,
+    64773.68,
+    64872.6,
+    64973.27,
+    64746.82,
+    65159.29,
+    65219.94,
+    63937.8,
+    64374.92,
+    63761.05,
+    63384.79,
+    63795.96,
+    63320.01,
+    62735.36,
+    62996.4,
+    62985.36,
+    63074.54,
+    63101.04,
+    63451.5,
+    64271.83,
+    64271.49,
+    64336.11,
+    68631.82,
+    69372.81
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 2249.53,
-   "rsi": 81.6,
+   "price": 2245.0,
+   "rsi": 80.1,
    "sparkline": [
     1911.51,
     1908.23,
@@ -61,7 +61,7 @@
     1900.6,
     1910.88,
     2097.73,
-    2249.53
+    2245.0
    ]
   },
   "pax-gold": {
@@ -98,8 +98,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 84.9,
-   "rsi": 72.8,
+   "price": 84.84,
+   "rsi": 72.6,
    "sparkline": [
     74.14,
     72.85,
@@ -125,13 +125,13 @@
     76.33,
     76.73,
     81.98,
-    84.9
+    84.84
    ]
   },
   "ripple": {
    "label": "XRP",
    "price": 1.1,
-   "rsi": 67.2,
+   "rsi": 67.1,
    "sparkline": [
     1.05,
     1.04,
@@ -162,8 +162,8 @@
   },
   "chainlink": {
    "label": "LINK",
-   "price": 10.43,
-   "rsi": 68.5,
+   "price": 10.41,
+   "rsi": 66.6,
    "sparkline": [
     8.18,
     8.21,
@@ -189,11 +189,53 @@
     9.43,
     9.5,
     9.94,
-    10.43
+    10.41
    ]
   }
  },
  "signals": [
+  {
+   "time": "2026-08-20T05:51:41+00:00",
+   "asset": "LINK",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "plan": {
+    "entry": 10.41,
+    "sl": 10.53,
+    "tp1": 10.29,
+    "tp2": 10.18,
+    "risk_pct": 1.12,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
+  {
+   "time": "2026-08-20T05:51:41+00:00",
+   "asset": "SOL",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "plan": {
+    "entry": 84.84,
+    "sl": 85.7,
+    "tp1": 83.99,
+    "tp2": 83.13,
+    "risk_pct": 1.01,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
+  {
+   "time": "2026-08-20T05:51:41+00:00",
+   "asset": "BTC",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "plan": {
+    "entry": 69372.81,
+    "sl": 69754.1,
+    "tp1": 68991.52,
+    "tp2": 68610.24,
+    "risk_pct": 0.55,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
   {
    "time": "2026-08-20T05:18:30+00:00",
    "asset": "LINK",
@@ -889,55 +931,9 @@
     "risk_pct": 0.56,
     "verdict": "\u2139\ufe0f"
    }
-  },
-  {
-   "time": "2026-08-17T19:57:18+00:00",
-   "asset": "XRP",
-   "type": "achat",
-   "reason": "Croisement haussier SMA20/SMA50 (golden cross)",
-   "plan": {
-    "entry": 1.0,
-    "sl": 1.0,
-    "tp1": 1.0,
-    "tp2": 1.01,
-    "risk_pct": 0.41,
-    "net_tp1": -0.5,
-    "net_tp2": 0.5,
-    "verdict": "\u26a0\ufe0f"
-   }
-  },
-  {
-   "time": "2026-08-17T19:35:58+00:00",
-   "asset": "LINK",
-   "type": "vente",
-   "reason": "Croisement baissier du MACD",
-   "plan": {
-    "entry": 9.46,
-    "sl": 9.52,
-    "tp1": 9.41,
-    "tp2": 9.36,
-    "risk_pct": 0.56,
-    "verdict": "\u2139\ufe0f"
-   }
-  },
-  {
-   "time": "2026-08-17T19:35:58+00:00",
-   "asset": "XRP",
-   "type": "achat",
-   "reason": "Croisement haussier SMA20/SMA50 (golden cross)",
-   "plan": {
-    "entry": 1.0,
-    "sl": 1.0,
-    "tp1": 1.0,
-    "tp2": 1.01,
-    "risk_pct": 0.41,
-    "net_tp1": -0.5,
-    "net_tp2": 0.5,
-    "verdict": "\u26a0\ufe0f"
-   }
   }
  ],
- "market_updated": "2026-08-20T05:18:30+00:00",
+ "market_updated": "2026-08-20T05:51:41+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
@@ -4231,6 +4227,20 @@
    "tp1": 10.32,
    "tp2": 10.21,
    "risk_pct": 1.09,
+   "verdict": "\u2139\ufe0f",
+   "tp1_franchi": false
+  },
+  {
+   "time": "2026-08-20T05:51:41+00:00",
+   "asset": "BTC",
+   "coin": "bitcoin",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "entry": 69372.81,
+   "sl": 69754.1,
+   "tp1": 68991.52,
+   "tp2": 68610.24,
+   "risk_pct": 0.55,
    "verdict": "\u2139\ufe0f",
    "tp1_franchi": false
   }
