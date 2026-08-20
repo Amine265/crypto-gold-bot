@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 72582.3,
-   "rsi": 81.9,
+   "price": 72659.38,
+   "rsi": 82.2,
    "sparkline": [
     64758.27,
     64220.5,
@@ -29,13 +29,13 @@
     64632.57,
     64762.76,
     69171.65,
-    72582.3
+    72659.38
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 2346.54,
-   "rsi": 80.3,
+   "price": 2337.6,
+   "rsi": 79.5,
    "sparkline": [
     1915.59,
     1901.54,
@@ -61,7 +61,7 @@
     1913.73,
     1932.46,
     2244.27,
-    2346.54
+    2337.6
    ]
   },
   "pax-gold": {
@@ -98,7 +98,7 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 87.4,
+   "price": 87.42,
    "rsi": 73.8,
    "sparkline": [
     73.46,
@@ -125,13 +125,13 @@
     77.01,
     78.15,
     84.46,
-    87.4
+    87.42
    ]
   },
   "ripple": {
    "label": "XRP",
-   "price": 1.29,
-   "rsi": 88.7,
+   "price": 1.31,
+   "rsi": 89.9,
    "sparkline": [
     1.05,
     1.02,
@@ -157,13 +157,13 @@
     1.0,
     1.01,
     1.1,
-    1.29
+    1.31
    ]
   },
   "chainlink": {
    "label": "LINK",
-   "price": 10.78,
-   "rsi": 70.1,
+   "price": 10.79,
+   "rsi": 70.4,
    "sparkline": [
     8.25,
     8.17,
@@ -189,11 +189,25 @@
     9.48,
     9.72,
     10.45,
-    10.78
+    10.79
    ]
   }
  },
  "signals": [
+  {
+   "time": "2026-08-20T17:15:22+00:00",
+   "asset": "LINK",
+   "type": "vente",
+   "reason": "RSI pass\u00e9 en zone de surachat (70.4)",
+   "plan": {
+    "entry": 10.79,
+    "sl": 10.88,
+    "tp1": 10.69,
+    "tp2": 10.6,
+    "risk_pct": 0.85,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
   {
    "time": "2026-08-20T16:47:34+00:00",
    "asset": "LINK",
@@ -913,23 +927,9 @@
     "risk_pct": 0.3,
     "verdict": "\u2139\ufe0f"
    }
-  },
-  {
-   "time": "2026-08-18T01:46:03+00:00",
-   "asset": "SOL",
-   "type": "vente",
-   "reason": "Croisement baissier du MACD",
-   "plan": {
-    "entry": 75.73,
-    "sl": 76.0,
-    "tp1": 75.47,
-    "tp2": 75.2,
-    "risk_pct": 0.35,
-    "verdict": "\u2139\ufe0f"
-   }
   }
  ],
- "market_updated": "2026-08-20T16:47:34+00:00",
+ "market_updated": "2026-08-20T17:15:22+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
@@ -4229,20 +4229,6 @@
    "tp1_franchi": true
   },
   {
-   "time": "2026-08-20T15:24:27+00:00",
-   "asset": "SOL",
-   "coin": "solana",
-   "type": "vente",
-   "reason": "RSI pass\u00e9 en zone de surachat (71.3)",
-   "entry": 86.85,
-   "sl": 87.41,
-   "tp1": 86.29,
-   "tp2": 85.73,
-   "risk_pct": 0.65,
-   "verdict": "\u2139\ufe0f",
-   "tp1_franchi": false
-  },
-  {
    "time": "2026-08-20T16:02:19+00:00",
    "asset": "SOL",
    "coin": "solana",
@@ -4269,9 +4255,34 @@
    "risk_pct": 0.84,
    "verdict": "\u2139\ufe0f",
    "tp1_franchi": false
+  },
+  {
+   "time": "2026-08-20T17:15:22+00:00",
+   "asset": "LINK",
+   "coin": "chainlink",
+   "type": "vente",
+   "reason": "RSI pass\u00e9 en zone de surachat (70.4)",
+   "entry": 10.79,
+   "sl": 10.88,
+   "tp1": 10.69,
+   "tp2": 10.6,
+   "risk_pct": 0.85,
+   "verdict": "\u2139\ufe0f",
+   "tp1_franchi": false
   }
  ],
  "signaux_resultats": [
+  {
+   "time": "2026-08-20T17:15:22+00:00",
+   "signal_time": "2026-08-20T15:24:27+00:00",
+   "asset": "SOL",
+   "type": "vente",
+   "resultat": "SL",
+   "reason": "RSI pass\u00e9 en zone de surachat (71.3)",
+   "tp1_franchi": false,
+   "entry": 86.85,
+   "sortie": 87.42
+  },
   {
    "time": "2026-08-20T14:51:00+00:00",
    "signal_time": "2026-08-20T10:52:02+00:00",
@@ -4810,17 +4821,6 @@
    "tp1_franchi": false,
    "entry": 64212.78,
    "sortie": 64468.08
-  },
-  {
-   "time": "2026-08-17T22:37:05+00:00",
-   "signal_time": "2026-08-17T21:11:41+00:00",
-   "asset": "LINK",
-   "type": "achat",
-   "resultat": "SL",
-   "reason": "Croisement haussier du MACD",
-   "tp1_franchi": false,
-   "entry": 9.52,
-   "sortie": 9.47
   }
  ],
  "agent": {
@@ -4916,7 +4916,7 @@
    "sl": 71026.57,
    "tp1": 72582.56,
    "tp2": 73555.06,
-   "tp1_franchi": false
+   "tp1_franchi": true
   },
   {
    "time": "2026-08-20T08:52:04+00:00",
@@ -4927,7 +4927,7 @@
    "sl": 70637.57,
    "tp1": 72582.56,
    "tp2": 73555.06,
-   "tp1_franchi": false
+   "tp1_franchi": true
   },
   {
    "time": "2026-08-20T08:52:04+00:00",
