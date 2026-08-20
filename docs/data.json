@@ -7636,29 +7636,47 @@
   }
  ],
  "b0": {
-  "maj": "2026-08-19T01:52:23+00:00",
+  "maj": "2026-08-20T01:50:56+00:00",
   "pause": false,
   "alloc": 45.0,
   "actifs": {
    "BTC": {
-    "au_dessus": false,
-    "depuis": "2026-05-20",
-    "cloture": 64685.42,
-    "sma200": 69056.87,
+    "au_dessus": true,
+    "depuis": "2026-08-19",
+    "cloture": 69293.87,
+    "sma200": 69009.76,
     "source": "Kraken XBTUSDC",
-    "date_cloture": "2026-08-18",
-    "position": null,
-    "dernier_evenement": null
+    "date_cloture": "2026-08-19",
+    "position": {
+     "vol": 0.00064433,
+     "cout_usd": 45.36,
+     "prix_achat": 69834.01,
+     "ouvert_le": "2026-08-20T01:50:54+00:00",
+     "txid": "O3WENQ-CH2ZE-YP3QUC"
+    },
+    "dernier_evenement": {
+     "time": "2026-08-20T01:50:54+00:00",
+     "texte": "achat 45.00 $ ex\u00e9cut\u00e9 \u00e0 69,834.01 $ (0.00064433 BTC, frais 0.36 $)"
+    }
    },
    "ETH": {
-    "au_dessus": false,
-    "depuis": "2026-05-20",
-    "cloture": 1918.0,
-    "sma200": 2004.8,
+    "au_dessus": true,
+    "depuis": "2026-08-19",
+    "cloture": 2251.48,
+    "sma200": 2003.81,
     "source": "Kraken ETHUSDC",
-    "date_cloture": "2026-08-18",
-    "position": null,
-    "dernier_evenement": null
+    "date_cloture": "2026-08-19",
+    "position": {
+     "vol": 0.01247067,
+     "cout_usd": 28.51,
+     "prix_achat": 2268.1,
+     "ouvert_le": "2026-08-20T01:50:56+00:00",
+     "txid": "OARMVQ-THM7O-FDWUK3"
+    },
+    "dernier_evenement": {
+     "time": "2026-08-20T01:50:56+00:00",
+     "texte": "achat 28.28 $ ex\u00e9cut\u00e9 \u00e0 2,268.10 $ (0.01247067 ETH, frais 0.23 $)"
+    }
    }
   }
  }
