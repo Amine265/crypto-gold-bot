@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 78023.14,
-   "rsi": 77.1,
+   "price": 77754.13,
+   "rsi": 75.6,
    "sparkline": [
     64863.56,
     64882.55,
@@ -29,13 +29,13 @@
     68350.42,
     69766.18,
     72610.65,
-    78023.14
+    77754.13
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 2401.09,
-   "rsi": 69.7,
+   "price": 2398.27,
+   "rsi": 68.8,
    "sparkline": [
     1912.02,
     1913.48,
@@ -61,7 +61,7 @@
     2083.16,
     2259.72,
     2317.02,
-    2401.09
+    2398.27
    ]
   },
   "pax-gold": {
@@ -98,8 +98,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 91.22,
-   "rsi": 66.5,
+   "price": 91.5,
+   "rsi": 68.5,
    "sparkline": [
     73.5,
     73.67,
@@ -125,13 +125,13 @@
     81.44,
     85.8,
     87.6,
-    91.22
+    91.5
    ]
   },
   "ripple": {
    "label": "XRP",
-   "price": 1.39,
-   "rsi": 73.6,
+   "price": 1.38,
+   "rsi": 70.0,
    "sparkline": [
     1.03,
     1.03,
@@ -157,13 +157,13 @@
     1.06,
     1.11,
     1.25,
-    1.39
+    1.38
    ]
   },
   "chainlink": {
    "label": "LINK",
-   "price": 11.41,
-   "rsi": 68.5,
+   "price": 11.4,
+   "rsi": 68.2,
    "sparkline": [
     8.2,
     8.17,
@@ -189,11 +189,25 @@
     9.91,
     10.56,
     10.61,
-    11.41
+    11.4
    ]
   }
  },
  "signals": [
+  {
+   "time": "2026-08-21T10:52:15+00:00",
+   "asset": "ETH",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "plan": {
+    "entry": 2398.27,
+    "sl": 2417.81,
+    "tp1": 2378.72,
+    "tp2": 2359.18,
+    "risk_pct": 0.81,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
   {
    "time": "2026-08-21T10:15:38+00:00",
    "asset": "ETH",
@@ -899,25 +913,9 @@
     "net_tp2": -0.11,
     "verdict": "\u26d4"
    }
-  },
-  {
-   "time": "2026-08-19T07:11:09+00:00",
-   "asset": "XRP",
-   "type": "achat",
-   "reason": "Croisement haussier du MACD",
-   "plan": {
-    "entry": 1.0,
-    "sl": 1.0,
-    "tp1": 1.01,
-    "tp2": 1.01,
-    "risk_pct": 0.22,
-    "net_tp1": 0.5,
-    "net_tp2": 0.5,
-    "verdict": "\u2705"
-   }
   }
  ],
- "market_updated": "2026-08-21T10:15:38+00:00",
+ "market_updated": "2026-08-21T10:52:15+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
