@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 77528.31,
-   "rsi": 72.4,
+   "price": 77425.08,
+   "rsi": 71.6,
    "sparkline": [
     64796.67,
     64924.95,
@@ -29,13 +29,13 @@
     69418.44,
     71692.74,
     74686.91,
-    77528.31
+    77425.08
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 2413.41,
-   "rsi": 72.2,
+   "price": 2424.23,
+   "rsi": 74.0,
    "sparkline": [
     1912.11,
     1913.68,
@@ -61,7 +61,7 @@
     2253.56,
     2277.59,
     2346.97,
-    2413.41
+    2424.23
    ]
   },
   "pax-gold": {
@@ -98,49 +98,49 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 91.67,
-   "rsi": 67.9,
+   "price": 91.77,
+   "rsi": 68.4,
    "sparkline": [
-    73.44,
-    74.72,
-    76.21,
-    76.32,
-    76.6,
-    76.25,
-    75.97,
-    75.17,
-    76.11,
-    75.46,
-    76.08,
-    75.9,
-    75.42,
-    75.35,
-    75.47,
-    75.2,
-    74.81,
-    75.85,
-    75.76,
-    77.19,
-    77.37,
-    85.39,
-    87.11,
-    89.21,
-    91.67
+    73.42,
+    74.75,
+    76.17,
+    76.41,
+    76.7,
+    75.94,
+    75.7,
+    75.71,
+    76.7,
+    75.56,
+    76.12,
+    75.79,
+    75.1,
+    75.13,
+    75.57,
+    75.21,
+    75.08,
+    76.02,
+    75.65,
+    77.08,
+    77.2,
+    85.47,
+    86.48,
+    89.27,
+    91.77
    ]
   },
   "ripple": {
    "label": "XRP",
-   "price": 1.41,
-   "rsi": 68.2,
+   "price": 1.38,
+   "rsi": 62.5,
    "sparkline": [
     1.02,
     1.03,
     1.04,
     1.04,
     1.03,
-    1.03,
+    1.02,
     1.01,
-    1.01,
+    1.02,
     1.02,
     1.0,
     1.01,
@@ -153,47 +153,61 @@
     1.0,
     0.99,
     1.0,
-    1.01,
-    1.1,
-    1.19,
-    1.29,
-    1.41
+    1.0,
+    1.11,
+    1.22,
+    1.31,
+    1.38
    ]
   },
   "chainlink": {
    "label": "LINK",
-   "price": 11.54,
-   "rsi": 70.9,
+   "price": 11.63,
+   "rsi": 73.1,
    "sparkline": [
-    8.22,
-    8.25,
+    8.2,
+    8.26,
     8.34,
     8.29,
-    8.2,
-    8.3,
-    8.37,
-    8.55,
-    8.74,
+    8.21,
+    8.29,
+    8.4,
+    8.62,
+    8.79,
     8.66,
-    8.78,
+    8.79,
     8.82,
-    8.87,
-    9.39,
-    9.54,
-    9.41,
-    9.43,
-    9.52,
-    9.41,
+    8.9,
+    9.31,
+    9.57,
+    9.38,
     9.5,
-    9.79,
-    10.56,
-    10.62,
-    10.91,
-    11.54
+    9.51,
+    9.42,
+    9.5,
+    9.73,
+    10.57,
+    10.6,
+    10.93,
+    11.63
    ]
   }
  },
  "signals": [
+  {
+   "time": "2026-08-21T17:50:28+00:00",
+   "asset": "XRP",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "plan": {
+    "entry": 1.38,
+    "sl": 1.41,
+    "tp1": 1.35,
+    "tp2": 1.32,
+    "risk_pct": 2.36,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
   {
    "time": "2026-08-21T16:46:49+00:00",
    "asset": "XRP",
@@ -895,23 +909,9 @@
     "risk_pct": 0.34,
     "verdict": "\u2139\ufe0f"
    }
-  },
-  {
-   "time": "2026-08-19T14:01:32+00:00",
-   "asset": "BTC",
-   "type": "vente",
-   "reason": "RSI pass\u00e9 en zone de surachat (70.0)",
-   "plan": {
-    "entry": 64960.34,
-    "sl": 65104.44,
-    "tp1": 64816.25,
-    "tp2": 64672.16,
-    "risk_pct": 0.22,
-    "verdict": "\u2139\ufe0f"
-   }
   }
  ],
- "market_updated": "2026-08-21T17:14:52+00:00",
+ "market_updated": "2026-08-21T17:50:28+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
@@ -4181,20 +4181,6 @@
  },
  "plans_actifs": [
   {
-   "time": "2026-08-21T10:15:38+00:00",
-   "asset": "ETH",
-   "coin": "ethereum",
-   "type": "vente",
-   "reason": "Croisement baissier du MACD",
-   "entry": 2401.09,
-   "sl": 2420.33,
-   "tp1": 2381.86,
-   "tp2": 2362.62,
-   "risk_pct": 0.8,
-   "verdict": "\u2139\ufe0f",
-   "tp1_franchi": true
-  },
-  {
    "time": "2026-08-21T13:55:57+00:00",
    "asset": "XRP",
    "coin": "ripple",
@@ -4206,7 +4192,7 @@
    "tp2": 1.35,
    "risk_pct": 2.3,
    "verdict": "\u2139\ufe0f",
-   "tp1_franchi": false
+   "tp1_franchi": true
   },
   {
    "time": "2026-08-21T14:47:56+00:00",
@@ -4237,20 +4223,6 @@
    "tp1_franchi": false
   },
   {
-   "time": "2026-08-21T15:18:28+00:00",
-   "asset": "ETH",
-   "coin": "ethereum",
-   "type": "vente",
-   "reason": "RSI pass\u00e9 en zone de surachat (70.3)",
-   "entry": 2402.96,
-   "sl": 2418.82,
-   "tp1": 2387.1,
-   "tp2": 2371.25,
-   "risk_pct": 0.66,
-   "verdict": "\u2139\ufe0f",
-   "tp1_franchi": false
-  },
-  {
    "time": "2026-08-21T16:46:49+00:00",
    "asset": "XRP",
    "coin": "ripple",
@@ -4263,9 +4235,45 @@
    "risk_pct": 2.48,
    "verdict": "\u2139\ufe0f",
    "tp1_franchi": false
+  },
+  {
+   "time": "2026-08-21T17:50:28+00:00",
+   "asset": "XRP",
+   "coin": "ripple",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "entry": 1.38,
+   "sl": 1.41,
+   "tp1": 1.35,
+   "tp2": 1.32,
+   "risk_pct": 2.36,
+   "verdict": "\u2139\ufe0f",
+   "tp1_franchi": false
   }
  ],
  "signaux_resultats": [
+  {
+   "time": "2026-08-21T17:50:28+00:00",
+   "signal_time": "2026-08-21T15:18:28+00:00",
+   "asset": "ETH",
+   "type": "vente",
+   "resultat": "SL",
+   "reason": "RSI pass\u00e9 en zone de surachat (70.3)",
+   "tp1_franchi": false,
+   "entry": 2402.96,
+   "sortie": 2424.23
+  },
+  {
+   "time": "2026-08-21T17:50:28+00:00",
+   "signal_time": "2026-08-21T10:15:38+00:00",
+   "asset": "ETH",
+   "type": "vente",
+   "resultat": "SL",
+   "reason": "Croisement baissier du MACD",
+   "tp1_franchi": true,
+   "entry": 2401.09,
+   "sortie": 2424.23
+  },
   {
    "time": "2026-08-21T15:18:28+00:00",
    "signal_time": "2026-08-21T13:05:27+00:00",
@@ -4793,28 +4801,6 @@
    "tp1_franchi": false,
    "entry": 1907.83,
    "sortie": 1914.43
-  },
-  {
-   "time": "2026-08-19T06:18:06+00:00",
-   "signal_time": "2026-08-18T21:33:35+00:00",
-   "asset": "BTC",
-   "type": "vente",
-   "resultat": "TP2",
-   "reason": "Croisement baissier du MACD",
-   "tp1_franchi": true,
-   "entry": 64578.86,
-   "sortie": 64151.67
-  },
-  {
-   "time": "2026-08-19T04:57:40+00:00",
-   "signal_time": "2026-08-19T04:57:40+00:00",
-   "asset": "XRP",
-   "type": "achat",
-   "resultat": "SL",
-   "reason": "Croisement haussier SMA20/SMA50 (golden cross)",
-   "tp1_franchi": false,
-   "entry": 1.0,
-   "sortie": 1.0
   }
  ],
  "agent": {
