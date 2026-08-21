@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 78324.8,
-   "rsi": 70.7,
+   "price": 78533.48,
+   "rsi": 72.9,
    "sparkline": [
     64850.57,
     64969.88,
@@ -29,13 +29,13 @@
     69458.2,
     72371.13,
     78281.72,
-    78324.8
+    78533.48
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 2523.19,
-   "rsi": 81.8,
+   "price": 2525.7,
+   "rsi": 82.0,
    "sparkline": [
     1913.92,
     1918.47,
@@ -61,7 +61,7 @@
     2250.76,
     2314.76,
     2412.58,
-    2523.19
+    2525.7
    ]
   },
   "pax-gold": {
@@ -98,8 +98,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 93.82,
-   "rsi": 72.9,
+   "price": 94.37,
+   "rsi": 74.7,
    "sparkline": [
     73.64,
     75.4,
@@ -125,13 +125,13 @@
     84.84,
     87.01,
     91.78,
-    93.82
+    94.37
    ]
   },
   "ripple": {
    "label": "XRP",
-   "price": 1.44,
-   "rsi": 71.3,
+   "price": 1.45,
+   "rsi": 72.4,
    "sparkline": [
     1.02,
     1.04,
@@ -157,13 +157,13 @@
     1.1,
     1.23,
     1.37,
-    1.44
+    1.45
    ]
   },
   "chainlink": {
    "label": "LINK",
-   "price": 12.16,
-   "rsi": 82.0,
+   "price": 12.2,
+   "rsi": 82.5,
    "sparkline": [
     8.17,
     8.31,
@@ -189,11 +189,41 @@
     10.45,
     10.62,
     11.6,
-    12.16
+    12.2
    ]
   }
  },
  "signals": [
+  {
+   "time": "2026-08-21T22:58:22+00:00",
+   "asset": "XRP",
+   "type": "vente",
+   "reason": "RSI pass\u00e9 en zone de surachat (72.4)",
+   "plan": {
+    "entry": 1.45,
+    "sl": 1.48,
+    "tp1": 1.42,
+    "tp2": 1.39,
+    "risk_pct": 2.14,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
+  {
+   "time": "2026-08-21T22:58:22+00:00",
+   "asset": "SOL",
+   "type": "achat",
+   "reason": "Croisement haussier du MACD",
+   "plan": {
+    "entry": 94.37,
+    "sl": 93.42,
+    "tp1": 95.32,
+    "tp2": 96.26,
+    "risk_pct": 1.0,
+    "net_tp1": 0.51,
+    "net_tp2": 1.5,
+    "verdict": "\u2705"
+   }
+  },
   {
    "time": "2026-08-21T22:35:42+00:00",
    "asset": "XRP",
@@ -883,41 +913,9 @@
     "net_tp2": 2.98,
     "verdict": "\u2705"
    }
-  },
-  {
-   "time": "2026-08-20T08:52:04+00:00",
-   "asset": "SOL",
-   "type": "achat",
-   "reason": "Croisement haussier du MACD",
-   "plan": {
-    "entry": 87.66,
-    "sl": 86.62,
-    "tp1": 88.7,
-    "tp2": 89.75,
-    "risk_pct": 1.19,
-    "net_tp1": 0.69,
-    "net_tp2": 1.88,
-    "verdict": "\u2705"
-   }
-  },
-  {
-   "time": "2026-08-20T08:52:04+00:00",
-   "asset": "BTC",
-   "type": "achat",
-   "reason": "Croisement haussier du MACD",
-   "plan": {
-    "entry": 71610.07,
-    "sl": 71026.57,
-    "tp1": 72193.57,
-    "tp2": 72777.06,
-    "risk_pct": 0.81,
-    "net_tp1": 0.31,
-    "net_tp2": 1.13,
-    "verdict": "\u2705"
-   }
   }
  ],
- "market_updated": "2026-08-21T22:35:42+00:00",
+ "market_updated": "2026-08-21T22:58:22+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
@@ -4285,6 +4283,20 @@
    "tp1": 1.41,
    "tp2": 1.38,
    "risk_pct": 2.08,
+   "verdict": "\u2139\ufe0f",
+   "tp1_franchi": false
+  },
+  {
+   "time": "2026-08-21T22:58:22+00:00",
+   "asset": "XRP",
+   "coin": "ripple",
+   "type": "vente",
+   "reason": "RSI pass\u00e9 en zone de surachat (72.4)",
+   "entry": 1.45,
+   "sl": 1.48,
+   "tp1": 1.42,
+   "tp2": 1.39,
+   "risk_pct": 2.14,
    "verdict": "\u2139\ufe0f",
    "tp1_franchi": false
   }
