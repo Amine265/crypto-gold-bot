@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 77190.7,
-   "rsi": 52.6,
+   "price": 76956.65,
+   "rsi": 50.1,
    "sparkline": [
     64953.65,
     64916.01,
@@ -29,13 +29,13 @@
     72426.36,
     75343.39,
     77022.48,
-    77190.7
+    76956.65
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 2423.76,
-   "rsi": 47.6,
+   "price": 2418.89,
+   "rsi": 46.4,
    "sparkline": [
     1917.76,
     1915.38,
@@ -61,7 +61,7 @@
     2322.65,
     2366.48,
     2414.76,
-    2423.76
+    2418.89
    ]
   },
   "pax-gold": {
@@ -98,8 +98,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 94.21,
-   "rsi": 55.4,
+   "price": 93.68,
+   "rsi": 53.2,
    "sparkline": [
     74.88,
     75.97,
@@ -125,13 +125,13 @@
     87.24,
     90.76,
     90.85,
-    94.21
+    93.68
    ]
   },
   "ripple": {
    "label": "XRP",
-   "price": 1.52,
-   "rsi": 57.1,
+   "price": 1.49,
+   "rsi": 54.1,
    "sparkline": [
     1.04,
     1.04,
@@ -157,13 +157,13 @@
     1.26,
     1.31,
     1.37,
-    1.52
+    1.49
    ]
   },
   "chainlink": {
    "label": "LINK",
-   "price": 11.67,
-   "rsi": 49.4,
+   "price": 11.56,
+   "rsi": 46.6,
    "sparkline": [
     8.3,
     8.3,
@@ -189,11 +189,25 @@
     10.69,
     10.93,
     11.67,
-    11.67
+    11.56
    ]
   }
  },
  "signals": [
+  {
+   "time": "2026-08-22T10:04:27+00:00",
+   "asset": "XRP",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "plan": {
+    "entry": 1.49,
+    "sl": 1.56,
+    "tp1": 1.42,
+    "tp2": 1.36,
+    "risk_pct": 4.45,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
   {
    "time": "2026-08-22T09:36:28+00:00",
    "asset": "XRP",
@@ -899,23 +913,9 @@
     "risk_pct": 0.35,
     "verdict": "\u2139\ufe0f"
    }
-  },
-  {
-   "time": "2026-08-20T22:49:07+00:00",
-   "asset": "XRP",
-   "type": "vente",
-   "reason": "Croisement baissier du MACD",
-   "plan": {
-    "entry": 1.26,
-    "sl": 1.29,
-    "tp1": 1.23,
-    "tp2": 1.2,
-    "risk_pct": 2.49,
-    "verdict": "\u2139\ufe0f"
-   }
   }
  ],
- "market_updated": "2026-08-22T09:36:28+00:00",
+ "market_updated": "2026-08-22T10:04:27+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
