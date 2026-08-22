@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 77279.15,
-   "rsi": 54.1,
+   "price": 77223.69,
+   "rsi": 53.6,
    "sparkline": [
     64963.35,
     65026.69,
@@ -29,13 +29,13 @@
     71904.51,
     74844.99,
     77158.86,
-    77279.15
+    77223.69
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 2438.67,
-   "rsi": 51.1,
+   "price": 2431.21,
+   "rsi": 49.5,
    "sparkline": [
     1916.52,
     1918.97,
@@ -61,7 +61,7 @@
     2296.59,
     2347.97,
     2392.12,
-    2438.67
+    2431.21
    ]
   },
   "pax-gold": {
@@ -98,8 +98,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 93.93,
-   "rsi": 55.1,
+   "price": 93.79,
+   "rsi": 54.6,
    "sparkline": [
     74.62,
     76.14,
@@ -125,13 +125,13 @@
     87.31,
     88.61,
     91.36,
-    93.93
+    93.79
    ]
   },
   "ripple": {
    "label": "XRP",
-   "price": 1.52,
-   "rsi": 61.2,
+   "price": 1.53,
+   "rsi": 62.1,
    "sparkline": [
     1.03,
     1.04,
@@ -139,31 +139,31 @@
     1.03,
     1.03,
     1.01,
+    1.01,
     1.02,
-    1.02,
-    1.0,
     1.0,
     1.01,
     1.01,
     1.0,
     1.0,
     1.0,
-    0.99,
+    1.0,
+    1.0,
     1.0,
     0.99,
     1.0,
-    1.0,
-    1.13,
+    1.01,
+    1.1,
     1.19,
     1.29,
     1.4,
-    1.52
+    1.53
    ]
   },
   "chainlink": {
    "label": "LINK",
-   "price": 11.85,
-   "rsi": 54.0,
+   "price": 11.78,
+   "rsi": 52.3,
    "sparkline": [
     8.26,
     8.33,
@@ -189,11 +189,39 @@
     10.67,
     10.78,
     11.54,
-    11.85
+    11.78
    ]
   }
  },
  "signals": [
+  {
+   "time": "2026-08-22T06:14:41+00:00",
+   "asset": "LINK",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "plan": {
+    "entry": 11.78,
+    "sl": 12.03,
+    "tp1": 11.52,
+    "tp2": 11.27,
+    "risk_pct": 2.16,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
+  {
+   "time": "2026-08-22T06:14:41+00:00",
+   "asset": "ETH",
+   "type": "vente",
+   "reason": "Croisement baissier du MACD",
+   "plan": {
+    "entry": 2431.21,
+    "sl": 2458.91,
+    "tp1": 2403.5,
+    "tp2": 2375.8,
+    "risk_pct": 1.14,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
   {
    "time": "2026-08-22T05:36:55+00:00",
    "asset": "LINK",
@@ -885,37 +913,9 @@
     "risk_pct": 0.87,
     "verdict": "\u2139\ufe0f"
    }
-  },
-  {
-   "time": "2026-08-20T17:15:22+00:00",
-   "asset": "LINK",
-   "type": "vente",
-   "reason": "RSI pass\u00e9 en zone de surachat (70.4)",
-   "plan": {
-    "entry": 10.79,
-    "sl": 10.88,
-    "tp1": 10.69,
-    "tp2": 10.6,
-    "risk_pct": 0.85,
-    "verdict": "\u2139\ufe0f"
-   }
-  },
-  {
-   "time": "2026-08-20T16:47:34+00:00",
-   "asset": "LINK",
-   "type": "vente",
-   "reason": "RSI pass\u00e9 en zone de surachat (70.1)",
-   "plan": {
-    "entry": 10.78,
-    "sl": 10.87,
-    "tp1": 10.69,
-    "tp2": 10.6,
-    "risk_pct": 0.84,
-    "verdict": "\u2139\ufe0f"
-   }
   }
  ],
- "market_updated": "2026-08-22T05:36:55+00:00",
+ "market_updated": "2026-08-22T06:14:41+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
@@ -4879,9 +4879,10 @@
   ],
   "positions": []
  },
- "calibrages_actifs": [
+ "calibrages_actifs": [],
+ "calibrages_resultats": [
   {
-   "time": "2026-08-21T21:34:12+00:00",
+   "time": "2026-08-22T06:14:41+00:00",
    "asset": "ETH",
    "coin": "ethereum",
    "variante": "C",
@@ -4889,10 +4890,11 @@
    "sl": 2438.25,
    "tp1": 2520.21,
    "tp2": 2561.19,
-   "tp1_franchi": true
-  }
- ],
- "calibrages_resultats": [
+   "tp1_franchi": true,
+   "signal_time": "2026-08-21T21:34:12+00:00",
+   "resultat": "SL",
+   "sortie": 2431.21
+  },
   {
    "time": "2026-08-22T05:36:55+00:00",
    "asset": "ETH",
@@ -7678,20 +7680,6 @@
    "signal_time": "2026-08-13T14:03:56+00:00",
    "resultat": "SL",
    "sortie": 8.72
-  },
-  {
-   "time": "2026-08-13T16:13:16+00:00",
-   "asset": "SOL",
-   "coin": "solana",
-   "variante": "C",
-   "entry": 76.11,
-   "sl": 75.65,
-   "tp1": 76.58,
-   "tp2": 77.04,
-   "tp1_franchi": false,
-   "signal_time": "2026-08-13T14:03:56+00:00",
-   "resultat": "SL",
-   "sortie": 75.59
   }
  ],
  "b0": {
