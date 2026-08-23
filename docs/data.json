@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 77701.7,
-   "rsi": 62.2,
+   "price": 77654.68,
+   "rsi": 61.5,
    "sparkline": [
     65006.43,
     64841.34,
@@ -33,8 +33,8 @@
   },
   "ethereum": {
    "label": "ETH",
-   "price": 2461.67,
-   "rsi": 61.2,
+   "price": 2459.12,
+   "rsi": 60.6,
    "sparkline": [
     1917.73,
     1905.72,
@@ -96,7 +96,7 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 95.57,
+   "price": 95.58,
    "rsi": 59.9,
    "sparkline": [
     76.76,
@@ -128,7 +128,7 @@
   "ripple": {
    "label": "XRP",
    "price": 1.52,
-   "rsi": 58.1,
+   "rsi": 59.3,
    "sparkline": [
     1.04,
     1.03,
@@ -158,8 +158,8 @@
   },
   "chainlink": {
    "label": "LINK",
-   "price": 11.58,
-   "rsi": 53.7,
+   "price": 11.57,
+   "rsi": 53.2,
    "sparkline": [
     8.25,
     8.28,
@@ -189,6 +189,20 @@
   }
  },
  "signals": [
+  {
+   "time": "2026-08-23T22:54:26+00:00",
+   "asset": "SOL",
+   "type": "vente",
+   "reason": "Croisement baissier SMA20/SMA50 (death cross)",
+   "plan": {
+    "entry": 95.58,
+    "sl": 96.12,
+    "tp1": 95.04,
+    "tp2": 94.5,
+    "risk_pct": 0.56,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
   {
    "time": "2026-08-23T22:33:29+00:00",
    "asset": "SOL",
@@ -902,23 +916,9 @@
     "risk_pct": 1.05,
     "verdict": "\u2139\ufe0f"
    }
-  },
-  {
-   "time": "2026-08-21T13:55:57+00:00",
-   "asset": "XRP",
-   "type": "vente",
-   "reason": "RSI pass\u00e9 en zone de surachat (70.9)",
-   "plan": {
-    "entry": 1.41,
-    "sl": 1.44,
-    "tp1": 1.38,
-    "tp2": 1.35,
-    "risk_pct": 2.3,
-    "verdict": "\u2139\ufe0f"
-   }
   }
  ],
- "market_updated": "2026-08-23T22:33:29+00:00",
+ "market_updated": "2026-08-23T22:54:26+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
