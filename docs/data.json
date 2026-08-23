@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 77983.18,
-   "rsi": 65.9,
+   "price": 77758.68,
+   "rsi": 63.0,
    "sparkline": [
     65196.98,
     65108.02,
@@ -29,13 +29,13 @@
     78269.18,
     77290.11,
     75991.07,
-    77983.18
+    77758.68
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 2473.67,
-   "rsi": 64.2,
+   "price": 2467.03,
+   "rsi": 62.6,
    "sparkline": [
     1924.18,
     1919.93,
@@ -61,7 +61,7 @@
     2511.63,
     2426.99,
     2387.92,
-    2473.67
+    2467.03
    ]
   },
   "pax-gold": {
@@ -98,8 +98,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 96.06,
-   "rsi": 62.8,
+   "price": 95.41,
+   "rsi": 58.8,
    "sparkline": [
     77.36,
     77.0,
@@ -125,13 +125,13 @@
     96.28,
     94.22,
     92.42,
-    96.06
+    95.41
    ]
   },
   "ripple": {
    "label": "XRP",
    "price": 1.53,
-   "rsi": 62.1,
+   "rsi": 60.8,
    "sparkline": [
     1.04,
     1.03,
@@ -162,8 +162,8 @@
   },
   "chainlink": {
    "label": "LINK",
-   "price": 11.68,
-   "rsi": 57.4,
+   "price": 11.63,
+   "rsi": 55.6,
    "sparkline": [
     8.34,
     8.31,
@@ -189,11 +189,25 @@
     12.33,
     11.74,
     11.29,
-    11.68
+    11.63
    ]
   }
  },
  "signals": [
+  {
+   "time": "2026-08-23T21:52:26+00:00",
+   "asset": "SOL",
+   "type": "vente",
+   "reason": "Croisement baissier SMA20/SMA50 (death cross)",
+   "plan": {
+    "entry": 95.41,
+    "sl": 95.93,
+    "tp1": 94.89,
+    "tp2": 94.37,
+    "risk_pct": 0.55,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
   {
    "time": "2026-08-23T20:56:16+00:00",
    "asset": "XRP",
@@ -907,23 +921,9 @@
     "risk_pct": 1.15,
     "verdict": "\u2139\ufe0f"
    }
-  },
-  {
-   "time": "2026-08-21T10:52:15+00:00",
-   "asset": "ETH",
-   "type": "vente",
-   "reason": "Croisement baissier du MACD",
-   "plan": {
-    "entry": 2398.27,
-    "sl": 2417.81,
-    "tp1": 2378.72,
-    "tp2": 2359.18,
-    "risk_pct": 0.81,
-    "verdict": "\u2139\ufe0f"
-   }
   }
  ],
- "market_updated": "2026-08-23T21:31:12+00:00",
+ "market_updated": "2026-08-23T21:52:26+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
@@ -4235,6 +4235,20 @@
    "net_tp2": 1.48,
    "verdict": "\u2705",
    "tp1_franchi": true
+  },
+  {
+   "time": "2026-08-23T21:52:26+00:00",
+   "asset": "SOL",
+   "coin": "solana",
+   "type": "vente",
+   "reason": "Croisement baissier SMA20/SMA50 (death cross)",
+   "entry": 95.41,
+   "sl": 95.93,
+   "tp1": 94.89,
+   "tp2": 94.37,
+   "risk_pct": 0.55,
+   "verdict": "\u2139\ufe0f",
+   "tp1_franchi": false
   }
  ],
  "signaux_resultats": [
