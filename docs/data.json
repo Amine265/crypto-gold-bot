@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 76725.23,
-   "rsi": 43.8,
+   "price": 76084.5,
+   "rsi": 35.7,
    "sparkline": [
     64743.07,
     65152.75,
@@ -29,13 +29,13 @@
     77643.51,
     77965.31,
     77027.74,
-    76725.23
+    76084.5
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 2395.41,
-   "rsi": 40.0,
+   "price": 2369.03,
+   "rsi": 33.7,
    "sparkline": [
     1911.89,
     1920.06,
@@ -61,7 +61,7 @@
     2390.78,
     2519.68,
     2413.54,
-    2395.41
+    2369.03
    ]
   },
   "pax-gold": {
@@ -98,8 +98,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 92.74,
-   "rsi": 45.1,
+   "price": 92.27,
+   "rsi": 43.4,
    "sparkline": [
     75.95,
     77.14,
@@ -125,13 +125,13 @@
     91.18,
     93.87,
     93.31,
-    92.74
+    92.27
    ]
   },
   "ripple": {
    "label": "XRP",
    "price": 1.46,
-   "rsi": 47.3,
+   "rsi": 47.2,
    "sparkline": [
     1.04,
     1.04,
@@ -153,43 +153,42 @@
     1.0,
     1.06,
     1.11,
-    1.25,
-    1.38,
-    1.46,
-    1.45,
-    1.46
+    1.26,
+    1.35,
+    1.48,
+    1.45
    ]
   },
   "chainlink": {
    "label": "LINK",
-   "price": 11.39,
-   "rsi": 40.4,
+   "price": 11.13,
+   "rsi": 33.6,
    "sparkline": [
+    8.27,
+    8.31,
+    8.24,
     8.29,
-    8.32,
-    8.21,
-    8.3,
     8.65,
-    8.74,
-    8.75,
+    8.71,
     8.76,
-    8.83,
-    8.79,
-    9.08,
-    9.48,
-    9.38,
-    9.41,
-    9.39,
-    9.48,
+    8.74,
+    8.88,
+    8.82,
+    9.37,
+    9.51,
+    9.37,
+    9.45,
     9.41,
     9.54,
-    9.91,
-    10.56,
-    10.61,
-    11.37,
-    12.09,
-    11.65,
-    11.39
+    9.42,
+    9.67,
+    9.99,
+    10.54,
+    10.53,
+    11.25,
+    12.02,
+    11.61,
+    11.13
    ]
   }
  },
@@ -915,7 +914,7 @@
    }
   }
  ],
- "market_updated": "2026-08-23T04:49:31+00:00",
+ "market_updated": "2026-08-23T05:17:33+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
@@ -4185,20 +4184,6 @@
  },
  "plans_actifs": [
   {
-   "time": "2026-08-21T21:34:12+00:00",
-   "asset": "BTC",
-   "coin": "bitcoin",
-   "type": "vente",
-   "reason": "RSI pass\u00e9 en zone de surachat (71.2)",
-   "entry": 78148.78,
-   "sl": 78903.27,
-   "tp1": 77394.29,
-   "tp2": 76639.81,
-   "risk_pct": 0.97,
-   "verdict": "\u2139\ufe0f",
-   "tp1_franchi": true
-  },
-  {
    "time": "2026-08-21T21:56:56+00:00",
    "asset": "OR (once, via PAXG)",
    "coin": "pax-gold",
@@ -4211,34 +4196,6 @@
    "risk_pct": 0.29,
    "verdict": "\u2139\ufe0f",
    "tp1_franchi": false
-  },
-  {
-   "time": "2026-08-22T05:36:55+00:00",
-   "asset": "ETH",
-   "coin": "ethereum",
-   "type": "vente",
-   "reason": "Croisement baissier du MACD",
-   "entry": 2438.67,
-   "sl": 2465.58,
-   "tp1": 2411.77,
-   "tp2": 2384.86,
-   "risk_pct": 1.1,
-   "verdict": "\u2139\ufe0f",
-   "tp1_franchi": true
-  },
-  {
-   "time": "2026-08-22T05:36:55+00:00",
-   "asset": "LINK",
-   "coin": "chainlink",
-   "type": "vente",
-   "reason": "Croisement baissier du MACD",
-   "entry": 11.85,
-   "sl": 12.09,
-   "tp1": 11.6,
-   "tp2": 11.35,
-   "risk_pct": 2.08,
-   "verdict": "\u2139\ufe0f",
-   "tp1_franchi": true
   },
   {
    "time": "2026-08-22T07:41:53+00:00",
@@ -4269,34 +4226,6 @@
    "tp1_franchi": true
   },
   {
-   "time": "2026-08-23T03:11:48+00:00",
-   "asset": "ETH",
-   "coin": "ethereum",
-   "type": "vente",
-   "reason": "Croisement baissier SMA20/SMA50 (death cross)",
-   "entry": 2413.88,
-   "sl": 2426.1,
-   "tp1": 2401.67,
-   "tp2": 2389.46,
-   "risk_pct": 0.51,
-   "verdict": "\u2139\ufe0f",
-   "tp1_franchi": true
-  },
-  {
-   "time": "2026-08-23T04:05:21+00:00",
-   "asset": "BTC",
-   "coin": "bitcoin",
-   "type": "vente",
-   "reason": "Croisement baissier SMA20/SMA50 (death cross)",
-   "entry": 76886.9,
-   "sl": 77111.27,
-   "tp1": 76662.53,
-   "tp2": 76438.16,
-   "risk_pct": 0.29,
-   "verdict": "\u2139\ufe0f",
-   "tp1_franchi": false
-  },
-  {
    "time": "2026-08-23T04:05:21+00:00",
    "asset": "SOL",
    "coin": "solana",
@@ -4308,24 +4237,76 @@
    "tp2": 91.41,
    "risk_pct": 1.17,
    "verdict": "\u2139\ufe0f",
-   "tp1_franchi": false
-  },
-  {
-   "time": "2026-08-23T04:49:31+00:00",
-   "asset": "LINK",
-   "coin": "chainlink",
-   "type": "vente",
-   "reason": "Croisement baissier SMA20/SMA50 (death cross)",
-   "entry": 11.39,
-   "sl": 11.49,
-   "tp1": 11.28,
-   "tp2": 11.17,
-   "risk_pct": 0.94,
-   "verdict": "\u2139\ufe0f",
-   "tp1_franchi": false
+   "tp1_franchi": true
   }
  ],
  "signaux_resultats": [
+  {
+   "time": "2026-08-23T05:17:33+00:00",
+   "signal_time": "2026-08-23T04:49:31+00:00",
+   "asset": "LINK",
+   "type": "vente",
+   "resultat": "TP2",
+   "reason": "Croisement baissier SMA20/SMA50 (death cross)",
+   "tp1_franchi": true,
+   "entry": 11.39,
+   "sortie": 11.13
+  },
+  {
+   "time": "2026-08-23T05:17:33+00:00",
+   "signal_time": "2026-08-23T04:05:21+00:00",
+   "asset": "BTC",
+   "type": "vente",
+   "resultat": "TP2",
+   "reason": "Croisement baissier SMA20/SMA50 (death cross)",
+   "tp1_franchi": true,
+   "entry": 76886.9,
+   "sortie": 76084.5
+  },
+  {
+   "time": "2026-08-23T05:17:33+00:00",
+   "signal_time": "2026-08-23T03:11:48+00:00",
+   "asset": "ETH",
+   "type": "vente",
+   "resultat": "TP2",
+   "reason": "Croisement baissier SMA20/SMA50 (death cross)",
+   "tp1_franchi": true,
+   "entry": 2413.88,
+   "sortie": 2369.03
+  },
+  {
+   "time": "2026-08-23T05:17:33+00:00",
+   "signal_time": "2026-08-22T05:36:55+00:00",
+   "asset": "LINK",
+   "type": "vente",
+   "resultat": "TP2",
+   "reason": "Croisement baissier du MACD",
+   "tp1_franchi": true,
+   "entry": 11.85,
+   "sortie": 11.13
+  },
+  {
+   "time": "2026-08-23T05:17:33+00:00",
+   "signal_time": "2026-08-22T05:36:55+00:00",
+   "asset": "ETH",
+   "type": "vente",
+   "resultat": "TP2",
+   "reason": "Croisement baissier du MACD",
+   "tp1_franchi": true,
+   "entry": 2438.67,
+   "sortie": 2369.03
+  },
+  {
+   "time": "2026-08-23T05:17:33+00:00",
+   "signal_time": "2026-08-21T21:34:12+00:00",
+   "asset": "BTC",
+   "type": "vente",
+   "resultat": "TP2",
+   "reason": "RSI pass\u00e9 en zone de surachat (71.2)",
+   "tp1_franchi": true,
+   "entry": 78148.78,
+   "sortie": 76084.5
+  },
   {
    "time": "2026-08-23T03:11:48+00:00",
    "signal_time": "2026-08-23T01:55:44+00:00",
@@ -4809,72 +4790,6 @@
    "tp1_franchi": true,
    "entry": 10.83,
    "sortie": 10.64
-  },
-  {
-   "time": "2026-08-20T17:15:22+00:00",
-   "signal_time": "2026-08-20T15:24:27+00:00",
-   "asset": "SOL",
-   "type": "vente",
-   "resultat": "SL",
-   "reason": "RSI pass\u00e9 en zone de surachat (71.3)",
-   "tp1_franchi": false,
-   "entry": 86.85,
-   "sortie": 87.42
-  },
-  {
-   "time": "2026-08-20T14:51:00+00:00",
-   "signal_time": "2026-08-20T10:52:02+00:00",
-   "asset": "LINK",
-   "type": "vente",
-   "resultat": "TP2",
-   "reason": "RSI pass\u00e9 en zone de surachat (71.5)",
-   "tp1_franchi": true,
-   "entry": 10.69,
-   "sortie": 10.52
-  },
-  {
-   "time": "2026-08-20T14:04:28+00:00",
-   "signal_time": "2026-08-20T08:52:04+00:00",
-   "asset": "SOL",
-   "type": "achat",
-   "resultat": "SL",
-   "reason": "Croisement haussier du MACD",
-   "tp1_franchi": false,
-   "entry": 87.66,
-   "sortie": 86.55
-  },
-  {
-   "time": "2026-08-20T13:16:40+00:00",
-   "signal_time": "2026-08-20T08:52:04+00:00",
-   "asset": "XRP",
-   "type": "achat",
-   "resultat": "TP2",
-   "reason": "Croisement haussier du MACD",
-   "tp1_franchi": true,
-   "entry": 1.15,
-   "sortie": 1.19
-  },
-  {
-   "time": "2026-08-20T11:36:38+00:00",
-   "signal_time": "2026-08-20T07:01:05+00:00",
-   "asset": "LINK",
-   "type": "vente",
-   "resultat": "SL",
-   "reason": "RSI pass\u00e9 en zone de surachat (73.5)",
-   "tp1_franchi": false,
-   "entry": 10.58,
-   "sortie": 10.72
-  },
-  {
-   "time": "2026-08-20T09:46:09+00:00",
-   "signal_time": "2026-08-20T07:51:24+00:00",
-   "asset": "ETH",
-   "type": "vente",
-   "resultat": "SL",
-   "reason": "Croisement baissier du MACD",
-   "tp1_franchi": false,
-   "entry": 2247.1,
-   "sortie": 2287.27
   }
  ],
  "agent": {
