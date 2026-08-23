@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 77402.93,
-   "rsi": 56.8,
+   "price": 77390.13,
+   "rsi": 56.6,
    "sparkline": [
     65097.51,
     64945.77,
@@ -29,13 +29,13 @@
     78495.21,
     77285.0,
     76050.98,
-    77402.93
+    77390.13
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 2447.47,
-   "rsi": 56.6,
+   "price": 2448.51,
+   "rsi": 56.9,
    "sparkline": [
     1919.4,
     1915.44,
@@ -61,7 +61,7 @@
     2514.11,
     2422.59,
     2389.06,
-    2447.47
+    2448.51
    ]
   },
   "pax-gold": {
@@ -98,8 +98,8 @@
   },
   "solana": {
    "label": "SOL",
-   "price": 95.31,
-   "rsi": 57.9,
+   "price": 95.03,
+   "rsi": 55.9,
    "sparkline": [
     77.16,
     76.7,
@@ -125,13 +125,13 @@
     95.65,
     94.35,
     92.25,
-    95.31
+    95.03
    ]
   },
   "ripple": {
    "label": "XRP",
-   "price": 1.51,
-   "rsi": 55.2,
+   "price": 1.5,
+   "rsi": 53.6,
    "sparkline": [
     1.04,
     1.03,
@@ -157,13 +157,13 @@
     1.55,
     1.48,
     1.44,
-    1.51
+    1.5
    ]
   },
   "chainlink": {
    "label": "LINK",
-   "price": 11.49,
-   "rsi": 49.6,
+   "price": 11.5,
+   "rsi": 49.9,
    "sparkline": [
     8.33,
     8.27,
@@ -189,11 +189,25 @@
     12.2,
     11.72,
     11.22,
-    11.49
+    11.5
    ]
   }
  },
  "signals": [
+  {
+   "time": "2026-08-23T20:56:16+00:00",
+   "asset": "XRP",
+   "type": "vente",
+   "reason": "Croisement baissier SMA20/SMA50 (death cross)",
+   "plan": {
+    "entry": 1.5,
+    "sl": 1.51,
+    "tp1": 1.48,
+    "tp2": 1.47,
+    "risk_pct": 1.0,
+    "verdict": "\u2139\ufe0f"
+   }
+  },
   {
    "time": "2026-08-23T20:34:39+00:00",
    "asset": "XRP",
@@ -907,23 +921,9 @@
     "risk_pct": 0.81,
     "verdict": "\u2139\ufe0f"
    }
-  },
-  {
-   "time": "2026-08-21T10:15:38+00:00",
-   "asset": "ETH",
-   "type": "vente",
-   "reason": "Croisement baissier du MACD",
-   "plan": {
-    "entry": 2401.09,
-    "sl": 2420.33,
-    "tp1": 2381.86,
-    "tp2": 2362.62,
-    "risk_pct": 0.8,
-    "verdict": "\u2139\ufe0f"
-   }
   }
  ],
- "market_updated": "2026-08-23T20:34:39+00:00",
+ "market_updated": "2026-08-23T20:56:16+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
