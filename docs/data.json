@@ -2,8 +2,8 @@
  "market": {
   "bitcoin": {
    "label": "BTC",
-   "price": 77238.82,
-   "rsi": 57.0,
+   "price": 77298.47,
+   "rsi": 57.7,
    "sparkline": [
     64882.91,
     65089.27,
@@ -29,13 +29,13 @@
     77438.15,
     77348.06,
     76843.64,
-    77238.82
+    77298.47
    ]
   },
   "ethereum": {
    "label": "ETH",
-   "price": 2431.12,
-   "rsi": 56.2,
+   "price": 2432.54,
+   "rsi": 56.6,
    "sparkline": [
     1916.33,
     1921.12,
@@ -61,7 +61,7 @@
     2424.89,
     2435.48,
     2407.79,
-    2431.12
+    2432.54
    ]
   },
   "pax-gold": {
@@ -130,8 +130,8 @@
   },
   "ripple": {
    "label": "XRP",
-   "price": 1.5,
-   "rsi": 56.1,
+   "price": 1.49,
+   "rsi": 55.8,
    "sparkline": [
     1.04,
     1.03,
@@ -157,13 +157,13 @@
     1.39,
     1.56,
     1.45,
-    1.5
+    1.49
    ]
   },
   "chainlink": {
    "label": "LINK",
-   "price": 11.38,
-   "rsi": 45.0,
+   "price": 11.41,
+   "rsi": 46.1,
    "sparkline": [
     8.29,
     8.21,
@@ -189,11 +189,27 @@
     11.61,
     11.8,
     11.49,
-    11.38
+    11.41
    ]
   }
  },
  "signals": [
+  {
+   "time": "2026-08-23T12:01:59+00:00",
+   "asset": "BTC",
+   "type": "achat",
+   "reason": "Croisement haussier du MACD",
+   "plan": {
+    "entry": 77298.47,
+    "sl": 76978.54,
+    "tp1": 77618.41,
+    "tp2": 77938.35,
+    "risk_pct": 0.41,
+    "net_tp1": -0.09,
+    "net_tp2": 0.33,
+    "verdict": "\u26a0\ufe0f"
+   }
+  },
   {
    "time": "2026-08-23T11:40:26+00:00",
    "asset": "BTC",
@@ -899,25 +915,9 @@
     "risk_pct": 2.11,
     "verdict": "\u2139\ufe0f"
    }
-  },
-  {
-   "time": "2026-08-21T05:42:59+00:00",
-   "asset": "SOL",
-   "type": "achat",
-   "reason": "Croisement haussier du MACD",
-   "plan": {
-    "entry": 89.93,
-    "sl": 89.38,
-    "tp1": 90.47,
-    "tp2": 91.02,
-    "risk_pct": 0.61,
-    "net_tp1": 0.1,
-    "net_tp2": 0.71,
-    "verdict": "\u2705"
-   }
   }
  ],
- "market_updated": "2026-08-23T11:40:26+00:00",
+ "market_updated": "2026-08-23T12:01:59+00:00",
  "updated": "2026-07-26T12:11:52+00:00",
  "traders": [
   {
