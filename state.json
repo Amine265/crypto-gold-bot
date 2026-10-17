@@ -1,8 +1,8 @@
 {
-  "bitcoin": "",
-  "ethereum": "",
-  "pax-gold": "Croisement baissier du MACD",
+  "bitcoin": "Croisement baissier du MACD",
+  "ethereum": "Croisement baissier du MACD",
+  "pax-gold": "",
   "solana": "",
-  "ripple": "",
-  "chainlink": "RSI pass\u00e9 en zone de survente (29.0)"
+  "ripple": "Croisement baissier du MACD",
+  "chainlink": ""
 }
