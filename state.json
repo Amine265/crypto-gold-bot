@@ -3,6 +3,6 @@
   "ethereum": "",
   "pax-gold": "",
   "solana": "",
-  "ripple": "Croisement haussier du MACD",
-  "chainlink": ""
+  "ripple": "",
+  "chainlink": "Croisement haussier SMA20/SMA50 (golden cross)"
 }
