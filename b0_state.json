@@ -1,7 +1,9 @@
 {
  "ordres_jour": {
-  "date": "2026-11-08",
-  "actifs": []
+  "date": "2026-11-09",
+  "actifs": [
+   "ETH"
+  ]
  },
  "positions": {
   "BTC": {
@@ -10,13 +12,6 @@
    "prix_achat": 69834.01,
    "ouvert_le": "2026-08-20T01:50:54+00:00",
    "txid": "O3WENQ-CH2ZE-YP3QUC"
-  },
-  "ETH": {
-   "vol": 0.01247067,
-   "cout_usd": 28.51,
-   "prix_achat": 2268.1,
-   "ouvert_le": "2026-08-20T01:50:56+00:00",
-   "txid": "OARMVQ-THM7O-FDWUK3"
   }
  },
  "dernier_evenement": {
@@ -25,8 +20,8 @@
    "texte": "achat 45.00 $ ex\u00e9cut\u00e9 \u00e0 69,834.01 $ (0.00064433 BTC, frais 0.36 $)"
   },
   "ETH": {
-   "time": "2026-08-20T01:50:56+00:00",
-   "texte": "achat 28.28 $ ex\u00e9cut\u00e9 \u00e0 2,268.10 $ (0.01247067 ETH, frais 0.23 $)"
+   "time": "2026-11-09T06:23:03+00:00",
+   "texte": "vente ex\u00e9cut\u00e9e \u00e0 2,120.71 $ (0.01247067 ETH) \u2192 P&L -2.27 $"
   }
  },
  "historique": [
@@ -39,6 +34,11 @@
    "time": "2026-08-20T01:50:56+00:00",
    "actif": "ETH",
    "texte": "achat 28.28 $ ex\u00e9cut\u00e9 \u00e0 2,268.10 $ (0.01247067 ETH, frais 0.23 $)"
+  },
+  {
+   "time": "2026-11-09T06:23:03+00:00",
+   "actif": "ETH",
+   "texte": "vente ex\u00e9cut\u00e9e \u00e0 2,120.71 $ (0.01247067 ETH) \u2192 P&L -2.27 $"
   }
  ]
 }
