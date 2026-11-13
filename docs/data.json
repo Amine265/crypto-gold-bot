@@ -7767,36 +7767,30 @@
   }
  ],
  "b0": {
-  "maj": "2026-11-12T07:07:56+00:00",
+  "maj": "2026-11-13T06:42:12+00:00",
   "pause": false,
   "alloc": 45.0,
   "actifs": {
    "BTC": {
-    "au_dessus": true,
-    "depuis": "2026-08-19",
-    "cloture": 73935.2,
-    "sma200": 73131.31,
+    "au_dessus": false,
+    "depuis": "2026-11-12",
+    "cloture": 71398.11,
+    "sma200": 73094.97,
     "source": "Kraken XBTUSDC",
-    "date_cloture": "2026-11-11",
-    "position": {
-     "vol": 0.00064433,
-     "cout_usd": 45.36,
-     "prix_achat": 69834.01,
-     "ouvert_le": "2026-08-20T01:50:54+00:00",
-     "txid": "O3WENQ-CH2ZE-YP3QUC"
-    },
+    "date_cloture": "2026-11-12",
+    "position": null,
     "dernier_evenement": {
-     "time": "2026-08-20T01:50:54+00:00",
-     "texte": "achat 45.00 $ ex\u00e9cut\u00e9 \u00e0 69,834.01 $ (0.00064433 BTC, frais 0.36 $)"
+     "time": "2026-11-13T06:42:12+00:00",
+     "texte": "vente ex\u00e9cut\u00e9e \u00e0 68,897.16 $ (0.00064433 BTC) \u2192 P&L -1.32 $"
     }
    },
    "ETH": {
     "au_dessus": false,
     "depuis": "2026-11-08",
-    "cloture": 2055.87,
-    "sma200": 2151.37,
+    "cloture": 2017.6,
+    "sma200": 2149.61,
     "source": "Kraken ETHUSDC",
-    "date_cloture": "2026-11-11",
+    "date_cloture": "2026-11-12",
     "position": null,
     "dernier_evenement": {
      "time": "2026-11-09T06:23:03+00:00",
